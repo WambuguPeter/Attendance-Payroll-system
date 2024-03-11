@@ -18,7 +18,7 @@ const Navbar = () => {
                 <img src={logo} alt="logo" />
             </div>
             <div className="companyName">
-                <h1>TILLHAPPENS</h1>
+                <h1>T-HAPPENS</h1>
             </div>
             <div className="menu">
                 <img src={menu} alt="menu" />
@@ -39,7 +39,7 @@ const Navbar = () => {
                     <div className="count">2</div>
                 </div>
                 <div className="avator">
-                    <span className='user'>Admin</span>
+                    <span className='user'>Employee</span>
                     <img src={admin} alt="avater" />
                 </div>
                 <div className="dropdown">                    

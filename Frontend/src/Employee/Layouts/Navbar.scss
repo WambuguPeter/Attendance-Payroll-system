@@ -1,0 +1,104 @@
+.navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px 10px;
+    img{
+        width: 20px;
+        height: 20px;
+    }
+    .navLeft{
+        width: 25%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;        
+        .logo img{
+            width: 60px;
+            height: 60px;
+        }
+        .menu{
+            display: none;
+        }
+    }
+    .navRight{
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .search{
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            border: 1px solid black;
+            border-radius: 70px;
+            width: 35%;
+            height: 35px;
+            padding: 5px;
+
+            input{
+                border: none;
+                height: 90%;
+                width: 70%;
+            }
+        }
+        .rightend{
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            gap: 1rem;
+            .msg{
+                position: relative;
+                height: 25px;
+                width: 25px;
+            }
+            .notify{
+                position: relative;
+                height: 25px;
+                width: 25px;
+            } 
+            .count{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 10;
+                height: 13px;
+                width: 13px;
+                background-color: red;
+                border-radius: 50%;
+                padding: 2px;
+                color: #ffff;
+                font-size: 12px;
+            }           
+            .avator{
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                .user{
+                    background-color: rgb(10, 88, 52);
+                    color: white;
+                    border-radius: 5px;
+                    padding: 3px;
+                }                
+                 img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+
+            }
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .navbar {
+        .companyName{
+            display: none;
+        }
+        .menu{
+            display: flex;
+        }
+    }
+  }

@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css'
 import Login from "./Pages/Login";
-import MainContainer from "./Layouts/MainContainer";
+import MainClient from "./Employee/Layouts/MainClient";
 import LoginAdmin from "./Pages/LoginAdmin";
+import MainContainer from "./Admin/Layouts/MainContainer";
 
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
 
       <Route path="/" element={<Login/>} />
       <Route path="/LoginAdmin" element={<LoginAdmin/>} />
-      <Route path="/MainContent" element={<MainContainer/>} />
+      <Route path="/*" element={<MainContainer/>} />
+      <Route path="/MainClient/*" element={<MainClient/>} />
 
     </Routes>     
     </BrowserRouter>

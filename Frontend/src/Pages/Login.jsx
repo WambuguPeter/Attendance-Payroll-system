@@ -1,4 +1,3 @@
-import React from 'react'
 import './Login.scss'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,7 +15,7 @@ const Login = () => {
         </form>
         <div className="loginbtns">
         <button onClick={() => navigate('/LoginAdmin')} >As Admin</button>
-        <button onClick={() => navigate('/MainContent')} >Login</button>
+        <button onClick={() => navigate('/MainClient')} >Login</button>
 
         </div>
             

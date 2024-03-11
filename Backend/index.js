@@ -2,17 +2,20 @@ import express from "express";
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import logger from "./src/utils/logger";
+import { connectToDatabase } from "../Backend/src/utils/dbConnect.js";
+import logger from "./src/utils/logger.js"
 
 dotenv.config();
-const port = process.env.API_PORT || 3000;
+const port = process.env.API_PORT || 5000;
 const app = express();
 var corsOptions = {
-  origin: "http://127.0.0.1:5173",
+  origin: "http://localhost:5173",
   credentials: true,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, 
 };
 
+// Connect to the database
+connectToDatabase();
 
 // middlewares
 app.use(bodyParser.json());
@@ -25,8 +28,6 @@ app.get('/health', (req, res) => {
 
 // routes
 
-
-
 app.listen(port, () => {
-    logger.info(`Attendance and Payroll Manager running on http://localhost:${port}`);
+    logger.info(`Attendance and Payroll System running on http://localhost:${port}`);
 })

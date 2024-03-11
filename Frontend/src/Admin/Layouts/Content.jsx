@@ -7,7 +7,7 @@ const Content = () => {
   return (
     <div className='content'>
                
-        <h1>Welcome to the Dashboard!!</h1>
+        <h1>Welcome to the Admin Dashboard!!</h1>
         <button onClick={() => navigate('/')}>logout</button>
     </div>
   )

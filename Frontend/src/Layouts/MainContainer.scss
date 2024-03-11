@@ -1,0 +1,33 @@
+.mainContainerPage{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .navbar{
+        width: 100%;
+        height: 10%;
+        // background-color: goldenrod;
+    }
+    .main{
+        display: flex;
+        width: 100%;
+        height: 90%;        
+        background-color: rgb(151, 238, 151);        
+        border-top: 3px solid rgb(10, 207, 10);
+        .sidebar{
+            width: 20%;
+            background-color: rgb(4, 97, 4);
+        }
+        .content{
+            width: 80%;
+
+        }
+
+    }
+}
+@media screen and (max-width: 768px) {
+    .sidebar{
+        display: none;
+    }
+    
+  }

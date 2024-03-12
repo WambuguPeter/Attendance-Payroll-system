@@ -1,4 +1,6 @@
 import './Navbar.scss'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import logo from '../assets/images/logo.jpg'
 import search from '../assets/images/search.png'
@@ -7,10 +9,21 @@ import notify from '../assets/images/notification.png'
 import admin from '../assets/images/Admin2.jpg'
 import dropdown from '../assets/images/chevron-down.png'
 import menu from '../assets/images/menu.png'
+import profile from '../assets/images/Profile.png'
+import setting from '../assets/images/setting.png'
+import logout from '../assets/images/logout1.png'
 
 
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const [showDropDown, setShowDropDown] = useState(false);
+    const toggleDropDown = () => {
+        setShowDropDown(!showDropDown);
+    }
+
+
   return (
     <div className='navbar'>
         <div className="navLeft">
@@ -39,11 +52,34 @@ const Navbar = () => {
                     <div className="count">2</div>
                 </div>
                 <div className="avator">
-                    <span className='user'>Employee</span>
+                    <span className='user'>Staff</span>
                     <img src={admin} alt="avater" />
                 </div>
-                <div className="dropdown">                    
+                <div className="dropdown"  onClick={toggleDropDown}>                    
                     <img src={dropdown} alt="dropdown" />
+                    {showDropDown && (
+                        <div className="profile" 
+                            onClick={() => {
+                                navigate("/E-profile")
+                            }}>
+                                <img src={profile} alt="nopic" />
+                                <span>Profile</span>
+                        </div>&
+                        <div className="Settings"
+                            onClick={() => {
+                                navigate("/E-setting")
+                            }}>
+                                <img src={setting} alt="nopic" />
+                                <span>Setting</span>
+                        </div>&
+                        <div className="Logout"
+                            onClick={() => {
+                                navigate("/")
+                            }}>
+                                <img src={logout} alt="nopic" />
+                                <span>Logout</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>    

@@ -6,7 +6,6 @@ const Sidebar = () => {
     <div className='sidenav'>
       <Menu />
 
-      <h1>SideNav</h1>
 
     </div>
   )

@@ -15,7 +15,7 @@ function App() {
       <Route path="/" element={<Login/>} />
       <Route path="/LoginAdmin" element={<LoginAdmin/>} />
       <Route path="/*" element={<MainContainer/>} />
-      <Route path="/MainClient/*" element={<MainClient/>} />
+      <Route path="/MainClient/" element={<MainClient/>} />
 
     </Routes>     
     </BrowserRouter>

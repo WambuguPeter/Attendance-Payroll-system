@@ -1,10 +1,21 @@
 .menuMain{
+
+  // background-color: red; 
     
     .menu {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-left: 10px;  
+        justify-content: center;
+        gap: 20px;
+        // margin-left: 10px;
+        margin-top: 30px;
+         .heading{
+          display: flex;
+          justify-content: center;
+          width: 80%;
+          
+         }
+       
         .menu-link{
           text-decoration: none;
         }  
@@ -14,7 +25,10 @@
           align-items: center;
           color: #fff;
           font-weight: bold;
-          background-color: rgb(3, 75, 3);
+          background-color: rgb(2, 39, 2);
+          height: 30px;
+          border-radius: 10px;
+          padding: 5px;
           }
     
          
@@ -31,7 +45,7 @@
             transition: font-size 0.3s ease;         
           }
           .titles:hover{
-            color: blue;
+            color: rgb(166, 240, 208);
             font-size: 20px;
           }
           img {

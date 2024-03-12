@@ -1,19 +1,18 @@
 import React from 'react'
 
-const Payroll = () => {
+const Profile = () => {
   return (
-    <div className='payroll'>
+    <div>
        <div className="header1">
-        <h1>Payroll.</h1>
+        <h1>Profile.</h1>
         <div className="generate">
-          <span>+ Add</span>
+          <span>Edit</span>
         </div>
       </div>
 
-      Payroll
-
+      Profile
     </div>
   )
 }
 
-export default Payroll
+export default Profile

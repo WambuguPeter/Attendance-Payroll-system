@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import Content from '../Pages/Content';
+import AdminDashboard from '../Pages/AdminDashboard';
 import Employee from '../Pages/Employee';
 import Schedule from '../Pages/Schedule'
 import Attendance from '../Pages/Attendance'
@@ -24,8 +24,9 @@ const MainContainer = () => {
           <Sidebar />
           </div>
         <div className="content">
+          <AdminDashboard />
           <Routes>
-            <Route path='/Dashboard' element={<Content />} />
+            <Route path='/Dashboard' element={<AdminDashboard />} />
             <Route path='/Employees' element={<Employee/>} />
             <Route path='/Schedule' element={<Schedule/>} />
             <Route path='/Attendance' element={<Attendance/>} />

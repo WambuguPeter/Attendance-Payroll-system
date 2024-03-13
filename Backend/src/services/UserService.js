@@ -1,4 +1,4 @@
-import {poolRequest} from '../utils/dbConnect.js'
+import {poolRequest, sql} from '../utils/dbConnect.js'
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,9 +15,10 @@ export const getAllUserService = async () =>{
     }
 };
 
-export const getUserByEmailService = async () =>{
+export const getUserByEmailService = async (Email) =>{
     try {
         const result = await poolRequest()
+        .input("Email", sql.VarChar(255),  Email)
         .query("SELECT * FROM Employees WHERE Email= @Email" );
         return result.recordset[0];        
     } catch (error) {

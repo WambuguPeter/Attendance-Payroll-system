@@ -1,9 +1,7 @@
 import Joi from "joi";
-import joi from "joi";
-
 
 export const userLoginvalidator = (user) => {
-    const userValidatorSchema = joi.object({
+    const userValidatorSchema = Joi.object({
         Email: Joi.string().email().max(255).required(),
         Password: Joi.string().min(6).max(255).required(),
     });

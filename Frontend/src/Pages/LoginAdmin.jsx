@@ -14,7 +14,7 @@ const LoginAdmin = () => {
             </form>
             <div className="loginbtns">
                 <button onClick={() => navigate('/')} >As Staff</button>
-                <button onClick={() => navigate('/MainContent')} >Login</button>
+                <button onClick={() => navigate('/MainAdmin')} >Login</button>
             </div>
       
         </div>

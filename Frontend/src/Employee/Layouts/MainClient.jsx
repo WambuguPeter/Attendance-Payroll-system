@@ -4,10 +4,10 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Content from './Content';
-import Attendance from '../Pages/Attendance';
-import Payroll from '../Pages/Payroll';
-import Profile from '../Pages/Profile'
-import Setting from '../Pages/Settings'
+import Attendance from '../Pages/EmpAttendance';
+import Payroll from '../Pages/EmpPayroll';
+import Profile from '../Pages/EmpProfile'
+import Setting from '../Pages/EmpSettings'
 
 
 const MainClient = () => {
@@ -19,7 +19,7 @@ const MainClient = () => {
       <div className="main">
         <div className="sidebar"><Sidebar /></div>
         <div className="content">
-        <Content />
+        {/* <Content /> */}
           <Routes>
             <Route path='/E-Dashboard' element={<Content />} />
             <Route path='/E-Attendance' element={<Attendance/>} />

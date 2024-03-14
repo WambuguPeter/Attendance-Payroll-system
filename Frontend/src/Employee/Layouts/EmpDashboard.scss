@@ -1,0 +1,95 @@
+.header1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // width: 115%;
+    margin: 10px 30px;
+    padding-left: 40px;
+    background-color: rgb(236, 234, 230);
+    box-shadow: 5px 5px 5px ;
+    border-radius: 10px;
+    .generate{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: blue;
+        margin-right: 20px;   
+        height: 38px;
+        width: 15vh;
+        padding: 5px;
+        border-radius: 20px;
+        color: #fff;
+    }
+}
+
+.content1{
+    display: flex;
+    height: 80vh;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    .leftContent{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        flex: 0.4;
+        padding: 1rem;
+        // background-color: aqua;
+        gap: 1em;
+        .clock{
+            height: 60%;
+            width: 90%;            
+
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+
+            .time{
+                font-weight: bold;
+                font-size: 28px;
+                background-color: rgb(65, 65, 224);
+                border-radius: 10px;
+                padding: 5px;
+                color: #fff;
+
+
+            }
+            img{
+                height: 35vh;
+                width: 35vh;
+            }
+            .timeOut{
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .profile{
+            display: flex; 
+            gap: 1rem; 
+            img{
+                height: 23vh;
+                width: 20vh;
+                border-radius: 50%;
+            }
+            .details{
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                justify-content: center;
+                align-items: center;
+                font-size: 20px
+            }          
+        }
+
+    }
+    .rightContent{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        flex: 0.6;
+        padding: 1rem;
+        // background-color: aqua;
+        
+    }
+
+}

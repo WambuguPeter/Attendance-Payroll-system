@@ -40,7 +40,7 @@ const Login = () => {
         localStorage.setItem("employeeDetails", JSON.stringify(userDetails));
         LoadingToast(false);
         SuccessToast("Login successful");
-        userDetails.Admin ? navigate("/MainContainer") : navigate("/MainClient");
+        userDetails.Admin = false ? navigate("/MainContainer") : navigate("/MainClient");
       } else {
         console.log(response.error.data.message);
         ErrorToast(response.error.data.message);

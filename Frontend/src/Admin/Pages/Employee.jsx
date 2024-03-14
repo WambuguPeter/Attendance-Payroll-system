@@ -41,11 +41,11 @@ const Employee = () => {
           <tbody>
             {employees.map(employee => (
               <tr className="details" key={employee.id} >
-                <td className="row-A">{employee.id}</td>
-                <td className="row-B">{employee.name}</td>
-                <td className="row-A">{employee.email}</td>
-                <td className="row-B">{employee.position}</td>
-                <td className="row-A">{employee.schedule}</td>
+                <td >{employee.id}</td>
+                <td >{employee.name}</td>
+                <td >{employee.email}</td>
+                <td >{employee.position}</td>
+                <td >{employee.schedule}</td>
                 <td>
                   <div className="action-icons">
                     <FaEye className="icon1" />

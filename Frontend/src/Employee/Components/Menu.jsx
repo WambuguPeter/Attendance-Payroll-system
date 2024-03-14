@@ -27,8 +27,11 @@ function Menu() {
   return (
     
     <div className="menuMain">
-      <h4>MENU</h4>
       <div className="menu">
+      <div className="heading">
+        <h3>MENU</h3>
+        </div>
+
         {menuItems.map((item, index) => (
           <div className="menu-item" key={index}>
             <NavLink

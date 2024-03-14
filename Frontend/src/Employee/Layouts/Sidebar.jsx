@@ -7,7 +7,6 @@ const Sidebar = () => {
       <div className="menu">
         <Menu />
       </div>
-      <h1>SideNav</h1>
     </div>
   )
 }

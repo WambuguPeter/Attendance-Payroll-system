@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { Route } from "react-router-dom";
 import "./Login.scss";
 import { ToasterContainer,
   ErrorToast,
@@ -40,7 +41,10 @@ const Login = () => {
         localStorage.setItem("employeeDetails", JSON.stringify(userDetails));
         LoadingToast(false);
         SuccessToast("Login successful");
-        userDetails.Admin = false ? navigate("/MainContainer") : navigate("/MainClient");
+      //   {admin=true ? ( <Route path="/MainContainer" element={<MainContainer/>} />)
+      // :(<Route path="/MainClient" element={<MainClient/>} />)} 
+        userDetails.admin == true ? navigate("/MainContainer") : navigate("/MainClient");
+        // navigate("*")
       } else {
         console.log(response.error.data.message);
         ErrorToast(response.error.data.message);
@@ -59,12 +63,15 @@ const Login = () => {
   return (
     <div className="loginpage">
       <ToasterContainer />
+      <div className="login-card">
+
       <div className="form">
         <div className="title">
-          {/* <img src={feedly} alt="no-logo" /> */}
+        
         </div>
         <form action="" className="login" onSubmit={handleSubmit(onSubmit)}>
-          <h1>Welcome...</h1>
+          <h1>Welcome Back</h1>
+          <h1>TillHappens.</h1>
           <input
             type="text"
             name="Email"
@@ -81,8 +88,9 @@ const Login = () => {
             {...register("Password")}
           />
           <p>{errors.Password?.message}</p>
-          <input type="submit" value="Login" className="submit" />
+          <input type="submit" value="Login" className="loginbtns" />
         </form>
+      </div>
       </div>
     </div>
   );

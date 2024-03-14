@@ -1,53 +1,83 @@
 .counts{
     display: flex;
-    width: 115%;
+    // justify-content: center;
+    align-items: center;
     height: 20vh;
+    width: 100%;
     margin-left: 30px;
-    background-color: blueviolet;
+    // background-color: blueviolet;
+
     .total{
-        // height: 10%;
-        width: 25%;
+        // height: 100%;
+        width: 23%;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        // flex-direction: column;
+        // justify-content: center;
         align-items: center;
         border-radius: 10px;
         margin: 15px 5px;
-        // box-shadow: 3px 3px 3px;
-        .number{
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .describe{
-            font-weight: 16px;
-            color: #fff;
-        }
         .total1{
-            background-color: rgb(138, 223, 138);
             display: flex;
             flex-direction: column;
+            gap: 4px;
+            font-size: 24px;
             align-items: center;
-            width: 20vh;
-            height: 90%;
+            // color: blue;
+            height: 20vh;
+            width: 35vh;
+            padding: 5px;
+            padding-top: 10px;
+            border-radius: 5px;
+            box-shadow: 3px 3px 3px 3px;
         }
-        .total2{
-            background-color: rgb(7, 77, 16);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #id1{
+            background-color: rgb(28, 243, 28);
         }
-        .total3{
-            background-color: rgb(7, 97, 0);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #id2{
+            background-color: rgb(48, 204, 48);
         }
-        .total4{
-            background-color:blue;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #id3{
+            background-color: rgb(24, 192, 24);
+        }
+        #id4{
+            background-color: rgb(21, 158, 67)
         }
     }
+        // box-shadow: 3px 3px 3px;
+    //     .number{
+    //         font-size: 24px;
+    //         font-weight: bold;
+    //         color: #fff;
+    //     }
+    //     .describe{
+    //         font-weight: 16px;
+    //         color: #fff;
+    //     }
+    //     .total1{
+    //         background-color: rgb(138, 223, 138);
+    //         display: flex;
+    //         flex-direction: column;
+    //         align-items: center;
+    //         width: 20vh;
+    //         height: 90%;
+    //     }
+    //     .total2{
+    //         background-color: rgb(7, 77, 16);
+    //         display: flex;
+    //         flex-direction: column;
+    //         align-items: center;
+    //     }
+    //     .total3{
+    //         background-color: rgb(7, 97, 0);
+    //         display: flex;
+    //         flex-direction: column;
+    //         align-items: center;
+    //     }
+    //     .total4{
+    //         background-color:blue;
+    //         display: flex;
+    //         flex-direction: column;
+    //         align-items: center;
+    //     }
+    
 }

@@ -1,8 +1,10 @@
 import './EmpDashboard.scss'
 import { useNavigate } from "react-router-dom"
 import emp from "../assets/images/emp1.jpg"
+import clock from "../assets/images/clock1.jpg"
+import BarGraph from '../Components/BarGraph'
 // import { useState } from 'react'
-// import AttendList from '../Components/AttendList';
+import AttendList from '../Components/AttendList';
 
 const EmpDashboard = () => {
   // const [ timeInVisible, setTimeInVisible]= useState(true);
@@ -37,7 +39,7 @@ const EmpDashboard = () => {
               <div className='time'>Time In</div>
             <div></div>
               </span>
-            <img src="" alt="nopic" />
+            <img className='clock1' src={clock} alt="nopic" />
             <span className='timeOut'>
               <div></div>
               <div className='time'>Time Out</div>
@@ -55,9 +57,10 @@ const EmpDashboard = () => {
         <div className="rightContent">
           <div className="graph">
             <h3>Attendance Graph</h3>
+            <BarGraph />
           </div>
           <div className="attend">
-            {/* <AttendList /> */}
+            <AttendList />
           </div>
 
         </div>

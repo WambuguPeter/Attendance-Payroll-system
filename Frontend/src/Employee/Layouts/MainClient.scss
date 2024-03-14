@@ -21,6 +21,9 @@
         }
         .content{
             width: 80%;
+            height: 85vh;
+            overflow: scroll;
+            scroll-behavior: smooth;
 
         }
 

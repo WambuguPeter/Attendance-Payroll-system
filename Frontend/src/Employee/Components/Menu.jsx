@@ -10,17 +10,17 @@ function Menu() {
     {
       title: "Dashboard",
       icon: Dashboard,
-      path: "/E-Dashboard"
+      path: "/MainClient/E-Dashboard"
     },
     {
       title: "Attendance",
       icon: Attendance,
-      path: "/E-Attendance"
+      path: "/MainClient/E-Attendance"
     },
     {
       title: "Payroll",
       icon: Payroll,
-      path: "/E-Payroll"
+      path: "/MainClient/E-Payroll"
     },
   ];
 
@@ -37,7 +37,7 @@ function Menu() {
             <NavLink
               to={item.path}
               className="menu-link"
-              activeClassName="active"
+              activeclassname="active"
             >
               <div className="menu-left">
                 <img src={item.icon} alt={item.title} />

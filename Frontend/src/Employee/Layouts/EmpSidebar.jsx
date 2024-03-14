@@ -1,4 +1,4 @@
-import './Sidebar.scss';
+import './EmpSidebar.scss';
 import Menu from '../Components/Menu';
 
 const Sidebar = () => {

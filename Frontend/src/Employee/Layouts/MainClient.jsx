@@ -2,7 +2,7 @@ import './MainClient.scss'
 import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Sidebar from './EmpSidebar';
 import EmpDashboard from './EmpDashboard';
 import  EmpAttendance from '../Pages/EmpAttendance';
 import EmpPayroll from '../Pages/EmpPayroll';
@@ -21,11 +21,11 @@ const MainClient = () => {
         <div className="content">
         {/* <EmpDashboard /> */}
           <Routes>
-            <Route path='/E-Dashboard' element={<EmpDashboard />} />
-            <Route path='/E-Attendance' element={<EmpAttendance/>} />
-            <Route path='/E-Payroll' element={<EmpPayroll/>} />
-            <Route path='/E-profile' element={<Profile />} />
-            <Route path='/E-setting' element={<Setting />} />
+            <Route path='/MainClient/E-Dashboard' element={<EmpDashboard />} />
+            <Route path='/MainClient/E-Attendance' element={<EmpAttendance/>} />
+            <Route path='/MainClient/E-Payroll' element={<EmpPayroll/>} />
+            <Route path='/MainClient/E-profile' element={<Profile />} />
+            <Route path='/MainClient/E-setting' element={<Setting />} />
           </Routes>
 
         </div>

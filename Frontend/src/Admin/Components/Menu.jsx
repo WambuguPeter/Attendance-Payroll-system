@@ -13,32 +13,32 @@ function Menu() {
     {
       title: "Dashboard",
       icon: Dashboard,
-      path: "/Dashboard"
+      path: "/MainContainer/Dashboard"
     },
     {
       title: "Employees",
       icon: Employees,
-      path: "/Employees"
+      path: "/MainContainer/Employees"
     },
     {
       title: "Schedule",
       icon: Schedule,
-      path: "/Schedule"
+      path: "/MainContainer/Schedule"
     },
     {
       title: "Attendance",
       icon: Attendance,
-      path: "/Attendance"
+      path: "/MainContainer/Attendance"
     },
     {
       title: "Overtime",
       icon: Overtime,
-      path: "/Overtime"
+      path: "/MainContainer/Overtime"
     },
     {
       title: "Payroll",
       icon: Payroll,
-      path: "/Payroll"
+      path: "/MainContainer/Payroll"
     },
   ];
 
@@ -56,7 +56,7 @@ function Menu() {
             <NavLink
               to={item.path}
               className="menu-link"
-              activeClassName="active"
+              activeclassname="active"
             >
               <div className="menu-left">
                 <img src={item.icon} alt={item.title} />

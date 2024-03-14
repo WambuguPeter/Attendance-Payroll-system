@@ -24,9 +24,10 @@
 
 .content1{
     display: flex;
-    height: 80vh;
+    height: 85vh;
     overflow: scroll;
     scroll-behavior: smooth;
+    margin-top: 0px;
     .leftContent{
         display: flex;
         flex-direction: column;
@@ -35,11 +36,12 @@
         flex: 0.4;
         padding: 1rem;
         // background-color: aqua;
-        gap: 1em;
+        gap: 2em;
         .clock{
             height: 60%;
-            width: 90%;            
-
+            width: 90%;
+            background-color: rgb(229, 245, 248); 
+            border-radius: 10px;        
             display: flex;
             flex-direction: column;
             // align-items: center;
@@ -47,16 +49,18 @@
             .time{
                 font-weight: bold;
                 font-size: 28px;
-                background-color: rgb(65, 65, 224);
+                background-color: rgb(81, 81, 199);
                 border-radius: 10px;
                 padding: 5px;
                 color: #fff;
 
 
             }
+            
             img{
                 height: 35vh;
                 width: 35vh;
+                margin-left: 35px;
             }
             .timeOut{
                 display: flex;
@@ -65,7 +69,10 @@
         }
         .profile{
             display: flex; 
+            background-color: rgb(205, 237, 243); 
             gap: 1rem; 
+            width: 90%;
+            border-radius: 10px;
             img{
                 height: 23vh;
                 width: 20vh;
@@ -85,9 +92,11 @@
     .rightContent{
         display: flex;
         flex-direction: column;
-        height: 100%;
         flex: 0.6;
         padding: 1rem;
+        height: 85vh;
+        overflow: scroll;
+        scroll-behavior: smooth;
         // background-color: aqua;
         
     }

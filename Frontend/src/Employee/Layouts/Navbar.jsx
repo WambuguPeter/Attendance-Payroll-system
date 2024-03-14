@@ -55,29 +55,31 @@ const Navbar = () => {
                     <span className='user'>Staff</span>
                     <img src={admin} alt="avater" />
                 </div>
-                <div className="dropdown"  onClick={toggleDropDown}>                    
+                <div className="dropdown" onClick={toggleDropDown}>                    
                     <img src={dropdown} alt="dropdown" />
                     {showDropDown && (
-                        <div className="profile" 
-                            onClick={() => {
-                                navigate("/E-profile")
-                            }}>
-                                <img src={profile} alt="nopic" />
-                                <span>Profile</span>
-                        </div>&
-                        <div className="Settings"
-                            onClick={() => {
-                                navigate("/E-setting")
-                            }}>
-                                <img src={setting} alt="nopic" />
-                                <span>Setting</span>
-                        </div>&
-                        <div className="Logout"
-                            onClick={() => {
-                                navigate("/")
-                            }}>
-                                <img src={logout} alt="nopic" />
-                                <span>Logout</span>
+                        <div className='dropdownitems'> 
+                            <div className="item" 
+                                onClick={() => {
+                                    navigate("/profile")
+                                }}>
+                                    <img src={profile} alt="nopic" />
+                                    <span>Profile</span>
+                            </div>
+                            <div className="item"
+                                onClick={() => {
+                                    navigate("/setting")
+                                }}>
+                                    <img src={setting} alt="nopic" />
+                                    <span>Setting</span>
+                            </div>
+                            <div className="item"
+                                onClick={() => {
+                                    navigate("/")
+                                }}>
+                                    <img src={logout} alt="nopic" />
+                                    <span>LogOut</span>
+                            </div>
                         </div>
                     )}
                 </div>

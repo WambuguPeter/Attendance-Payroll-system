@@ -26,14 +26,13 @@ const MainContainer = () => {
         <div className="content">
           <AdminDashboard />
           <Routes>
-            <Route path='/Dashboard' element={<AdminDashboard />} />
-            <Route path='/Employees' element={<Employee/>} />
-            <Route path='/Schedule' element={<Schedule/>} />
-            <Route path='/Attendance' element={<Attendance/>} />
-            <Route path='/Overtime' element={<Overtime/>} />
-            <Route path='/Payroll' element={<Payroll/>} />
-            <Route path='/Setting' element={<Setting/>} />
-            <Route path='/profile' element={<Profile/>} />
+            <Route path='/MainContainer/Employees' element={<Employee/>} />
+            <Route path='/MainContainer/Schedule' element={<Schedule/>} />
+            <Route path='/MainContainer/Attendance' element={<Attendance/>} />
+            <Route path='/MainContainer/Overtime' element={<Overtime/>} />
+            <Route path='/MainContainer/Payroll' element={<Payroll/>} />
+            <Route path='/MainContainer/Setting' element={<Setting/>} />
+            <Route path='/MainContainer/profile' element={<Profile/>} />
           </Routes>
 
         </div>

@@ -24,8 +24,9 @@ const MainContainer = () => {
           <Sidebar />
           </div>
         <div className="content">
-          <AdminDashboard />
+          {/* <AdminDashboard /> */}
           <Routes>
+            <Route path='/MainContainer' element={<AdminDashboard />} />
             <Route path='/MainContainer/Employees' element={<Employee/>} />
             <Route path='/MainContainer/Schedule' element={<Schedule/>} />
             <Route path='/MainContainer/Attendance' element={<Attendance/>} />

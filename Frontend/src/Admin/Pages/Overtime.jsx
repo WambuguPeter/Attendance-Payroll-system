@@ -5,9 +5,9 @@ const Overtime = () => {
   const overtimeRates = [
     {id: 1, position: 'Developer', rate: 500.00 },
     {id: 2, position: 'Manager', rate: 700.00 },
-    {id: 1, position: 'Trainer', rate: 600.00 },
-    {id: 1, position: 'Worker', rate: 300.00 },
-    {id: 1, position: 'Designer', rate: 400.00 }
+    {id: 3, position: 'Trainer', rate: 600.00 },
+    {id: 4, position: 'Worker', rate: 300.00 },
+    {id: 5, position: 'Designer', rate: 400.00 }
   ]
   return (
     <div className='ovetimePage'>

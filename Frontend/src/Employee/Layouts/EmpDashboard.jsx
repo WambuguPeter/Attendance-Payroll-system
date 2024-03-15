@@ -2,8 +2,9 @@ import './EmpDashboard.scss'
 import { useNavigate } from "react-router-dom"
 import emp from "../assets/images/emp1.jpg"
 import clock from "../assets/images/clock1.jpg"
-import BarGraph from '../Components/BarGraph'
+// import BarGraph from '../Components/BarGraph'
 // import { useState } from 'react'
+import graph from '../assets/images/graph1.png'
 import AttendList from '../Components/AttendList';
 
 const EmpDashboard = () => {
@@ -34,6 +35,14 @@ const EmpDashboard = () => {
               {timeInVisible ? 'Time Out' : 'Time In'}
             </span>
           </div> */}
+           <div className="profile">
+            <img src={emp} alt="nopic" />
+            <div className="details">
+              <span>Lydia Wanjiku</span>
+              <span>Developer</span>
+              <span>@ TillHappens Ltd.</span>
+            </div>
+          </div>
           <div className="clock">
             <span className='timeOut'>
               <div className='time'>Time In</div>
@@ -45,19 +54,13 @@ const EmpDashboard = () => {
               <div className='time'>Time Out</div>
               </span>            
           </div>
-          <div className="profile">
-            <img src={emp} alt="nopic" />
-            <div className="details">
-              <span>Lydia Wanjiku</span>
-              <span>Developer</span>
-              <span>@ TillHappens Ltd.</span>
-            </div>
-          </div>
+         
         </div>
         <div className="rightContent">
           <div className="graph">
             <h3>Attendance Graph</h3>
-            <BarGraph />
+            {/* <BarGraph /> */}
+            <img src={graph} alt="nopic" />
           </div>
           <div className="attend">
             <AttendList />

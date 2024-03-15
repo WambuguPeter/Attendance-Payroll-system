@@ -7,20 +7,20 @@ import { NavLink } from "react-router-dom";
 
 function Menu() {
   const menuItems = [    
-    {
-      title: "Dashboard",
-      icon: Dashboard,
-      path: "/MainClient/E-Dashboard"
-    },
+    // {
+    //   title: "Dashboard",
+    //   icon: Dashboard,
+    //   path: "/MainClient"
+    // },
     {
       title: "Attendance",
       icon: Attendance,
-      path: "/MainClient/E-Attendance"
+      path: "/MainClient/EmpAttendance"
     },
     {
       title: "Payroll",
       icon: Payroll,
-      path: "/MainClient/E-Payroll"
+      path: "/MainClient/EmpPayroll"
     },
   ];
 

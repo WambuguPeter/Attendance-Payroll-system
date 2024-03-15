@@ -10,11 +10,11 @@ import { NavLink } from "react-router-dom";
 
 function Menu() {
   const menuItems = [    
-    {
-      title: "Dashboard",
-      icon: Dashboard,
-      path: "/MainContainer/Dashboard"
-    },
+    // {
+    //   title: "Dashboard",
+    //   icon: Dashboard,
+    //   path: "/MainContainer"
+    // },
     {
       title: "Employees",
       icon: Employees,

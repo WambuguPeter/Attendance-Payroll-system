@@ -13,7 +13,7 @@ const Major = () => {
          {/* {admin=true ? ( <Route path="/MainContainer" element={<MainContainer/>} />)
       :(<Route path="/MainClient" element={<MainClient/>} />)} */}
             <Route path='/MainContainer/*' element={<MainContainer/>}/>
-            <Route path='/*' element={<MainClient/>}/>
+            <Route path='/MainClient/*' element={<MainClient/>}/>
         </Routes>
 
     </div>

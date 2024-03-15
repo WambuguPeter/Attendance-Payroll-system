@@ -21,11 +21,11 @@ const MainClient = () => {
         <div className="content">
         {/* <EmpDashboard /> */}
           <Routes>
-            <Route path='/MainClient/E-Dashboard' element={<EmpDashboard />} />
-            <Route path='/MainClient/E-Attendance' element={<EmpAttendance/>} />
-            <Route path='/MainClient/E-Payroll' element={<EmpPayroll/>} />
-            <Route path='/MainClient/E-profile' element={<Profile />} />
-            <Route path='/MainClient/E-setting' element={<Setting />} />
+            <Route path='/*' element={<EmpDashboard />} />
+            <Route path='/EmpAttendance' element={<EmpAttendance/>} />
+            <Route path='/EmpPayroll' element={<EmpPayroll/>} />
+            <Route path='/E-profile' element={<Profile />} />
+            <Route path='/E-setting' element={<Setting />} />
           </Routes>
 
         </div>

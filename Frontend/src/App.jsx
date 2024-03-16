@@ -5,14 +5,17 @@ import Login from "./Pages/Login";
 import MainClient from "./Employee/Layouts/MainClient";
 import MainContainer from "./Admin/Layouts/MainContainer";
 import Major from "./Pages/Major";
+import { ToasterContainer } from "./Admin/Components/Toster";
 
 
 
 function App() {
 
   return (
+    <>
+    
+      {/* <ToasterContainer /> */}
     <Routes>
-
       <Route path="/" element={<Login/>} />
       {/* <Route path="*" element={<Major/>} /> */}
 
@@ -21,6 +24,7 @@ function App() {
 
 
     </Routes>     
+    </>
     
   )
 }

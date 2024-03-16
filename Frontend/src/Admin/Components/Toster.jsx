@@ -1,4 +1,4 @@
-import { Toaster, toast } from "sonner";
+import { Toaster, toast } from 'sonner';
 
 export const SuccessToast = (message) => {
   toast.success(message, {
@@ -14,12 +14,13 @@ export const ErrorToast = (message) => {
 
 export const LoadingToast = (state = true) => {
   if (state === true) {
-    toast.loading("Loading...");
+    toast.loading('Loading...');
   } else {
     toast.dismiss();
   }
 };
 
+
 export const ToasterContainer = () => {
-  return <Toaster richColors position="top-right" />;
+  return <Toaster richColors position='top-right' />;
 };

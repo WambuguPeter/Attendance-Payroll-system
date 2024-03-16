@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-// import { connectToDatabase } from "../Backend/src/utils/dbConnect.js";
 import logger from "./src/utils/logger.js"
 import userRouter from "./src/routes/UserRoutes.js";
 
@@ -17,8 +16,6 @@ var corsOptions = {
 };
 
 
-// Connect to the database
-// connectToDatabase();
 
 // middlewares
 app.use(express.json());

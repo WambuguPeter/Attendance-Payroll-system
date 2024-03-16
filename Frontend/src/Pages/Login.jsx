@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Route } from "react-router-dom";
+import { useState } from "react";
 import "./Login.scss";
 import { ToasterContainer,
   ErrorToast,
   LoadingToast,
-  SuccessToast, } from "./Toster";
+  SuccessToast, } from "../Admin/Components/Toster";
 import { useNavigate } from "react-router-dom";
 import { useLoginEmployeeMutation } from "../Admin/features/users/UserApi";
 import MainContainer from "../Admin/Layouts/MainContainer";
@@ -15,7 +16,10 @@ import MainClient from "../Employee/Layouts/MainClient";
 
  
 const Login = () => {
+
   const [loginEmployee, { isLoading }] = useLoginEmployeeMutation();
+  
+
   const navigate = useNavigate();
   const schema = yup.object().shape({
     Email: yup.string().required("Username is required"),
@@ -29,10 +33,9 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
  
-  // const userDetails = localStorage.getItem()
   const onSubmit = async (data) => {
     try {
-      LoadingToast(true);
+      LoadingToast();
       const response = await loginEmployee(data).unwrap();
       console.log("Response: ", response);
       if (!response.error) {
@@ -41,8 +44,6 @@ const Login = () => {
         localStorage.setItem("employeeDetails", JSON.stringify(userDetails));
         LoadingToast(false);
         SuccessToast("Login successful");
-      //   {admin=true ? ( <Route path="/MainContainer" element={<MainContainer/>} />)
-      // :(<Route path="/MainClient" element={<MainClient/>} />)} 
         userDetails.admin == true ? navigate("/MainContainer") : navigate("/MainClient");
         // navigate("*")
       } else {
@@ -50,16 +51,19 @@ const Login = () => {
         ErrorToast(response.error.data.message);
       }
     } catch (error) {
-      LoadingToast(false);
       console.log(error);
       // ErrorToast(error.data.message);
       ErrorToast('Logging failed');
+      LoadingToast(false);
 
     }
   };
   if (isLoading) {
-    return <div>{LoadingToast(true)}</div>;
+    return <div>{LoadingToast(false)}</div>;
+  } else{
+    LoadingToast(false)
   }
+
   return (
     <div className="loginpage">
       <ToasterContainer />

@@ -5,16 +5,28 @@ import { addEmployeeService,
     deleteEmployeeService, 
     getAllUserService, 
     getEmployeeByIDService,
-     getUserByEmailService } from "../services/UserService.js";
+     getUserByEmailService, 
+     updateEmployeeService} from "../services/UserService.js";
 import { userLoginvalidator, validateNewEmployee } from "../validators/UserValidator.js";
 import { sendBadRequest, sendDeleteSuccess, sendCreated,
 sendNotFound,
 sendServerError,
-sendSuccess} from "../helper/helperFunctions.js";     
+sendSuccess,
+checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js";     
 import { response } from "express";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
+
+const checkEmployee = async (req) => {
+  const employeeID = Number(req.params.EmployeeID);
+  const employee = await getEmployeeByIDService(employeeID);
+  if (employee.length == 0 || employee.message) {
+      return false;
+  } else {
+      return true;
+  }
+}
 
 export const getAllUserController = async (req,res) => {
     try {
@@ -34,10 +46,10 @@ export const getEmpByIDController = async (req, res) => {
       const EmployeeID = req.params.EmployeeID;
       const employee = await getEmployeeByIDService(EmployeeID);
   
-      if (employee) {
+      if (employee.length != 0) {
         return res.status(200).json(employee);
       } else {
-        // return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ error: "Employee not found" });
       }
     } catch (error) {
       sendServerError(res, error.message);
@@ -151,87 +163,231 @@ export const loginUserController = async (req, res) =>{
 }
 };
 
-// export const getEmployeeByIDController = async (req, res) =>{
-//     try {
-//         const data = await getUserService();
-//         const user = data.find((item) => item.UserID == req.params.id);
-//         if (!user) {
-//             sendNotFound(res, 'User not found');}
-//             else{
-//                 res.status(200).send(user);
-//             }
-//         }
-//      catch (error) {
-//         sendServerError(res, error.message);
-//     }
+
+export const deleteEmployee = async (req, res) => {
+  try {
+      const employeeID = Number(req.params.EmployeeID);
+      if (await checkEmployee(req)) {
+          const result = await deleteEmployeeService(employeeID);
+          if (result && result.message) {
+              return res.status(500).send({ "error": result.message });
+          } else {
+              return sendDeleteSuccess(res, 'Employee deleted successfully');
+          }
+      } else {
+          return sendNotFound(res, 'Employee not found');
+      }
+
+  } catch (error) {
+      sendServerError(res, error.message);
+  }
+}
+
+// export const updateUser = async (req, res) => {
+//   try {
+//       const userId = Number(req.params.id);
+//       const { error } = updateUserValidator(req.body);
+//       if (error) {
+//           return res.status(400).send(error.details[0].message);
+//       } else {
+//           if (await checkUser(req)) {
+//               const { username, email, password, img_url } = req.body;
+//               let updatedUserData = { username, email };
+
+//               if (password) {
+//                   const hashedPassword = await hashPassword(password);
+//                   updatedUserData.password = hashedPassword;
+//               }
+
+//               if (img_url) {
+//                   updatedUserData.img_url = img_url;
+//               }
+
+//               const updateResult = await updateUserService(userId, updatedUserData);
+
+//               if (updateResult.message) {
+//                   return res.status(500).send({ "error": updateResult.message });
+//               } else {
+//                   res.status(200).json({ "message": "User updated successfully" });
+//               }
+//           } else {
+//               return sendNotFound(res, 'User not found');
+//           }
+//       }
+//   } catch (error) {
+//       sendServerError(res, error.message);
+//   }
 // }
 
 
 
-
-export const deleteEmployee = async (req, res) => {
-  try {
-      const EmployeeID = req.params.EmployeeID;
-      console.log("EmployeeID!!! :", EmployeeID);
-      const data = await getAllUserService();
-      console.log(data);
-      
-    //   Check if the user exists
-      const deleteThisEmployee = data.find((Employee) => Employee.EmployeeID === EmployeeID);
-      console.log("deleteThisEmployee",deleteThisEmployee);
-      if (!deleteThisEmployee) {
-          return res.status(404).json({ message: "Employee not found!!" });
-      }
-
-    //   If the user exists, proceed with deletion
-      await deleteEmployeeService(EmployeeID);
-
-      return res.status(200).json({
-          message: "Employee deleted successfully"
-      });
-      
-  } catch (error) {
-      return res.status(500).json({
-          error: error.message
-      });
-  }
-}
-
-
-export const updateUser = async (req, res) => {
+export const updateUserController = async (req, res) => {
     try {
-      const data = await getUserService();
-      const user = data.find((item) => item.UserID == req.params.id);
-      if (!user) {
-        sendNotFound(res, "User to update not found");
-      } else {
-        if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
-          const { Username, Email, Password, TagName, Location } = req.body;
-          if (Username) {
-            tbl_User.Username = Username;
-          }
-          if (Email) {
-            tbl_User.Email = Email;
-          }
-          if (Password) {
-            tbl_User.Password = Password;
-          }
-          if (TagName) {
-            tbl_User.TagName = TagName;
-          }
-          if (Location) {
-            tbl_User.Location = Location;
-          }
-          const updatedUser = await updateUserService(user);
-          //res.status(200).json(updatedUser);
-          console.log(updatedUser);
-          sendCreated(res, "User updated successfully");
-        } else {
-          sendServerError(res, "Please provide a complete field");
-        }
+      const employeeID = Number(req.params.EmployeeID);
+      const exists = await checkEmployee(req);
+
+      if (!exists){
+        return res.status(404).json({ message: "Employee not found" });
       }
-    } catch (error) {
-      sendServerError(res, error.message);
-    }
-  };
+      
+      if (exists){
+        console.log("he exists")
+      }
+      const employeeData = await getEmployeeByIDService(employeeID);
+      // console.log(employeeData)
+     
+      const updatedEmployeeData ={ ...employeeData[0], ...req.body };
+      console.log("employeeData :", employeeData)
+      updatedEmployeeData.EmployeeID =employeeID;
+      // console.log(employeeID)
+
+      if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
+            const {FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
+            ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = req.body;
+            if (FirstName) {
+              updatedEmployeeData.FirstName = FirstName;
+            }
+            if (LastName) {
+              updatedEmployeeData.LastName = LastName;
+            }
+            if (Location) {
+              updatedEmployeeData.Location = Location;
+            }
+            if (BirthDate) {
+              updatedEmployeeData.BirthDate = BirthDate;
+            }
+            if (Contact) {
+              updatedEmployeeData.Contact = Contact;
+            }
+            if (Gender) {
+              updatedEmployeeData.Gender = Gender;
+            }
+            if (admin) {
+              updatedEmployeeData.admin = admin;
+            }
+            if (PositionID) {
+              updatedEmployeeData.PositionID = PositionID;
+            }
+            if (ScheduleID) {
+              updatedEmployeeData.ScheduleID = ScheduleID;
+            }
+            if (PhotoURL) {
+              updatedEmployeeData.PhotoURL = PhotoURL;
+            }
+            if (Email) {
+              updatedEmployeeData.Email = Email;
+            }
+            if (Password) {
+              updatedEmployeeData.Password = Password;
+            }
+            if (BankName) {
+              updatedEmployeeData.BankName = BankName;
+            }
+            if (BankBranch) {
+              updatedEmployeeData.BankBranch = BankBranch;
+            }
+            if (AccountNumber) {
+              updatedEmployeeData.AccountNumber = AccountNumber;
+            }
+            if (Bio) {
+              updatedEmployeeData.Bio = Bio;
+            }
+          
+            const updatedEmployee = await updateEmployeeService(updatedEmployeeData);
+            if (updatedEmployee && updatedEmployee.rowsAffected && updatedEmployee.rowsAffected[0] > 0) {
+              return res.status(200).json({ message: "Employee updated successfully" });
+            } else {
+              return res.status(500).json({ error: "Failed to update employee" });
+          }}
+        } catch (error) {
+          return res.status(500).json({ error: error.message });
+      }
+  }
+
+            //res.status(200).json(updatedUser);
+            // console.log(updatedUser);
+
+          //   sendCreated(res, "User updated successfully");
+          // } else {
+          //   sendServerError(res, "Please provide a complete field");
+          // }
+  
+
+    //   const result = await updateEmployeeService(employeeData);
+    //   console.log(result)
+
+    //   if (result && result.rowsAffected && result.rowsAffected[0] > 0) {
+    //     return res.status(200).json({ message: "Employee updated successfully" });
+    // } else {
+    //     return res.status(500).json({ error: "Failed to update employee" });
+    // }
+// } catch (error) {
+//     return res.status(500).json({ error: error.message });
+// }
+// }
+
+
+
+  //     const data = await getUserService();
+  //     const user = data.find((item) => item.UserID == req.params.id);
+  //     if (!user) {
+  //       sendNotFound(res, "User to update not found");
+  //     } else {
+  //       if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
+  //         const {FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
+  //        ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = req.body;
+  //         if (FirstName) {
+  //           Employees.FirstName = FirstName;
+  //         }
+  //         if (Email) {
+  //           Employees.Email = Email;
+  //         }
+  //         if (Password) {
+  //           Employees.Password = Password;
+  //         }
+  //         if (TagName) {
+  //           Employees.TagName = TagName;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         if (Location) {
+  //           Employees.Location = Location;
+  //         }
+  //         const updatedUser = await updateEmployeeService(user);
+  //         //res.status(200).json(updatedUser);
+  //         console.log(updatedUser);
+  //         sendCreated(res, "User updated successfully");
+  //       } else {
+  //         sendServerError(res, "Please provide a complete field");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     sendServerError(res, error.message);
+  //   }
+  // };
   

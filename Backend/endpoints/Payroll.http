@@ -1,0 +1,12 @@
+
+#-------------Payrolls-----------
+
+### get all Payrolls.
+GET http://localhost:8000/api/payroll/getAll
+
+### get Payrolls By ID.
+GET http://localhost:8000/api/payroll/getpayrollByID/1
+
+### Delete Payrolls .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

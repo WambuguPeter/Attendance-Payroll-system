@@ -6,16 +6,16 @@ import { sendBadRequest, sendDeleteSuccess,
     sendCreated, sendNotFound,
     sendServerError, sendSuccess} from "../helper/helperFunctions.js";     
 import { response } from "express";
-import { getAllPayrollsService, getPayrollByIDService } from "../services/Payroll.js";
+import { getAllDeductionsService, getDeductionByIDService } from "../services/DeductionSevice.js";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
 
-export const getAllPayrollsController = async (req,res) => {
+export const getAllDeductionsController = async (req,res) => {
     try {
-        const data = await getAllPayrollsService();
+        const data = await getAllDeductionsService();
         if (data.length=== 0) {
-            sendNotFound(res, "Currently there is No Payroll");
+            sendNotFound(res, "Currently there are No Deductions");
         } else {
             res.status(200).send(data);
         }
@@ -24,15 +24,15 @@ export const getAllPayrollsController = async (req,res) => {
     }
 };
 
-export const getPayrollByIDController = async (req, res) => {
+export const getDeductionsByIDController = async (req, res) => {
     try {
-      const PayrollID = req.params.PayrollID;
-      const payroll = await getPayrollByIDService(PayrollID);
+      const DeductionID = req.params.DeductionID;
+      const deduction = await getDeductionByIDService(DeductionID);
   
-      if (payroll.length != 0) {
-        return res.status(200).json(payroll);
+      if (deduction.length != 0) {
+        return res.status(200).json(deduction);
       } else {
-        return res.status(404).json({ error: "Payroll not found" });
+        return res.status(404).json({ error: "Deduction not found" });
       }
     } catch (error) {
       sendServerError(res, error.message);

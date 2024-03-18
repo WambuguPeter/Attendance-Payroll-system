@@ -1,8 +1,10 @@
 import "./Employee.scss"
 import React, { useState } from 'react';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import addEmployee from "../features/users/CreateEmp";
 
 const Employee = () => {
+
   // Sample array of employees (replace with your actual data)
   const employees = [
     { id: 1, name: 'John Doe', email: 'john@example.com', position: 'Developer', schedule: '9:00 AM - 5:00 PM' },
@@ -17,13 +19,51 @@ const Employee = () => {
     { id: 10, name: 'Mia Jackson', email: 'mia@example.com', position: 'Quality Assurance', schedule: '9:30 AM - 5:30 PM' }
   ];
 
+  
+  // const [showForm, setShowForm] = useState(false);
+  const [ isOpen, setIsOpen ] = useState( false );
+
+  const toggleModal = () =>{
+    setIsOpen(!isOpen);
+  }
+
+  const modal =
+  isOpen &&
+  createPortal(
+    <div className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={toggleModal}>
+          &times;
+        </span>
+        <CreateEmployee onClose={toggleModal} />
+      </div>
+    </div>,
+    document.body
+  );
+  
+
 
   return (
     <div className='employeePage'>
       <div className="header1">
         <h1>Employees</h1>
         <div className="generate">
-          <span>+ Add</span>
+          <span onClick={togleModal}>+ add</span>
+          {/* <span onClick={() =>{
+            setShowForm((prevState) => !prevState);
+          }}
+          >
+            {showForm? "Close Form" : "+ Add"}
+            </span> */}
+          {/* {showButton && (
+          <div className="buttons">
+            <button
+              onClick={() => {
+                setShowForm((prevState) => !prevState);
+              }}
+            >
+              {showForm ? "Close Form" : "Create Event"}
+            </button> */}
         </div>
       </div>
       <div className="employeeList">

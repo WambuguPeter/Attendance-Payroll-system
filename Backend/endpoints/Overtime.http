@@ -1,0 +1,14 @@
+
+#-------------Overtime-----------
+
+### get all Overtime.
+GET http://localhost:8000/api/ovetime/getAll
+
+
+### get Overtime By ID.
+GET http://localhost:8000/api/ovetime/getovetimeByID/1
+
+
+### Delete Overtime .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

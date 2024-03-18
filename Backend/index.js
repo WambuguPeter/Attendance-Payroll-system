@@ -3,7 +3,16 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import logger from "./src/utils/logger.js"
+
 import userRouter from "./src/routes/UserRoutes.js";
+import scheduleRouter from "./src/routes/ScheduleRoutes.js";
+import positionRoute from "./src/routes/PositionRoutes.js";
+import payrollRoute from "./src/routes/PayrollRoute.js";
+import deductionRoute from "./src/routes/DeductionRoute.js";
+import advanceCashRoute from "./src/routes/AdvanceCashRoute.js";
+import ovetimeRoute from "./src/routes/OvertimeRoute.js";
+import attendanceRoute from "./src/routes/AttendanceRoute.js";
+import leavesRoute from "./src/routes/LeavesRoute.js";
 
 
 dotenv.config();
@@ -28,6 +37,14 @@ app.get('/health', (req, res) => {
 
 // routes
 app.use("/api", userRouter);
+app.use('/api', scheduleRouter);
+app.use('/api', positionRoute);
+app.use('/api',payrollRoute);
+app.use('/api',deductionRoute);
+app.use('/api',advanceCashRoute);
+app.use('/api',ovetimeRoute);
+app.use('/api',attendanceRoute);
+app.use('/api',leavesRoute);
 
 
 app.listen(port, () => {

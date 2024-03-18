@@ -1,0 +1,11 @@
+#-------------Deductions-----------
+
+### get all Deductions.
+GET http://localhost:8000/api/Deduction/getAll
+
+### get Deductions By ID.
+GET http://localhost:8000/api//Deduction/getDeductionByID/1
+
+### Delete Deductions .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

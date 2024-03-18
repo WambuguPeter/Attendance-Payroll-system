@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-//Get all Position
-export const getAllPositionsService = async () =>{
+//Get all Leaves
+export const getAllLeavesService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM Positions");
+        .query("SELECT * FROM Leaves");
         return result.recordset;
         
     } catch (error) {
@@ -19,12 +19,12 @@ export const getAllPositionsService = async () =>{
 
 
 
-//get Positions by Id
-export const getPositionByIDService = async (PositionID) =>{
+//get Leavess by Id
+export const getLeaveByIDService = async (LeavesID) =>{
     try {
         const result = await poolRequest()
-        .input("PositionID", sql.Int,  PositionID)
-        .query("SELECT * FROM Positions WHERE PositionID= @PositionID");
+        .input("LeavesID", sql.Int,  LeavesID)
+        .query("SELECT * FROM Leaves WHERE LeavesID= @LeavesID");
         return result.recordset;
         
     } catch (error) {

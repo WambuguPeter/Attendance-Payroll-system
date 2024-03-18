@@ -1,0 +1,12 @@
+
+#-------------Attendance-----------
+
+### get all Attendance.
+GET http://localhost:8000/api/attendance/getAll
+
+### get Attendance By ID.
+GET http://localhost:8000/api/attendance/getattendanceByID/1
+
+### Delete Attendance .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

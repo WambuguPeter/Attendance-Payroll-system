@@ -1,0 +1,12 @@
+
+#-------------Position-----------
+
+### get all Positions.
+GET http://localhost:8000/api/Positions/getAll
+
+### get Position By ID.
+GET http://localhost:8000/api/Positions/getPositionByID/1
+
+### Delete Position .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

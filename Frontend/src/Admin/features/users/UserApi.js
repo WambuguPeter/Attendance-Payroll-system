@@ -17,10 +17,24 @@ export const employeeApi = createApi({
             }),
             invalidatesTags: ["Employees"]
         }),
+        addEmployee: builder.mutation({
+            query: (employee) =>({
+                url:"/users/addNewEmployee",
+                method: "POST",
+                body: employee,
+            }),
+            invalidatesTags: ["Employees"],
+        }),
+        deleteEmployee: builder.mutation({
+            query:(EmployeeID) => ({
+                url:`/users/deleteEmployeeById/${EmployeeID}`,
+                method: "DELETE",
+            })
+        })
         
 
 
     })
 });
 
-export const {useGetEmployeesQuery, useLoginEmployeeMutation} = employeeApi;
+export const {useGetEmployeesQuery, useLoginEmployeeMutation, useAddEmployeeMutation, useDeleteEmployeeMutation} = employeeApi;

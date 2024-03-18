@@ -1,0 +1,12 @@
+
+#-------------Leaves-----------
+
+### get all Leaves.
+GET http://localhost:8000/api/leaves/getAll
+
+### get Leaves By ID.
+GET http://localhost:8000/api/leaves/getleavesByID:/leavesID
+
+### Delete Leaves .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

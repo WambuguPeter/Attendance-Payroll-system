@@ -73,34 +73,49 @@ export const getUserByEmailService = async (Email) =>{
 };
 
 
-
-export const deleteEmployeeService = async (EmployeeID) => {
+export const deleteEmployeeService = async (employeeID) => {
     try {
-        console.log("EmployeeID at delete sevice",EmployeeID)
+        console.log("EmployeeID at delete sevice",employeeID)
         const result = await poolRequest()
-        .input ('EmployeeID',sql.Int, EmployeeID)
-        .query('DELETE FROM Employees WHERE EmployeeID=@EmployeeID');
+        .input ('EmployeeID',sql.Int, employeeID)
+        .query("DELETE FROM Employees WHERE EmployeeID=@EmployeeID");
         return result.recordset;
     } catch (error) {
-        return error.message;
+        return error;
     }
 }
 
-export const updateUserService = async (user) => {
-    const { UserID, Username, Email, Password, TagName, Location } = user;
+export const updateEmployeeService = async (employee) => {
+    const { FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
+         ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = employee;
+        //  console.log(employee)
     try {
       const result = await poolRequest()
-        .input("UserID", sql.Int, UserID)
-        .input("Username", sql.VarChar, Username)
+        // .input("EmployeeID", sql.Int, EmployeeID)           
+        .input("FirstName", sql.VarChar, FirstName)
+        .input("LastName", sql.VarChar, LastName)
+        .input("Location", sql.VarChar, Location)
+        .input("BirthDate", sql.Date, BirthDate)
+        .input("Contact", sql.VarChar, Contact)
+        .input("Gender", sql.VarChar, Gender)
+        .input("admin", sql.Bit, admin)
+        .input("PositionID", sql.Int, PositionID)
+        .input("ScheduleID", sql.Int, ScheduleID)
+        .input("PhotoURL", sql.VarChar, PhotoURL)
         .input("Email", sql.VarChar, Email)
         .input("Password", sql.VarChar, Password)
-        .input("TagName", sql.VarChar, TagName)
-        .input("Location", sql.VarChar, Location)
+        .input("BankName", sql.VarChar, BankName)
+        .input("BankBranch", sql.VarChar, BankBranch)
+        .input("AccountNumber", sql.VarChar, AccountNumber)
+        .input("Bio", sql.VarChar, Bio)
         .query(
-          "UPDATE tbl_User SET Username=@Username, Email=@Email, Password=@Password, TagName=@TagName, Location=@Location WHERE UserID=@UserID"
-        );
+          `UPDATE Employees 
+           SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, 
+          PositionID= @PositionID, ScheduleID= @ScheduleID, PhotoURL= @PhotoURL, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio`
+          );
       return result;
     } catch (error) {
+        console.error("Error updating employee:", error);
       return error;
     }
   };

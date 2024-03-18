@@ -6,16 +6,16 @@ import { sendBadRequest, sendDeleteSuccess,
     sendCreated, sendNotFound,
     sendServerError, sendSuccess} from "../helper/helperFunctions.js";     
 import { response } from "express";
-import { getAllPayrollsService, getPayrollByIDService } from "../services/Payroll.js";
+import { getAllAttendancesService, getAttendanceByIDService } from "../services/AttendanceService.js";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
 
-export const getAllPayrollsController = async (req,res) => {
+export const getAllAttendanceController = async (req,res) => {
     try {
-        const data = await getAllPayrollsService();
+        const data = await getAllAttendancesService();
         if (data.length=== 0) {
-            sendNotFound(res, "Currently there is No Payroll");
+            sendNotFound(res, "Currently there is No Attendances");
         } else {
             res.status(200).send(data);
         }
@@ -24,15 +24,15 @@ export const getAllPayrollsController = async (req,res) => {
     }
 };
 
-export const getPayrollByIDController = async (req, res) => {
+export const getAttendancesByIDController = async (req, res) => {
     try {
-      const PayrollID = req.params.PayrollID;
-      const payroll = await getPayrollByIDService(PayrollID);
+      const AttendanceID = req.params.AttendanceID;
+      const attendance = await getAttendanceByIDService(AttendanceID);
   
-      if (payroll.length != 0) {
-        return res.status(200).json(payroll);
+      if (attendance.length != 0) {
+        return res.status(200).json(attendance);
       } else {
-        return res.status(404).json({ error: "Payroll not found" });
+        return res.status(404).json({ error: "Attendance not found" });
       }
     } catch (error) {
       sendServerError(res, error.message);

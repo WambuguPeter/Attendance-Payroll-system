@@ -1,0 +1,10 @@
+
+#-------------AdvanceCash-----------
+
+### get all AdvanceCash.
+GET http://localhost:8000/api/AdvanceCash/getAll
+### get AdvanceCash By ID.
+GET http://localhost:8000/api//AdvanceCash/getAdvanceCashByID/1
+### Delete AdvanceCash .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+

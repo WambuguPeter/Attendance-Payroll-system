@@ -1,0 +1,14 @@
+
+#-------------Schedules-----------
+
+### get all Schedules.
+GET http://localhost:8000/api/Schedules/getAll
+
+### get Schedule By ID.
+GET http://localhost:8000/api/Schedules/getScheduleByID/1
+
+
+### Delete Schedule .
+DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+
+

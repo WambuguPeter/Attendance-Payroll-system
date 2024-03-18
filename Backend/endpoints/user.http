@@ -1,7 +1,6 @@
 ### Health check
 GET http://localhost:8000/health
 
-# gggggg
 
 #-------------user---------
 
@@ -32,7 +31,7 @@ Content-Type: application/json
 GET http://localhost:8000/api/users/getAllUsers
 
 ### getting User By ID
-GET http://localhost:8000/api/users/getUserByID/1
+GET http://localhost:8000/api/users/getUserByID/4
 
 ### login
 POST http://localhost:8000/api/users/login
@@ -42,6 +41,35 @@ Content-Type: application/json
     "Email" : "john@example.com",
     "Password" : "password123"
 }
+
+
+### Update Employee
+PUT http://localhost:8000/api/users/UpdateEmployeeByID/4
+Content-Type: application/json
+
+{
+    "FirstName" : "Tito",
+    "LastName" : "Munyoki",
+    "Location" : "Nyeri",
+    "BirthDate" : "2000-05-10",
+    "Contact" : "0735621144",
+    "Gender" : "Male",
+    "admin" : 0,
+    "PositionID" : 1,
+    "ScheduleID" : 1,
+    "PhotoURL" : "https://example.com/john.jpg",
+    "Email" : "pientopitelo@gmail.com",
+    "Password" : "password110",
+    "BankName" : "NCBA",
+    "BankBranch" : "Nyeri",
+    "AccountNumber" : "12354321",
+    "Bio" : "Meet Titus Munyoki from Moringa"
+}
+
+
+
+
+
 
 
 ###delete employee

@@ -1,3 +1,4 @@
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const employeeApi = createApi({
@@ -16,10 +17,9 @@ export const employeeApi = createApi({
         }),
         getEmployeeByID: builder.query({
             //by id???
-            query: (employee) =>({
-                url: "users/getUserByID/4",
+            query: (EmployeeID) =>({
+                url: `users/getUserByID/${EmployeeID}`,
                 method: "GET",
-                body:employee,
             }),
             providesTags: ["Employees"]
         }),
@@ -31,24 +31,39 @@ export const employeeApi = createApi({
             }),
             invalidatesTags: ["Employees"]
         }),
+
         addEmployee: builder.mutation({
             query: (employee) =>({
-                url:"/users/addNewEmployee",
+                url:"users/addNewEmployee",
                 method: "POST",
                 body: employee,
             }),
             invalidatesTags: ["Employees"],
         }),
+
+        updateEmployee: builder.mutation({
+            query: (EmployeeID) =>({
+                url:`users/UpdateEmployeeByID/${EmployeeID}`,
+                method: "PUT",
+            }),
+            invalidatesTags: ["Employees"],
+        }),
+
+
         deleteEmployee: builder.mutation({
             query:(EmployeeID) => ({
-                url:`/users/deleteEmployeeById/${EmployeeID}`,
+                url:`users/deleteEmployeeById/${EmployeeID}`,
                 method: "DELETE",
-            })
+            }),
+            invalidatesTags: ["Employees"],
         })
+
         
 
 
     })
 });
 
-export const {useGetEmployeesQuery, useLoginEmployeeMutation, useAddEmployeeMutation, useDeleteEmployeeMutation} = employeeApi;
+export const {useGetEmployeesQuery, useLoginEmployeeMutation, 
+    useAddEmployeeMutation, useDeleteEmployeeMutation,
+     useGetEmployeeByIDQuery, useUpdateEmployeeMutation } = employeeApi;

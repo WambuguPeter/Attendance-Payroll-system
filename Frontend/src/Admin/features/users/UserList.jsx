@@ -1,8 +1,11 @@
-import ClipLoader from "react-spinners/ClipLoader";
-import { useGetEmployeesQuery } from "./UserApi";
+import React, { useState } from 'react';
+import RotateLoader from "react-spinners/RotateLoader";
+import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation } from "./UserApi";
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
+import EditEmployeeModal from './updateEmployee';
 
-const EmployeesList = ({ onDeleteEmployee }) => {
+const EmployeesList = () => {
   const {
     data: employees,
     error,
@@ -11,23 +14,52 @@ const EmployeesList = ({ onDeleteEmployee }) => {
     isFetching,
   } = useGetEmployeesQuery();
 
-  console.log(
-    `Employees: ${employees}, Error: ${error}, isLoading: ${isLoading}, isError: ${isError}, isFetching: ${isFetching}`
-  );
+  const [deleteEmployee] = useDeleteEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
+  const [editEmployeeData, setEditEmployeeData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
 
   if (isLoading || isFetching) {
-    return <ClipLoader color="#000" loading={true} size={100} />;
+    LoadingToast("Loading");
+    return <RotateLoader color="#36d7b7" loading={true} size={15} />;
   }
 
   if (error || isError || !employees || employees.length === 0) {
     console.log("Error caught or no Employee");
+    ErrorToast("No Employee");
     return <div> <h2>No Employees at the moment</h2>  </div>;
   }
+  const sortedEmployees = [...employees].sort((a, b) => b.EmployeeID - a.EmployeeID);
+
+  const handleDeleteEmployee = async (EmployeeID) =>{
+    try {
+      await deleteEmployee(EmployeeID).unwrap();
+      SuccessToast("Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+    }
+  };
+
+  const handleEditEmployee = (employee) => {
+    setEditEmployeeData(employee);
+    setIsModalOpen(true); // Open the modal when editing an employee
+  };
+
+  const handleUpdateEmployee = async (updatedEmployee) => {
+    try {
+      await updateEmployee(updatedEmployee).unwrap();
+      SuccessToast("Employee details updated successfully");
+      setIsModalOpen(false); // Close the modal after updating employee details
+    } catch (error) {
+      console.error("Error updating employee:", error);
+      ErrorToast("Failed to update employee details");
+    }
+  };
 
   return (
     <div className="employeesList">
+      <ToasterContainer />
       <section className="employeescontainer">
-        {/* <h2>Employee List</h2> */}
         <table>
           <thead>
             <tr className="titles">
@@ -40,7 +72,7 @@ const EmployeesList = ({ onDeleteEmployee }) => {
             </tr>
           </thead>
           <tbody>
-            {employees.map(employee => (
+            {sortedEmployees.map((employee) => (
               <tr className="details" key={employee.EmployeeID}>
                 <td>{employee.EmployeeID}</td>
                 <td>{`${employee.FirstName} ${employee.LastName}`}</td>
@@ -50,11 +82,8 @@ const EmployeesList = ({ onDeleteEmployee }) => {
                 <td>
                   <div className="action-icons">
                     <FaEye className="icon1" />
-                    <FaEdit className="icon2" />
-                    <FaTrash
-                      className="icon3"
-                      onClick={() => onDeleteEmployee(employee.EmployeeID)}
-                    />
+                    <FaEdit className="icon2" onClick={() => handleEditEmployee(employee)} />
+                    <FaTrash className="icon3" onClick={() => handleDeleteEmployee(employee.EmployeeID)} />
                   </div>
                 </td>
               </tr>
@@ -62,6 +91,13 @@ const EmployeesList = ({ onDeleteEmployee }) => {
           </tbody>
         </table>
       </section>
+      {isModalOpen && (
+        <EditEmployeeModal
+          employee={editEmployeeData}
+          onUpdateEmployee={handleUpdateEmployee}
+          onClose={() => setIsModalOpen(false)} // Close the modal
+        />
+      )}
     </div>
   );
 };

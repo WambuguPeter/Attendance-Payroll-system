@@ -9,22 +9,22 @@ POST http://localhost:8000/api/users/addNewEmployee
 Content-Type: application/json
 
 {
-    "FirstName" : "Titus",
+    "FirstName" : "Fank",
     "LastName" : "Munyoki",
     "Location" : "Nyeri",
     "BirthDate" : "2000-05-10",
     "Contact" : "0735621144",
     "Gender" : "Male",
-    "admin" : 0 ,
+    "admin" : false ,
     "PositionID" : 1,
     "ScheduleID" : 1,
     "PhotoURL" : "https://example.com/john.jpg",
-    "Email" : "pientopitelo@gmail.com",
-    "Password" : "password110",
+    "Email" : "franch@gmail.com",
+    "Password" : "password111",
     "BankName" : "NCBA",
     "BankBranch" : "Nyeri",
     "AccountNumber" : "12354321",
-    "Bio" : "Meet Titus Munyoki fro Moringa"
+    "Bio" : "Meet From Munyoki fro Moringa"
 }
 
 ### getting All users
@@ -73,4 +73,4 @@ Content-Type: application/json
 
 
 ###delete employee
-DELETE http://localhost:8000/api/users/deleteEmployeeById/8
+DELETE http://localhost:8000/api/users/deleteEmployeeById/5

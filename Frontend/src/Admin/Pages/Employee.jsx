@@ -1,7 +1,7 @@
 import "./Employee.scss"
 import React, { useState } from 'react';
-import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
-import addEmployee from "../features/users/CreateEmp";
+// import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import AddEmployee from "../features/users/CreateEmp";
 import EmployeesList from "../features/users/UserList";
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from "../features/users/UserApi";
 
@@ -23,6 +23,11 @@ const Employee = () => {
     setIsOpen(!isOpen);
   };
 
+  const [showForm, setShowForm] = useState(false);
+
+  const toggleForm = () => {
+    setShowForm((prevState) => !prevState);}
+
   const handleDeleteEmployee = async (employeeId) => {
     try {
       await deleteEmployee(employeeId).unwrap();
@@ -40,11 +45,13 @@ const Employee = () => {
       <div className="header1">
         <h1>Employees</h1>
         <div className="generate">
-          <span onClick={toggleModal}>+ add</span>
-         
+          <span onClick={toggleForm}>+ add</span>
         </div>
+        
       </div>
       <div className="employeeList">
+          {showForm && <AddEmployee onClose={toggleForm} />}
+     
       <EmployeesList employees={employees} onDeleteEmployee={handleDeleteEmployee} />
        
       </div>

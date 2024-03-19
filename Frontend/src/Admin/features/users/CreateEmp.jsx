@@ -3,7 +3,7 @@ import './CreateEmp.scss'
 
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
 
-const addEmployee = ({ onClose }) =>{
+const addEmployee = () =>{
 
     const [addEmployee, {isLoading}] = useAddEmployeeMutation();
 

@@ -6,7 +6,21 @@ export const employeeApi = createApi({
     tagTypes: ["Employees"],
     endpoints: (builder) =>({
         getEmployees: builder.query({
-            query: () => "users/getAllUsers",
+            query: () => ({
+                url: "users/getAllUsers",
+                method: "GET",
+            }) ,  
+            providesTags: ["Employees"]
+            
+            
+        }),
+        getEmployeeByID: builder.query({
+            //by id???
+            query: (employee) =>({
+                url: "users/getUserByID/4",
+                method: "GET",
+                body:employee,
+            }),
             providesTags: ["Employees"]
         }),
         loginEmployee: builder.mutation({

@@ -7,10 +7,20 @@ import { sendBadRequest, sendDeleteSuccess,
     sendCreated, sendNotFound,
     sendServerError, sendSuccess} from "../helper/helperFunctions.js";     
 import { response } from "express";
-import { getAllSchedulesService, getScheludeByIDService } from "../services/ScheduleService.js"
+import { deleteScheludeService, getAllSchedulesService, getScheludeByIDService } from "../services/ScheduleService.js"
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
+
+const checkSchedule = async (req) => {
+  const scheduleID = Number(req.params.ScheduleID);
+  const schedule = await getScheludeByIDService(scheduleID);
+  if (schedule.length == 0 || schedule.message) {
+      return false;
+  } else {
+      return true;
+  }
+}
 
 export const getAllSchedulesController = async (req,res) => {
     try {
@@ -112,22 +122,41 @@ export const getScheduleByIDController = async (req, res) => {
 //   }
 // }
 
+export const deleteSchedule = async (req, res) => {
+  try {
+      const scheduleID = Number(req.params.ScheduleID);
+      if (await checkSchedule(req)) {
+          const result = await deleteScheludeService(scheduleID);
+          if (result && result.message) {
+              return res.status(500).send({ "error": result.message });
+          } else {
+              return sendDeleteSuccess(res, 'Schedule deleted successfully');
+          }
+      } else {
+          return sendNotFound(res, 'Schedule not found');
+      }
 
-// export const deleteSchedule = async (req, res) => {
-//     try {
-//         const ScheduleID = req.params.ScheduleID; // Assuming ScheduleID is passed in the request parameters
-//         const toBeDeleted = await getScheludeByIDService(ScheduleID);
+  } catch (error) {
+      sendServerError(res, error.message);
+  }
+}
 
-//         if (toBeDeleted.length === 0) {
-//             return res.status(404).json({ message: "Schedule not found" });
-//         } else {
-//             await deleteScheduleService(ScheduleID);
-//             return res.status(200).json({ message: "Schedule deleted successfully" });
-//         }
-//     } catch (error) {
-//         return res.status(500).json({ error: error.message });
-//     }
-// }
+
+export const deleteSchedule1= async (req, res) => {
+    try {
+        const scheduleID = Number(req.params.ScheduleID); // Assuming scheduleID is passed in the request parameters
+        const toBeDeleted = await getScheludeByIDService(scheduleID);
+
+        if (toBeDeleted.length === 0) {
+            return res.status(404).json({ message: "Schedule not found" });
+        } else {
+            await deleteScheludeService(scheduleID);
+            return res.status(200).json({ message: "Schedule deleted successfully" });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
 
 
 // export const updateUser = async (req, res) => {

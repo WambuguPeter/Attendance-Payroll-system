@@ -8,5 +8,26 @@ GET http://localhost:8000/api/Positions/getAll
 GET http://localhost:8000/api/Positions/getPositionByID/1
 
 ### Delete Position .
-DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+DELETE http://localhost:8000/api//Positions/deletePositionByID/6
+
+### Add New position
+POST http://localhost:8000/api/Positions/addPosition
+Content-Type: application/json
+
+{
+    "Title" : "Developer",
+    "BasicSalary" : "45000",
+    "OvertimeRate" : "500"
+}
+
+### Update position
+PUT http://localhost:8000/api/Positions/updatePositionByID/1
+Content-Type: application/json
+
+{
+    "Title" : "Manager",
+    "BasicSalary" : "50000",
+    "OvertimeRate" : "750"
+}
+
 

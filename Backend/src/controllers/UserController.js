@@ -293,7 +293,7 @@ export const updateUserController = async (req, res) => {
               updatedEmployeeData.Bio = Bio;
             }
           
-            const updatedEmployee = await updateEmployeeService(updatedEmployeeData);
+            const updatedEmployee = await updateEmployeeService(updatedEmployeeData, employeeID);
             if (updatedEmployee && updatedEmployee.rowsAffected && updatedEmployee.rowsAffected[0] > 0) {
               return res.status(200).json({ message: "Employee updated successfully" });
             } else {

@@ -61,6 +61,8 @@ export const getEmployeeByIDService = async (EmployeeID) =>{
     }
 };
 
+// get by Email
+
 export const getUserByEmailService = async (Email) =>{
     try {
         const result = await poolRequest()
@@ -78,20 +80,21 @@ export const deleteEmployeeService = async (employeeID) => {
         console.log("EmployeeID at delete sevice",employeeID)
         const result = await poolRequest()
         .input ('EmployeeID',sql.Int, employeeID)
-        .query("DELETE FROM Employees WHERE EmployeeID=@EmployeeID");
+        .query(`DELETE FROM Employees WHERE EmployeeID=@EmployeeID`);
         return result.recordset;
     } catch (error) {
         return error;
     }
 }
 
-export const updateEmployeeService = async (employee) => {
+export const updateEmployeeService = async (employee, employeeID) => {
     const { FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
          ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = employee;
         //  console.log(employee)
+    const EmployeeID = employeeID
     try {
       const result = await poolRequest()
-        // .input("EmployeeID", sql.Int, EmployeeID)           
+        .input("EmployeeID", sql.Int, EmployeeID)           
         .input("FirstName", sql.VarChar, FirstName)
         .input("LastName", sql.VarChar, LastName)
         .input("Location", sql.VarChar, Location)
@@ -108,10 +111,11 @@ export const updateEmployeeService = async (employee) => {
         .input("BankBranch", sql.VarChar, BankBranch)
         .input("AccountNumber", sql.VarChar, AccountNumber)
         .input("Bio", sql.VarChar, Bio)
+        // where Id is????????
         .query(
           `UPDATE Employees 
            SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, 
-          PositionID= @PositionID, ScheduleID= @ScheduleID, PhotoURL= @PhotoURL, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio`
+          PositionID= @PositionID, ScheduleID= @ScheduleID, PhotoURL= @PhotoURL, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio WHERE EmployeeID= @EmployeeID`
           );
       return result;
     } catch (error) {

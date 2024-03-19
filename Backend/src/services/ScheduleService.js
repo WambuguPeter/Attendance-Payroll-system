@@ -52,10 +52,10 @@ export const addEmployeeService = async (newEmployee) => {
 
 
 //get Schelude by Id
-export const getScheludeByIDService = async (ScheduleID) =>{
+export const getScheludeByIDService = async (scheduleID) =>{
     try {
         const result = await poolRequest()
-        .input("ScheduleID", sql.Int,  ScheduleID)
+        .input("ScheduleID", sql.Int,  scheduleID)
         .query("SELECT * FROM Schedules WHERE ScheduleID= @ScheduleID");
         return result.recordset;
         

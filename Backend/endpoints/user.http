@@ -43,12 +43,12 @@ Content-Type: application/json
 }
 
 
-### Update Employee
+### Update Employee ---where id is.....
 PUT http://localhost:8000/api/users/UpdateEmployeeByID/4
 Content-Type: application/json
 
 {
-    "FirstName" : "Tito",
+    "FirstName" : "Titus",
     "LastName" : "Munyoki",
     "Location" : "Nyeri",
     "BirthDate" : "2000-05-10",
@@ -73,4 +73,4 @@ Content-Type: application/json
 
 
 ###delete employee
-DELETE http://localhost:8000/api/users/deleteEmployeeById/1
+DELETE http://localhost:8000/api/users/deleteEmployeeById/8

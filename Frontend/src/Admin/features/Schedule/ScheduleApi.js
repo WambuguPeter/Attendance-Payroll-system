@@ -48,9 +48,7 @@ export const scheduleApi = createApi({
                 method: "DELETE",
             }),
             invalidatesTags: ["Schedules"],
-        })
-
-        
+        })       
 
 
     })

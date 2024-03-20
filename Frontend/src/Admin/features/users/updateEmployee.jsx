@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useUpdateEmployeeMutation
+ } from './UserApi';
 
 const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
+  const [updateEmployee,{isLoading}] = useUpdateEmployeeMutation();
   const [updatedEmployee, setUpdatedEmployee] = useState({
     ...employee // Initialize form data with employee details
   });
@@ -13,8 +16,15 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await updateEmployee(updatedEmployee).unwrap();
+      onClose(); // Close the form upon successful submission
+    } catch (error) {
+      console.error("Error in Updating the employee:", error);
+      ErrorToast("Failed to Update employee");
+    }
     onUpdateEmployee(updatedEmployee);
   };
 

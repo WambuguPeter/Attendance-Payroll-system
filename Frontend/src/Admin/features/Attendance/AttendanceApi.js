@@ -58,4 +58,4 @@ export const attendanceApi = createApi({
 });
 
 export const {useGetAttendancesQuery, useAddAttendancesMutation,
-useDeleteAttendanceMutation, useGetAttendanceByIDQuery } = attendanceApi;
+useDeleteAttendanceMutation, useGetAttendanceByIDQuery, useUpdateAttendanceMutation } = attendanceApi;

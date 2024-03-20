@@ -12,3 +12,29 @@ GET http://localhost:8000/api/Schedules/getScheduleByID/6
 DELETE http://localhost:8000/api/Schedules/deleteSchedule/6
 
 
+### Add Schedule
+POST http://localhost:8000/api/Schedules/addSchedule
+Content-Type: application/json
+
+{
+    "ScheduleName": "Easter Shift",
+    "StartTime": "1970-01-01T16:00:00.000Z",
+    "EndTime": "1970-01-01T20:00:00.000Z",
+    "Hours": "4"
+}
+
+
+
+
+### Update Schedule
+PUT http://localhost:8000/api/Schedules/updateScheduleByID/3
+Content-Type: application/json
+
+{
+    "ScheduleName": "Evening Shift",
+    "StartTime": "1970-01-01T16:00:00.000Z",
+    "EndTime": "1970-01-01T20:00:00.000Z",
+    "Hours": "4"
+}
+
+

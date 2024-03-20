@@ -1,49 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import AddSchedule from '../features/Schedule/CreateSchedule';
+import ScheduleList from '../features/Schedule/ScheduleList';
+import { useGetSchedulesQuery, useDeleteSchedulesMutation } from '../features/Schedule/ScheduleApi';
 
 const Schedule = () => {
-  const schedules = [
-    {id:1, name: "Day Shift", starting:'9:00 AM', ending: '5:00 PM' },
-    {id:2, name: "Night Shift", starting:'8:00 PM', ending: '4:00 AM' },
-  ]
+  
+  const {
+    data: schedules,
+    error,
+    isLoading,
+    isError,
+    isFetching,
+  } = useGetSchedulesQuery({ refetchOnReconnect: true });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteSchedule] = useDeleteSchedulesMutation();
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const [showForm, setShowForm] = useState(false);
+
+  const toggleForm = () => {
+    setShowForm((prevState) => !prevState);}
+
+  const handleDeleteSchedule = async (ScheduleID) => {
+    try {
+      await deleteSchedule(ScheduleID).unwrap();
+    } catch (err) {
+      console.error('Failed to delete Schedule:', err);
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+
+
   return (
-    <div>
+    <div className='schedulePage'>
        <div className="header1">
         <h1>Schedule.</h1>
         <div className="generate">
-          <span>+ Add</span>
+          <span onClick={toggleForm}>+ Add</span>
         </div>
       </div>
       <div className="schedulesList">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Time In</th>
-              <th>Time Out</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schedules.map(schedule => (
-              <tr key={schedule.id}>
-                <td>{schedule.id}</td>
-                <td>{schedule.name}</td>
-                <td>{schedule.starting}</td>
-                <td>{schedule.ending}</td>
-                <td>
-                <div className="action-icons">
-                    <FaEye className="icon1" />
-                    <FaEdit  className="icon2" />
-                    <FaTrash className="icon3" />
-                  </div>
-                </td>
-              </tr>
-            ))}
-
-          </tbody>
-        </table>
+      {showForm && <AddSchedule onClose={toggleForm} />}
+     
+     <ScheduleList schedules={schedules} onDeleteSchedule={handleDeleteSchedule} />
       </div>
     </div>
   )

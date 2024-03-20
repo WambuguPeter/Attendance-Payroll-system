@@ -1,27 +1,24 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useAddScheduleMutation } from './ScheduleApi';
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
-import { useAddAttendancesMutation } from './AttendanceApi';
 
-const CreateAttendance = ({ onClose }) => {
-    const [addAttendance, { isLoading }] = useAddAttendancesMutation();
+const AddSchedule = ({ onClose }) => {
+  const [addSchedule, { isLoading }] = useAddScheduleMutation();
   const [formData, setFormData] = useState({
-    EmployeeID: "",
-    Date: "",
-    ScheduleID: "",
-    TimeIn: "",
-    TimeOut: "",
+    ScheduleName: "",
+    StartTime: "",
+    EndTime: "",
     Hours: ""
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addAttendance(formData).unwrap();
+      await addSchedule(formData).unwrap();
       onClose(); // Close the form upon successful submission
     } catch (error) {
-      console.error("Error adding Attendance:", error);
-      ErrorToast("Failed to add Attendance");
+      console.error("Error adding schedule:", error);
+      ErrorToast("Failed to add schedule");
     }
   };
 
@@ -29,10 +26,11 @@ const CreateAttendance = ({ onClose }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   return (
-    <div className='CreateAttendance'>
-        <ToasterContainer />
-        <h2>Add a New Attendance</h2>
+    <section className="addSchedule">
+      <ToasterContainer />
+      <h2>Add a New Schedule</h2>
       <form onSubmit={handleSubmit} className="form">
         {/* Input fields */}
         {Object.keys(formData).map((key) => (
@@ -48,9 +46,8 @@ const CreateAttendance = ({ onClose }) => {
         ))}
         <button type="submit">{isLoading ? "Loading" : "Save"}</button>
       </form>
+    </section>
+  );
+};
 
-    </div>
-  )
-}
-
-export default CreateAttendance
+export default AddSchedule;

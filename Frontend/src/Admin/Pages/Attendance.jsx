@@ -1,8 +1,9 @@
 import React from 'react'
-import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { useState } from 'react';
 import './Attendance.scss'
 import AttendanceList from '../features/Attendance/AttendanceList';
 import { useDeleteAttendanceMutation, useGetAttendancesQuery } from '../features/Attendance/AttendanceApi';
+import CreateAttendance from '../features/Attendance/CreateAttendance';
 
 const Attendance = () => {
 
@@ -14,6 +15,7 @@ const {
   isFetching,
 } = useGetAttendancesQuery({ refetchOnReconnect: true });
 const [deleteAttendance] = useDeleteAttendanceMutation();
+const [showForm, setShowForm] = useState(false);
 
 const toggleForm = () => {
   setShowForm((prevState) => !prevState);}
@@ -40,7 +42,7 @@ if (error) return <div>Error: {error.message}</div>;
         </div>
       </div>
       <div className="attendanceList">
-      {/* {showForm && <AddEmployee onClose={toggleForm} />} */}
+      {showForm && <CreateAttendance onClose={toggleForm} />}
 
         <AttendanceList  attendances={attendances} onDeleteattendance={handleDeleteAttendance}/>
         

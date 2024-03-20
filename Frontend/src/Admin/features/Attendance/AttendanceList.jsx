@@ -74,7 +74,7 @@ const AttendanceList = () => {
             {sortedAttendance.map((attendance) => (
               <tr className="details" key={attendance.AttendanceID}>
                 <td>{attendance.AttendanceID}</td>
-                <td>{attendance.Name} </td>
+                <td>{`${attendance.FirstName} ${attendance.LastName}`}</td>
                 <td>{attendance.TimeIn}</td>
                 <td>{attendance.TimeOut}</td>
                 <td>{attendance.Hours}</td>

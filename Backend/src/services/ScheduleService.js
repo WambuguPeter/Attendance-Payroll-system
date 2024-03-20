@@ -27,7 +27,7 @@ export const addScheduleService = async (newSchedule) => {
         .input("EndTime", sql.VarChar(255), newSchedule.EndTime)
         .input("Hours", sql.VarChar(255), newSchedule.Hours)       
         .query(
-            `INSERT INTO Positions (ScheduleName, StartTime, EndTime, Hours)
+            `INSERT INTO Schedules (ScheduleName, StartTime, EndTime, Hours)
             VALUES (@ScheduleName, @StartTime, @EndTime, @Hours)`
         );
         return result;

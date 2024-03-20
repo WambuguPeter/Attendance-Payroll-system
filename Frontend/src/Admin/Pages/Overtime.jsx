@@ -57,4 +57,4 @@ const Overtime = () => {
   )
 }
 
-export default Overtime
+export default Overtime;

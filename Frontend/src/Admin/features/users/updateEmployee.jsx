@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './updateEmployee.scss'
 import { useUpdateEmployeeMutation
  } from './UserApi';
 
@@ -31,7 +32,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
+        <span className="close" onClick={onClose}>X</span>
         <h2>Edit Employee</h2>
         <form onSubmit={handleSubmit}>
           <label>
@@ -51,28 +52,33 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
             <input type="Date" name="BirthDate" value={updatedEmployee.BirthDate} onChange={handleChange} />
           </label>
           <label>
-            Contact:
-            <input type="text" name="Contact" value={updatedEmployee.Contact} onChange={handleChange} />
+            Contact(Phone no):
+            <input type="tel" name="Contact" value={updatedEmployee.Contact} onChange={handleChange} />
           </label>
           <label>
             Gender:
             <input type="text" name="Gender" value={updatedEmployee.Gender} onChange={handleChange} />
           </label>
           <label>
-            admin:
-            <input type="boolean" name="admin" value={updatedEmployee.admin} onChange={handleChange} />
+            Admin:
+            <input type="radio" name="admin" value="true" checked={updatedEmployee.admin === true} onChange={handleChange} />
+            Yes
+          </label>
+          <label>
+            <input type="radio" name="admin" value="false" checked={updatedEmployee.admin === false} onChange={handleChange} />
+            No
           </label>
           <label>
             PositionID:
-            <input type="Int" name="PositionID" value={updatedEmployee.PositionID} onChange={handleChange} />
+            <input type="number" name="PositionID" value={updatedEmployee.PositionID} onChange={handleChange} />
           </label>
           <label>
             ScheduleID:
-            <input type="Int" name="ScheduleID" value={updatedEmployee.ScheduleID} onChange={handleChange} />
+            <input type="number" name="ScheduleID" value={updatedEmployee.ScheduleID} onChange={handleChange} />
           </label>
           <label>
             PhotoURL:
-            <input type="PhotoURL" name="PhotoURL" value={updatedEmployee.PhotoURL} onChange={handleChange} />
+            <input type="text" name="PhotoURL" value={updatedEmployee.PhotoURL} onChange={handleChange} />
           </label>
           <label>
             Email:
@@ -80,7 +86,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
           </label>
           <label>
             Password:
-            <input type="Password" name="Password" value={updatedEmployee.Password} onChange={handleChange} />
+            <input type="password" name="Password" value={updatedEmployee.Password} onChange={handleChange} />
           </label>
           <label>
           BankName:
@@ -92,7 +98,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
           </label>
           <label>
             AccountNumber:
-            <input type="Number" name="AccountNumber" value={updatedEmployee.AccountNumber} onChange={handleChange} />
+            <input type="number" name="AccountNumber" value={updatedEmployee.AccountNumber} onChange={handleChange} />
           </label>
           <label>
             Bio:

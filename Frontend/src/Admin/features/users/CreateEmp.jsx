@@ -43,7 +43,7 @@ const AddEmployee = ({ onClose }) => {
   return (
     <section className="addEmployee">
       <ToasterContainer />
-      <h2>Add a New Employee</h2>
+      {/* <h2>Add a New Employee</h2> */}
       <form onSubmit={handleSubmit} className="form">
         {/* Input fields */}
         {Object.keys(formData).map((key) => (

@@ -40,7 +40,12 @@ export const addEmployeeService = async (newEmployee) => {
 export const getAllUserService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM Employees");
+        .query(`
+        SELECT Employees.*, Schedules.*, Positions.*
+                FROM Employees
+                JOIN Schedules ON Schedules.ScheduleID = Employees.ScheduleID
+                JOIN Positions ON Positions.PositionID = Employees.PositionID
+        `);
         return result.recordset;
         
     } catch (error) {
@@ -48,18 +53,74 @@ export const getAllUserService = async () =>{
     }
 };
 
+
+
+
+
+
+// export const getAllUserService = async () =>{
+//     try {
+//         const result = await poolRequest()
+//         .query("SELECT * FROM Employees");
+//         return result.recordset;
+        
+//     } catch (error) {
+//         return error.message;
+//     }
+// };
+
+
 //get user by Id
 export const getEmployeeByIDService = async (EmployeeID) =>{
     try {
         const result = await poolRequest()
         .input("EmployeeID", sql.Int,  EmployeeID)
-        .query("SELECT * FROM Employees WHERE EmployeeID= @EmployeeID");
+        .query(`
+        SELECT Employees.*, Schedules.*, Positions.*
+                FROM Employees
+                JOIN Schedules ON Schedules.ScheduleID = Employees.ScheduleID
+                JOIN Positions ON Positions.PositionID = Employees.PositionID
+                WHERE EmployeeID= @EmployeeID;
+
+        `);
         return result.recordset;
         
     } catch (error) {
         return error.message;
     }
 };
+
+
+
+
+
+// export const getEmployeeByIDService = async (EmployeeID) =>{
+//     try {
+//         const result = await poolRequest()
+//         .input("EmployeeID", sql.Int,  EmployeeID)
+//         .query("SELECT * FROM Employees WHERE EmployeeID= @EmployeeID");
+//         return result.recordset;
+        
+//     } catch (error) {
+//         return error.message;
+//     }
+// };
+
+
+//get details o a single Employee
+export const getDetailsByBEmployeeIDService = async (EmployeeID) =>{
+    try {
+        const result = await poolRequest()
+        .input("EmployeeID", sql.Int,  EmployeeID)
+        .query(`SELECT Employees* FROM Employees, Schedules.ScheduleName, Positions.Title
+         WHERE EmployeeID= @EmployeeID`);
+        return result.recordset;
+        
+    } catch (error) {
+        return error.message;
+    }
+};
+
 
 // get by Email
 
@@ -121,5 +182,20 @@ export const updateEmployeeService = async (employee, employeeID) => {
     } catch (error) {
         console.error("Error updating employee:", error);
       return error;
+    }
+  };
+
+
+  export const getDetailsByEmployeeIDService = async (EmployeeID) => {
+    try {
+      console.log("Service reached");
+      const result = await poolRequest()
+        .input("EmployeeID", sql.Int, EmployeeID)
+        .query(
+          "SELECT Post.*, tbl_user.Username, tbl_user.TagName FROM Post INNER JOIN tbl_user ON Post.EmployeeID = tbl_user.EmployeeID WHERE Post.EmployeeID = @EmployeeID"
+        );
+      return result.recordset;
+    } catch (error) {
+      throw error;
     }
   };

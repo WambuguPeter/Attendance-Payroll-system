@@ -35,19 +35,19 @@ const UpdateScheduleModal = ({ schedule, onUpdateSchedule, onClose }) => {
         <form onSubmit={handleSubmit}>
           <label>
           ScheduleName:
-            <input type="text" name="ScheduleName" value={updatedEmployee.ScheduleName} onChange={handleChange} />
+            <input type="text" name="ScheduleName" value={updatedSchedule.ScheduleName} onChange={handleChange} />
           </label>
           <label>
           StartTime:
-            <input type="text" name="StartTime" value={updatedEmployee.StartTime} onChange={handleChange} />
+            <input type="text" name="StartTime" value={updatedSchedule.StartTime} onChange={handleChange} />
           </label>
           <label>
           EndTime:
-            <input type="text" name="EndTime" value={updatedEmployee.EndTime} onChange={handleChange} />
+            <input type="text" name="EndTime" value={updatedSchedule.EndTime} onChange={handleChange} />
           </label>
           <label>
             Hours:
-            <input type="Number" name="Hours" value={updatedEmployee.Hours} onChange={handleChange} />
+            <input type="Number" name="Hours" value={updatedSchedule.Hours} onChange={handleChange} />
           </label>
           
           <div className="buttons">

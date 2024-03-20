@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import RotateLoader from "react-spinners/RotateLoader";
-import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation } from "./UserApi";
+import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation, useGetEmployeeByIDQuery } from "./UserApi";
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 import EditEmployeeModal from './updateEmployee';
+import EmployeeDetailsModal from './EmployeeDetails';
 
 const EmployeesList = () => {
-  const {
-    data: employees,
-    error,
-    isLoading,
-    isError,
-    isFetching,
-  } = useGetEmployeesQuery();
-
+  const { data: employees, error, isLoading, isError, isFetching } = useGetEmployeesQuery();
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const [updateEmployee] = useUpdateEmployeeMutation();
   const [editEmployeeData, setEditEmployeeData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [selectedEmployeeID, setSelectedEmployeeID] = useState(null); // State to track the selected employee ID
 
-  if (isLoading || isFetching) {
+  const { data: singleEmployeeData, isLoading: isSingleEmployeeLoading, isError: isSingleEmployeeError } = useGetEmployeeByIDQuery(selectedEmployeeID);
+
+  if (isLoading || isFetching || isSingleEmployeeLoading) {
     LoadingToast("Loading");
     return <RotateLoader color="#36d7b7" loading={true} size={15} />;
   }
@@ -56,6 +52,10 @@ const EmployeesList = () => {
     }
   };
 
+  const handleViewEmployeeDetails = (EmployeeID) => {
+    setSelectedEmployeeID(EmployeeID); // Set the selected employee ID
+  };
+
   return (
     <div className="employeesList">
       <ToasterContainer />
@@ -77,11 +77,11 @@ const EmployeesList = () => {
                 <td>{employee.EmployeeID}</td>
                 <td>{`${employee.FirstName} ${employee.LastName}`}</td>
                 <td>{employee.Email}</td>
-                <td>{employee.PositionID}</td>
-                <td>{employee.ScheduleID}</td>
+                <td>{employee.Title}</td>
+                <td>{employee.ScheduleName}</td>
                 <td>
                   <div className="action-icons">
-                    <FaEye className="icon1" />
+                    <FaEye className="icon1" onClick={() => handleViewEmployeeDetails(employee.EmployeeID)}/>
                     <FaEdit className="icon2" onClick={() => handleEditEmployee(employee)} />
                     <FaTrash className="icon3" onClick={() => handleDeleteEmployee(employee.EmployeeID)} />
                   </div>
@@ -91,6 +91,14 @@ const EmployeesList = () => {
           </tbody>
         </table>
       </section>
+      <EmployeeDetailsModal
+        isOpen={selectedEmployeeID !== null}
+        onClose={() => setSelectedEmployeeID(null)}
+        employeeID={selectedEmployeeID}
+        singleEmployeeData={singleEmployeeData}
+        isLoading={isSingleEmployeeLoading}
+        isError={isSingleEmployeeError}
+      />
       {isModalOpen && (
         <EditEmployeeModal
           employee={editEmployeeData}

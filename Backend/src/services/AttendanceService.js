@@ -8,7 +8,12 @@ dotenv.config();
 export const getAllAttendancesService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM Attendances");
+        .query(`
+        SELECT Attendances.*, Employees.*
+                FROM Attendances
+                JOIN Employees ON Employees.EmployeeID = Attendances.EmployeeID
+                
+        `);
         return result.recordset;
         
     } catch (error) {
@@ -22,7 +27,13 @@ export const getAttendanceByIDService = async (attendanceID) =>{
     try {
         const result = await poolRequest()
         .input("AttendanceID", sql.Int, attendanceID)
-        .query("SELECT * FROM Attendances WHERE AttendanceID= @AttendanceID");
+        .query(`
+        SELECT Attendances.*, Employees.*
+                FROM Attendances
+                JOIN Employees ON Employees.EmployeeID = Attendances.EmployeeID
+                WHERE AttendanceID = @AttendanceID
+                
+        `);
         return result.recordset;
         
     } catch (error) {

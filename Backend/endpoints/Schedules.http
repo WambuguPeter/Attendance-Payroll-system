@@ -5,7 +5,7 @@
 GET http://localhost:8000/api/Schedules/getAll
 
 ### get Schedule By ID.
-GET http://localhost:8000/api/Schedules/getScheduleByID/6
+GET http://localhost:8000/api/Schedules/getScheduleByID/1
 
 
 ### Delete Schedule .

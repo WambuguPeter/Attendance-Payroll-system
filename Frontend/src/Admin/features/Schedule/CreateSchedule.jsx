@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAddScheduleMutation } from './ScheduleApi';
-import { ErrorToast, ToasterContainer } from '../../Components/Toster';
+import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 
 const AddSchedule = ({ onClose }) => {
   const [addSchedule, { isLoading }] = useAddScheduleMutation();

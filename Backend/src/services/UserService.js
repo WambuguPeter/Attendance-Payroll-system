@@ -76,11 +76,13 @@ export const getEmployeeByIDService = async (EmployeeID) =>{
         const result = await poolRequest()
         .input("EmployeeID", sql.Int,  EmployeeID)
         .query(`
-        SELECT Employees.*, Schedules.*, Positions.*
-                FROM Employees
-                JOIN Schedules ON Schedules.ScheduleID = Employees.ScheduleID
-                JOIN Positions ON Positions.PositionID = Employees.PositionID
-                WHERE EmployeeID= @EmployeeID;
+        SELECT Employees.*, Schedules.*, Positions.*, Attendances.*
+        FROM Employees
+        JOIN Schedules ON Schedules.ScheduleID = Employees.ScheduleID
+        JOIN Positions ON Positions.PositionID = Employees.PositionID
+        LEFT JOIN Attendances ON Employees.EmployeeID = Attendances.EmployeeID
+
+        WHERE Employees.EmployeeID = 1;
 
         `);
         return result.recordset;

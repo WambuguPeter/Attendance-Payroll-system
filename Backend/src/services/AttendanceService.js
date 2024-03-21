@@ -42,6 +42,27 @@ export const getAttendanceByIDService = async (attendanceID) =>{
 };
 
 
+//get Attendances by empoyeee Id
+export const getAttendByEmpIDService = async (employeeID) =>{
+    try {
+        const result = await poolRequest()
+        .input("EmployeeID", sql.Int, employeeID)
+        .query(`
+        SELECT Attendances.*, Employees.*
+                FROM Attendances
+                JOIN Employees ON Employees.EmployeeID = Attendances.EmployeeID
+                WHERE Attendances.EmployeeID= @EmployeeID;
+                
+        `);
+        return result.recordset;
+        
+    } catch (error) {
+        return error.message;
+    }
+};
+
+
+
 //Add new Attendance
 
 export const addAttendanceService = async (newAttendance) => {
@@ -92,10 +113,11 @@ export const updateAttendanceService = async (attendance) => {
         .input("Date", sql.VarChar, Date)
         .input("ScheduleID", sql.Int, ScheduleID)
         .input("TimeIn", sql.VarChar, TimeIn)
+        .input("TimeOut", sql.VarChar, TimeIn)
         .input("Hours", sql.VarChar, Hours)
         .query(
           `UPDATE Attendances 
-           SET EmployeeID= @EmployeeID, Date= @Date, ScheduleID= @ScheduleID, TimeIn= @TimeIn, Hours= @Hours
+           SET Date= @Date, ScheduleID= @ScheduleID, TimeIn= @TimeIn, TimeOut= @TimeOut, Hours= @Hours
            where AttendanceID = @AttendanceID`
           );
       return result;

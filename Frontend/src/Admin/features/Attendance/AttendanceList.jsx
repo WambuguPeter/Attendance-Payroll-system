@@ -80,7 +80,7 @@ const AttendanceList = () => {
                 <td>{attendance.Hours}</td>
                 <td>
                   <div className="action-icons">
-                    <FaEye className="icon1" />
+                    {/* <FaEye className="icon1" /> */}
                     <FaEdit className="icon2" onClick={() => handleEditAttendance(attendance)} />
                     <FaTrash className="icon3" onClick={() => handleDeleteAttendance(attendance.AttendanceID)} />
                   </div>

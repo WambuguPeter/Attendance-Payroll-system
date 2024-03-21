@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import AddSchedule from '../features/Schedule/CreateSchedule';
 import ScheduleList from '../features/Schedule/ScheduleList';
 import { useGetSchedulesQuery, useDeleteSchedulesMutation } from '../features/Schedule/ScheduleApi';

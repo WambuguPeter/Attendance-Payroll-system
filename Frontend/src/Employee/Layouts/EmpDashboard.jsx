@@ -1,42 +1,82 @@
-import './EmpDashboard.scss'
-import { useNavigate } from "react-router-dom"
-import emp from "../assets/images/emp1.jpg"
-import clock from "../assets/images/clock1.jpg"
-// import BarGraph from '../Components/BarGraph'
-// import { useState } from 'react'
-import graph from '../assets/images/graph1.png'
+import React, { useState, useEffect } from 'react';
+import './EmpDashboard.scss';
+import { useNavigate } from 'react-router-dom';
+import emp from '../assets/images/emp1.jpg';
+import clock from '../assets/images/clock1.jpg';
+import graph from '../assets/images/graph1.png';
 import AttendList from '../Components/AttendList';
+import { useAddAttendancesMutation, useUpdateAttendanceMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
 
 const EmpDashboard = () => {
-  // const [ timeInVisible, setTimeInVisible]= useState(true);
 
-  // const handleTimeClock = () =>{
-  //   setTimeInVisible(!timeInVisible)
-  // }
-  
-    const navigate = useNavigate();
-    
+  const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
+  const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isTimeIn, setIsTimeIn] = useState(false);
+  const [isTimeOut, setIsTimeOut] = useState(false);
+  const [addAttendance] = useAddAttendancesMutation();
+  const [updateAttendance] = useUpdateAttendanceMutation();
+  const navigate = useNavigate();
+
+  // Update current time every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
+  }, []);
+
+
+
+  const handleTimeIn = () => {
+    const attendanceData = {
+      employeeID: employeeID, // Assuming employeeID is stored in local storage
+      date: new Date().toISOString(),
+      timeIn: new Date().toISOString(),
+      timeOut: null, // Set timeOut to null initially
+    };
+
+    // Call the API to add attendance record
+    addAttendance(attendanceData)
+      .unwrap()
+      .then(() => {
+        setIsTimeIn(true);
+        setIsTimeOut(false);
+      })
+      .catch(error => console.error('Error adding attendance:', error));
+  };
+
+  const handleTimeOut = () => {
+    const attendanceData = {
+      employeeID: employeeID, // Assuming employeeID is stored in local storage
+      timeOut: new Date().toISOString(),
+    };
+
+    // Call the API to update the attendance record with the latest timeOut
+    // Note: You need to implement the logic to update the correct attendance record
+    // This is a simplified example assuming the last added record is the current one
+    // You may need to adjust this logic based on your backend implementation
+    updateAttendance(attendanceData)
+      .unwrap()
+      .then(() => {
+        setIsTimeOut(true);
+        setIsTimeIn(false);
+      })
+      .catch(error => console.error('Error updating attendance:', error));
+  };
+
   return (
-    <div className='empDashboard'>
+    <div className="empDashboard">
       <div className="header1">
         <h1>My Dashboard.</h1>
-        {/* <div className="generate">
-          <span>Generate</span>
-        </div> */}
       </div>
       <div className="content1">
         <div className="leftContent">
-          {/* <div className='clock'>
-            <span className={timeInVisible ? 'timeIn' : 'timeOut'} onClick={handleTimeClock}>
-              {timeInVisible ? 'Time In' : 'Time Out'}
-            </span>
-            <img src='' alt='nopic' />
-            <span className={timeInVisible ? 'timeOut' : 'timeIn'} onClick={handleTimeClock}>
-              {timeInVisible ? 'Time Out' : 'Time In'}
-            </span>
-          </div> */}
-           <div className="profile">
-            <img src={emp} alt="nopic" />
+          <div className="profile">
+            <img src={emp} alt="Profile" />
             <div className="details">
               <span>Lydia Wanjiku</span>
               <span>Developer</span>
@@ -44,32 +84,111 @@ const EmpDashboard = () => {
             </div>
           </div>
           <div className="clock">
-            <span className='timeOut'>
-              <div className='time'>Time In</div>
-            <div></div>
+            {!isTimeOut && (
+              <span className="timeOut">
+                <div className="time" onClick={handleTimeIn}>Time In</div>
+                <div></div>
               </span>
-            <img className='clock1' src={clock} alt="nopic" />
-            <span className='timeOut'>
-              <div></div>
-              <div className='time'>Time Out</div>
-              </span>            
+            )}
+            {isTimeOut && (
+              <span className="timeOut">
+                <div></div>
+                <div className="time" onClick={handleTimeOut}>Time Out</div>
+              </span>
+            )}
+            <div className='realTimer'>{currentTime.toLocaleTimeString()}</div>
           </div>
-         
         </div>
         <div className="rightContent">
           <div className="graph">
             <h3>Attendance Graph</h3>
-            {/* <BarGraph /> */}
-            <img src={graph} alt="nopic" />
+            <img src={graph} alt="Attendance Graph" />
           </div>
           <div className="attend">
-            <AttendList />
+            <AttendList isTimeIn={isTimeIn} isTimeOut={isTimeOut} />
           </div>
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EmpDashboard
+export default EmpDashboard;
+
+
+
+// import './EmpDashboard.scss'
+// import { useNavigate } from "react-router-dom"
+// import emp from "../assets/images/emp1.jpg"
+// import clock from "../assets/images/clock1.jpg"
+// // import BarGraph from '../Components/BarGraph'
+// // import { useState } from 'react'
+// import graph from '../assets/images/graph1.png'
+// import AttendList from '../Components/AttendList';
+
+// const EmpDashboard = () => {
+//   // const [ timeInVisible, setTimeInVisible]= useState(true);
+
+//   // const handleTimeClock = () =>{
+//   //   setTimeInVisible(!timeInVisible)
+//   // }
+  
+//     const navigate = useNavigate();
+    
+//   return (
+//     <div className='empDashboard'>
+//       <div className="header1">
+//         <h1>My Dashboard.</h1>
+//         {/* <div className="generate">
+//           <span>Generate</span>
+//         </div> */}
+//       </div>
+//       <div className="content1">
+//         <div className="leftContent">
+//           {/* <div className='clock'>
+//             <span className={timeInVisible ? 'timeIn' : 'timeOut'} onClick={handleTimeClock}>
+//               {timeInVisible ? 'Time In' : 'Time Out'}
+//             </span>
+//             <img src='' alt='nopic' />
+//             <span className={timeInVisible ? 'timeOut' : 'timeIn'} onClick={handleTimeClock}>
+//               {timeInVisible ? 'Time Out' : 'Time In'}
+//             </span>
+//           </div> */}
+//            <div className="profile">
+//             <img src={emp} alt="nopic" />
+//             <div className="details">
+//               <span>Lydia Wanjiku</span>
+//               <span>Developer</span>
+//               <span>@ TillHappens Ltd.</span>
+//             </div>
+//           </div>
+//           <div className="clock">
+//             <span className='timeOut'>
+//               <div className='time'>Time In</div>
+//             <div></div>
+//               </span>
+//             <img className='clock1' src={clock} alt="nopic" />
+//             <span className='timeOut'>
+//               <div></div>
+//               <div className='time'>Time Out</div>
+//               </span>            
+//           </div>
+         
+//         </div>
+//         <div className="rightContent">
+//           <div className="graph">
+//             <h3>Attendance Graph</h3>
+//             {/* <BarGraph /> */}
+//             <img src={graph} alt="nopic" />
+//           </div>
+//           <div className="attend">
+//             <AttendList />
+//           </div>
+
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default EmpDashboard

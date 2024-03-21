@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useUpdateAttendanceMutation } from './AttendanceApi'
+import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 
 const UpdateAttendance = ({attendance, onUpdateAttendance, onClose}) => {
     const [ updateAttendance, {isLoading}] = useUpdateAttendanceMutation();
@@ -35,7 +36,7 @@ const UpdateAttendance = ({attendance, onUpdateAttendance, onClose}) => {
             <form onSubmit={handleSubmit}>
             <label>
             EmployeeID :
-                <input type="Int" name="EmployeeID" value={updatedAttendance.EmployeeID} onChange={handleChange} />
+                <input type="Int" name="EmployeeID" value= {`${updatedAttendance.FirstName} ${updatedAttendance.LastName}`} onChange={handleChange} />
             </label>
             <label>
             Date:

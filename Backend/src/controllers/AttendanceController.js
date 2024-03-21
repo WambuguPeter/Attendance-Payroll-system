@@ -6,7 +6,7 @@ import { sendBadRequest, sendDeleteSuccess,
     sendCreated, sendNotFound,
     sendServerError, sendSuccess, checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js";     
 import { response } from "express";
-import { addAttendanceService, deleteAttendanceService, getAllAttendancesService, getAttendanceByIDService, updateAttendanceService } from "../services/AttendanceService.js";
+import { addAttendanceService, deleteAttendanceService, getAllAttendancesService, getAttendByEmpIDService, getAttendanceByIDService, updateAttendanceService } from "../services/AttendanceService.js";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
@@ -39,6 +39,22 @@ export const getAttendancesByIDController = async (req, res) => {
     try {
       const attendanceID = Number(req.params.AttendanceID);
       const attendance = await getAttendanceByIDService(attendanceID);
+  
+      if (attendance.length != 0) {
+        return res.status(200).json(attendance);
+      } else {
+        return res.status(404).json({ error: "Attendance not found" });
+      }
+    } catch (error) {
+      sendServerError(res, error.message);
+    }
+  };
+
+
+export const getAttendancesByEmpIDController = async (req, res) => {
+    try {
+      const employeeID = Number(req.params.EmployeeID);
+      const attendance = await getAttendByEmpIDService(employeeID);
   
       if (attendance.length != 0) {
         return res.status(200).json(attendance);
@@ -122,27 +138,25 @@ export const addAttendanceController = async (req, res) =>{
   }
 
 
-  export const updateAttendanceController = async (req, res) => {
+  export const updateAttendanceByEmpIDController = async (req, res) => {
     try {
-      const attendanceID = Number(req.params.AttendanceID);
+      const employeeID = Number(req.params.EmployeeID);
       const exists = await checkAttendance(req);
 
-      if (!exists){
-        return res.status(404).json({ message: "Attendance not found" });
-      }
+      // if (!exists){
+      //   return res.status(404).json({ message: "Attendance not found" });
+      // }
       
-      const attendanceData = await getAttendanceByIDService(attendanceID);
+      const attendanceData = await getAttendByEmpIDService(employeeID);
       // console.log(employeeData)
      
       const updatedAttendanceData ={ ...attendanceData[0], ...req.body };
-      updatedAttendanceData.AttendanceID =attendanceID;
+      updatedAttendanceData.EmployeeID =employeeID;
       // console.log(employeeID)
 
       if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
-            const { EmployeeID, Date, ScheduleID, TimeIn, Hours } = req.body;
-            if (EmployeeID) {
-              updatedAttendanceData.EmployeeID = EmployeeID;
-            }
+            const { Date, ScheduleID, TimeIn, Hours } = req.body;
+          
             if (Date) {
               updatedAttendanceData.Date = Date;
             }

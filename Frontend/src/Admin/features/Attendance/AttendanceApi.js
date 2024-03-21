@@ -17,8 +17,8 @@ export const attendanceApi = createApi({
 
         getAttendanceByID: builder.query({
           
-            query: (AttendanceID) =>({
-                url: `attendance/getattendanceByID/${AttendanceID}`,
+            query: (EmployeeID) =>({
+                url: `attendance/getattendanceByEmpID/${EmployeeID}`,
                 method: "GET",
             }),
             providesTags: ["Attendances"]
@@ -35,8 +35,8 @@ export const attendanceApi = createApi({
         }),
 
         updateAttendance: builder.mutation({
-            query: (AttendanceID) =>({
-                url:`attendance/UpdateAttendanceByID/${AttendanceID}`,
+            query: (EmployeeID) =>({
+                url:`attendance/UpdateAttendanceByEmpID/${EmployeeID}`,
                 method: "PUT",
             }),
             invalidatesTags: ["Attendances"],

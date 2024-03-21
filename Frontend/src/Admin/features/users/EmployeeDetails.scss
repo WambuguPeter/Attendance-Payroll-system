@@ -18,13 +18,14 @@
   
     .close-button {
       position: absolute;
-      top: 10px;
+      top: 5px;
       right: 10px;
-      background: none;
+      background: rgb(236, 236, 238);
       border: none;
       cursor: pointer;
       font-size: 18px;
-      color: #333;
+      color: #f8f8f8;
+      border-radius: 5px;
     }
   
     .employee-details-content {

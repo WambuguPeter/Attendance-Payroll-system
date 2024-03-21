@@ -29,7 +29,7 @@ const EmployeeDetailsModal = ({ isOpen, onClose, EmployeeID }) => {
       overlayClassName="employee-details-modal-overlay" // Apply custom overlay class for styling
     >
       <ToasterContainer />
-      <button className="close-button" onClick={onClose}>Close</button>
+      <button className="close-button" onClick={onClose}>👍</button>
       <h2 className="modal-title">Employee Details</h2>
       <div className="employee-details-content">
         <p><strong>ID:</strong> {employee.EmployeeID}</p>

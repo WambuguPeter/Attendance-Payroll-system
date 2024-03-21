@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './updateEmployee.scss'
 import { useUpdateEmployeeMutation
  } from './UserApi';
+ import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 
 const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
   const [updateEmployee,{isLoading}] = useUpdateEmployeeMutation();

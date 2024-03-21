@@ -12,7 +12,8 @@ import { sendBadRequest, sendDeleteSuccess, sendCreated,
 sendNotFound,
 sendServerError,
 sendSuccess,
-checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js";     
+checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js"; 
+import emailTemp from "../utils/EmailTemp.js";    
 import { response } from "express";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
@@ -95,7 +96,7 @@ export const addEmployeeController = async (req, res) =>{
         }
 
         if (response.rowsAffected && response.rowsAffected[0] === 1) {
-            // sendMail(newUser.Email);
+            sendMail(newEmployee.Email);
             sendCreated(res, "Employee created successfully");
           } else {
             sendServerError(res, "Failed to create Employee");

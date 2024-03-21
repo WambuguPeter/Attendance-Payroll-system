@@ -34,7 +34,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>X</span>
-        <h2>Edit Employee</h2>
+        <h2>Update Employee</h2>
         <form onSubmit={handleSubmit}>
           <label>
             First Name:

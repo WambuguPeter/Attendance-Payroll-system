@@ -35,7 +35,7 @@ const Login = () => {
  
   const onSubmit = async (data) => {
     try {
-      LoadingToast();
+      LoadingToast("Logging in...");
       const response = await loginEmployee(data).unwrap();
       console.log("Response: ", response);
       if (!response.error) {

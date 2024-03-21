@@ -30,27 +30,27 @@ const EmpDashboard = () => {
 
   const handleTimeIn = () => {
     const attendanceData = {
-      employeeID: employeeID,
-      date: new Date().toISOString(),
+      EmployeeID: employeeID,
+      Date: new Date().toISOString(),
       // date: currentTime.toLocaleTimeString(),
-      timeIn: currentTime.toLocaleTimeString(),
-      timeOut: null,
+      TimeIn: currentTime.toLocaleTimeString(),
+      TimeOut: null,
     };
     console.log(attendanceData)
 
     addAttendance(attendanceData)
       .unwrap()
       .then(() => {
-        setIsTimeIn(true);
-        setIsTimeOut(false);
+        setIsTimeIn(false);
+        setIsTimeOut(true);
       })
       .catch(error => console.error('Error adding attendance:', error));
   };
 
   const handleTimeOut = () => {
     const attendanceData = {
-      employeeID: employeeID,
-      timeOut: new Date().toISOString(),
+      EmployeeID: employeeID,
+      TimeOut: currentTime.toLocaleTimeString()
     };
 
     updateAttendance(attendanceData)

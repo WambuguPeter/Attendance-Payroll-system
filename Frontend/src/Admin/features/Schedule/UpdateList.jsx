@@ -32,7 +32,7 @@ const UpdateScheduleModal = ({ schedule, onUpdateSchedule, onClose }) => {
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <h2>Edit Schedule</h2>
+        <h2>Update Schedule</h2>
         <form onSubmit={handleSubmit}>
           <label>
           ScheduleName:

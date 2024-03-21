@@ -36,19 +36,6 @@ PUT http://localhost:8000/api/attendance/UpdateAttendanceByEmpID/2
 Content-Type: application/json
 
 {
-    "Date": "2024-03-18T00:00:00.000Z",
-    "ScheduleID": 1,
-    "TimeIn": "1970-01-01T08:00:00.000Z",
-    "TimeOut": "14:00:00.000Z",
-    "Hours": "10"
-}
-
-
-
-
-
-
-{
     "EmployeeID": 2,
     "Date": "2024-03-18",
     "ScheduleID": 1,
@@ -56,4 +43,18 @@ Content-Type: application/json
     "TimeOut": "14:00:00.000Z",
     "Hours": "5"
 }
+
+
+
+
+
+
+# {
+#     "EmployeeID": 2,
+#     "Date": "2024-03-18",
+#     "ScheduleID": 1,
+#     "TimeIn": "08:00:00AM",
+#     "TimeOut": "14:00:00.000Z",
+#     "Hours": "5"
+# }
 

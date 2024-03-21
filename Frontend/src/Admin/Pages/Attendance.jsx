@@ -29,8 +29,9 @@ const handleDeleteAttendance = async (AttendanceID) => {
 };
 
 
-if (isLoading) return <div>Loading...</div>;
-if (error) return <div>Error: {error.message}</div>;
+// if (isLoading) return <div>Loading...</div>;
+// if (error) return <div>Error: {error.message}</div>;
+
 
 
   return (
@@ -45,8 +46,9 @@ if (error) return <div>Error: {error.message}</div>;
       {showForm && <CreateAttendance onClose={toggleForm} />}
 
         <AttendanceList  attendances={attendances} onDeleteattendance={handleDeleteAttendance}/>
-        
-      </div>
+
+      
+        </div>
 
       
     </div>

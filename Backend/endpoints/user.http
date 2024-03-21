@@ -19,7 +19,7 @@ Content-Type: application/json
     "PositionID" : 1,
     "ScheduleID" : 1,
     "PhotoURL" : "https://example.com/john.jpg",
-    "Email" : "pientopitelo@gmail.com",
+    "Email" : "simogatuma21@gmail.com",
     "Password" : "password111",
     "BankName" : "NCBA",
     "BankBranch" : "Nyeri",
@@ -73,4 +73,4 @@ Content-Type: application/json
 
 
 ###delete employee
-DELETE http://localhost:8000/api/users/deleteEmployeeById/8
+DELETE http://localhost:8000/api/users/deleteEmployeeById/12

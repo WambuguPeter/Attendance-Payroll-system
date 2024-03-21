@@ -6,8 +6,9 @@ import './EmployeeDetails.scss'
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
-const EmployeeDetailsModal = ({ isOpen, onClose, EmployeeID }) => {
-  const { data: employee, isLoading, isError } = useGetEmployeeByIDQuery(EmployeeID);
+const EmployeeDetailsModal = ({ isOpen, onClose, employeeID }) => {
+  const { data: employee, isLoading, isError } = useGetEmployeeByIDQuery(employeeID);
+  // console.log(employee)
 
   if (isLoading) {
     LoadingToast("Loading");
@@ -32,14 +33,15 @@ const EmployeeDetailsModal = ({ isOpen, onClose, EmployeeID }) => {
       <button className="close-button" onClick={onClose}>👍</button>
       <h2 className="modal-title">Employee Details</h2>
       <div className="employee-details-content">
-        <p><strong>ID:</strong> {employee.EmployeeID}</p>
-        <p><strong>Name:</strong> {`${employee.FirstName} ${employee.LastName}`}</p>
-        <p><strong>Email:</strong> {employee.Email}</p>
-        <p><strong>Position:</strong> {employee.Title}</p>
-        <p><strong>Schedule:</strong> {employee.ScheduleName}</p>
-        <p><strong>AccountNumber:</strong> {employee.AccountNumber}</p>
-        <p><strong>BasicSalary:</strong> {employee.BasicSalary}</p>
-        <p><strong>Bio:</strong> {employee.Bio}</p>
+        {console.log(employee)}
+        <p><strong>ID:</strong> {employee[0].EmployeeID}</p>
+        <p><strong>Name:</strong> {`${employee[0].FirstName} ${employee[0].LastName}`}</p>
+        <p><strong>Email:</strong> {employee[0].Email}</p>
+        <p><strong>Position:</strong> {employee[0].Title}</p>
+        <p><strong>Schedule:</strong> {employee[0].ScheduleName}</p>
+        <p><strong>AccountNumber:</strong> {employee[0].AccountNumber}</p>
+        <p><strong>BasicSalary:</strong> {employee[0].BasicSalary}</p>
+        <p><strong>Bio:</strong> {employee[0].Bio}</p>
       </div>
     </Modal>
   );

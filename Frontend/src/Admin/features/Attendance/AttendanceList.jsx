@@ -25,8 +25,8 @@ const AttendanceList = () => {
   }
 
   if (error || isError || !attendances || attendances.length === 0) {
-    console.log("Error caught or no Attendance");
-    ErrorToast("No attendance");
+    // console.log("Error caught or no Attendance");
+    // ErrorToast("No attendance");
     return <div> <h2>No Attendance at the moment</h2>  </div>;
   }
 

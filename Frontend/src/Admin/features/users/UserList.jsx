@@ -4,7 +4,7 @@ import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutat
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 import EditEmployeeModal from './updateEmployee';
-// import EmployeeDetailsModal from './EmployeeDetails';
+import EmployeeDetailsModal from './EmployeeDetails';
 
 const EmployeesList = () => {
   const { data: employees, error, isLoading, isError, isFetching } = useGetEmployeesQuery();
@@ -52,8 +52,8 @@ const EmployeesList = () => {
     }
   };
 
-  const handleViewEmployeeDetails = (EmployeeID) => {
-    setSelectedEmployeeID(EmployeeID); // Set the selected employee ID
+  const handleViewEmployeeDetails = (employee) => {
+    setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
   };
 
   return (
@@ -81,7 +81,7 @@ const EmployeesList = () => {
                 <td>{employee.ScheduleName}</td>
                 <td>
                   <div className="action-icons">
-                    <FaEye className="icon1" onClick={() => handleViewEmployeeDetails(employee.EmployeeID)}/>
+                    <FaEye className="icon1" onClick={() => handleViewEmployeeDetails(employee)}/>
                     <FaEdit className="icon2" onClick={() => handleEditEmployee(employee)} />
                     <FaTrash className="icon3" onClick={() => handleDeleteEmployee(employee.EmployeeID)} />
                   </div>
@@ -91,14 +91,14 @@ const EmployeesList = () => {
           </tbody>
         </table>
       </section>
-      {/* <EmployeeDetailsModal
+      <EmployeeDetailsModal
         isOpen={selectedEmployeeID !== null}
         onClose={() => setSelectedEmployeeID(null)}
         employeeID={selectedEmployeeID}
         singleEmployeeData={singleEmployeeData}
         isLoading={isSingleEmployeeLoading}
         isError={isSingleEmployeeError}
-      /> */}
+      />
       {isModalOpen && (
         <EditEmployeeModal
           employee={editEmployeeData}

@@ -99,7 +99,7 @@ export const addEmployeeController = async (req, res) =>{
         }
 
         if (response.rowsAffected && response.rowsAffected[0] === 1) {
-            // sendMail(Email);
+            sendMail(Email);
             sendCreated(res, "Employee created successfully");
           } else {
             sendServerError(res, "Failed to create Employee");

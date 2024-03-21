@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "logger": "^0.0.1",
     "mssql": "^10.0.2",
+    "nodemailer": "^6.9.13",
     "pino": "^8.19.0",
     "pino-pretty": "^10.3.1"
   }

@@ -16,8 +16,8 @@ export const employeeApi = createApi({
             
         }),
         getEmployeeByID: builder.query({            
-            query: (employee) =>({
-                url: `users/getUserByID/${employee.EmployeeID}`,
+            query: (EmployeeID) =>({
+                url: `users/getUserByID/${EmployeeID}`,
                 method: "GET",
             }),
             providesTags: ["Employees"]
@@ -48,7 +48,6 @@ export const employeeApi = createApi({
             }),
             invalidatesTags: ["Employees"],
         }),
-
 
         deleteEmployee: builder.mutation({
             query:(EmployeeID) => ({

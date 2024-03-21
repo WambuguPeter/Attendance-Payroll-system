@@ -2,21 +2,20 @@ import React, { useState, useEffect } from 'react';
 import './EmpDashboard.scss';
 import { useNavigate } from 'react-router-dom';
 import emp from '../assets/images/emp1.jpg';
-import clock from '../assets/images/clock1.jpg';
 import graph from '../assets/images/graph1.png';
 import AttendList from '../Components/AttendList';
 import { useAddAttendancesMutation, useUpdateAttendanceMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
 
 const EmpDashboard = () => {
-
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
   const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
+  // console.log(employeeID)
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isTimeIn, setIsTimeIn] = useState(false);
   const [isTimeOut, setIsTimeOut] = useState(false);
   const [addAttendance] = useAddAttendancesMutation();
-  const [updateAttendance] = useUpdateAttendanceMutation();
+  const [updateAttendance] = useUpdateAttendanceMutation(employeeID);
   const navigate = useNavigate();
 
   // Update current time every second
@@ -29,17 +28,16 @@ const EmpDashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-
-
   const handleTimeIn = () => {
     const attendanceData = {
-      employeeID: employeeID, // Assuming employeeID is stored in local storage
+      employeeID: employeeID,
       date: new Date().toISOString(),
-      timeIn: new Date().toISOString(),
-      timeOut: null, // Set timeOut to null initially
+      // date: currentTime.toLocaleTimeString(),
+      timeIn: currentTime.toLocaleTimeString(),
+      timeOut: null,
     };
+    console.log(attendanceData)
 
-    // Call the API to add attendance record
     addAttendance(attendanceData)
       .unwrap()
       .then(() => {
@@ -51,14 +49,10 @@ const EmpDashboard = () => {
 
   const handleTimeOut = () => {
     const attendanceData = {
-      employeeID: employeeID, // Assuming employeeID is stored in local storage
+      employeeID: employeeID,
       timeOut: new Date().toISOString(),
     };
 
-    // Call the API to update the attendance record with the latest timeOut
-    // Note: You need to implement the logic to update the correct attendance record
-    // This is a simplified example assuming the last added record is the current one
-    // You may need to adjust this logic based on your backend implementation
     updateAttendance(attendanceData)
       .unwrap()
       .then(() => {

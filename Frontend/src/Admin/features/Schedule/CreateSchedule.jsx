@@ -28,7 +28,8 @@ const AddSchedule = ({ onClose }) => {
   };
 
   return (
-    <section className="addSchedule">
+    <div className="modal">
+    <section className="modal-content ">
       <ToasterContainer />
       <h2>Add a New Schedule</h2>
       <form onSubmit={handleSubmit} className="form">
@@ -47,6 +48,7 @@ const AddSchedule = ({ onClose }) => {
         <button type="submit">{isLoading ? "Loading" : "Save"}</button>
       </form>
     </section>
+    </div>
   );
 };
 

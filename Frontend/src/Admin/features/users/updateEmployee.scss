@@ -10,6 +10,7 @@
     justify-content: center;
     overflow: scroll;
     scroll-behavior: smooth;
+    
   
   
   .modal-content {
@@ -19,12 +20,13 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
+    margin-top: 40vh;
     overflow: scroll;
     scroll-behavior: smooth; /* Adjust as needed */
   }
   
   .close {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 25%;
     cursor: pointer;
@@ -47,7 +49,8 @@
     display: grid;
     grid-gap: 10px;
     height: 100%;
-    top: 10px;
+    // margin-top: 40vh;
+    // background-color: red;
   }
   
   label {

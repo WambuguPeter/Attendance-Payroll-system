@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CreateEmp.scss'
+import './CreateEmp.scss';
 import { useAddEmployeeMutation } from './UserApi';
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
 
@@ -40,26 +40,35 @@ const AddEmployee = ({ onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleClose = () => {
+    onClose(); // Close the form when close button is clicked
+  };
+
   return (
-    <section className="addEmployee">
+    <div className="modal">
+    <section className="modal-content">
       <ToasterContainer />
-      {/* <h2>Add a New Employee</h2> */}
+      <button className="close" onClick={handleClose}>X</button>
       <form onSubmit={handleSubmit} className="form">
-        {/* Input fields */}
+        <h2 className="form-title">Add New Employee</h2>
         {Object.keys(formData).map((key) => (
-          <label className="form-input" htmlFor={key} key={key}>
-            {key}:
+          <div className="form-group" key={key}>
+            <label className="form-label" htmlFor={key}>{key}:</label>
             <input
               id={key}
               name={key}
               value={formData[key]}
               onChange={handleChange}
+              className="form-input"
             />
-          </label>
+          </div>
         ))}
-        <button type="submit">{isLoading ? "Loading" : "Save"}</button>
+        <button type="submit" className="form-button" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Save"}
+        </button>
       </form>
     </section>
+    </div>
   );
 };
 

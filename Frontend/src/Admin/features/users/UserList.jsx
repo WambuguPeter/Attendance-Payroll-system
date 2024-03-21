@@ -4,7 +4,7 @@ import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutat
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 import EditEmployeeModal from './updateEmployee';
-import EmployeeDetailsModal from './EmployeeDetails';
+// import EmployeeDetailsModal from './EmployeeDetails';
 
 const EmployeesList = () => {
   const { data: employees, error, isLoading, isError, isFetching } = useGetEmployeesQuery();
@@ -47,7 +47,7 @@ const EmployeesList = () => {
       SuccessToast("Employee details updated successfully");
       setIsModalOpen(false); // Close the modal after updating employee details
     } catch (error) {
-      console.error("Error updating employee:", error);
+      // console.error("Error updating employee:", error);
       ErrorToast("Failed to update employee details");
     }
   };
@@ -91,14 +91,14 @@ const EmployeesList = () => {
           </tbody>
         </table>
       </section>
-      <EmployeeDetailsModal
+      {/* <EmployeeDetailsModal
         isOpen={selectedEmployeeID !== null}
         onClose={() => setSelectedEmployeeID(null)}
         employeeID={selectedEmployeeID}
         singleEmployeeData={singleEmployeeData}
         isLoading={isSingleEmployeeLoading}
         isError={isSingleEmployeeError}
-      />
+      /> */}
       {isModalOpen && (
         <EditEmployeeModal
           employee={editEmployeeData}

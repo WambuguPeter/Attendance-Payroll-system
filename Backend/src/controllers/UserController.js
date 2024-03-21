@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import logger from "../utils/logger.js";
+import nodemailer from "nodemailer"
 import { addEmployeeService, 
     deleteEmployeeService, 
     getAllUserService, 
@@ -18,6 +19,7 @@ import { response } from "express";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
+
 
 const checkEmployee = async (req) => {
   const employeeID = Number(req.params.EmployeeID);
@@ -41,6 +43,7 @@ export const getAllUserController = async (req,res) => {
         sendServerError(res, error);
     }
 };
+
 
 export const getEmpByIDController = async (req, res) => {
     try {
@@ -80,7 +83,7 @@ export const addEmployeeController = async (req, res) =>{
         const existingUser = await getUserByEmailService(Email);
 
         if (existingUser) {
-            return res.status(400).json({ error : "Employee already exists"});
+            return res.status(400).json({ error : "Employee already exists(Email)"});
             // console.log("Use in the syste alredy");
         }
         
@@ -96,7 +99,7 @@ export const addEmployeeController = async (req, res) =>{
         }
 
         if (response.rowsAffected && response.rowsAffected[0] === 1) {
-            sendMail(newEmployee.Email);
+            // sendMail(Email);
             sendCreated(res, "Employee created successfully");
           } else {
             sendServerError(res, "Failed to create Employee");
@@ -107,7 +110,7 @@ export const addEmployeeController = async (req, res) =>{
 }
 
 //send Email
-export const sendMail = async (email) => {
+export const sendMail = async (Email) => {
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -117,7 +120,7 @@ export const sendMail = async (email) => {
     });
     const mailOptions = {
       from: process.env.EMAIL,
-      to: email,
+      to: Email,
       subject: "Welcome To TillHappens Ltd!",
       html: emailTemp,
     };

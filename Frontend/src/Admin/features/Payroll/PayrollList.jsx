@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RotateLoader from "react-spinners/RotateLoader";
-import { useGetPayrollsQuery } from './PayrollApi';
+import { useGetPayrollsQuery, useDeletePayrollsMutation } from './PayrollApi';
 import PayrollDetailsModal from './PayrollDetails';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
@@ -16,7 +16,7 @@ const payrollList = () => {
 
 //   console.log(payrolls)
 
-//   const [deleteOvertime] = useDeleteOvertimeMutation();
+  const [deletePayroll] = useDeletePayrollsMutation();
 //   const [updateSchedule] = useUpdateSchedulesMutation();
 //   const [editScheduleData, setEditScheduleData] = useState(null);
 //   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
@@ -35,15 +35,15 @@ const [selectedEmployeeID, setSelectedEmployeeID] = useState(null);
   }
   const sortedPayrolls = [...payrolls].sort((a, b) => b.PayrollID - a.PayrollID);
 
-//   const handleDeleteOvertime = async (PayrollID) =>{
-//     console.log(PayrollID)
-//     try {
-//       await deleteOvertime(PayrollID).unwrap();
-//       SuccessToast("Deleted Successfully");
-//     } catch (error) {
-//       console.error("Error deleting Overtime:", error);
-//     }
-//   };
+  const handleDeletePayroll = async (PayrollID) =>{
+    console.log(PayrollID)
+    try {
+      await deletePayroll(PayrollID).unwrap();
+      SuccessToast("Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting Overtime:", error);
+    }
+  };
 
 //   const handleEditOvertime = (schedule) => {
 //     setEditScheduleData(schedule);
@@ -61,10 +61,10 @@ const [selectedEmployeeID, setSelectedEmployeeID] = useState(null);
 //     }
 //   };
 
-const handleViewPayrollDetails = (PayrollID) => {
-    setSelectedEmployeeID(PayrollID); 
-    // console.log(PayrollID)
-  };
+// const handleViewPayrollDetails = (PayrollID) => {
+//     setSelectedEmployeeID(PayrollID); 
+//     // console.log(PayrollID)
+//   };
 
   return (
     <div className="payrollList">
@@ -93,9 +93,9 @@ const handleViewPayrollDetails = (PayrollID) => {
                 <td>{payroll.NetPay}</td>
                 <td>
                   <div className="action-icons">
-                    <FaEye className="icon1" onClick={() => handleViewPayrollDetails(payroll.PayrollID)} />
+                    <FaEye className="icon1"  />
                     {/* <FaEdit className="icon2" onClick={() => handleEditSchedule(payroll)} /> */}
-                    {/* <FaTrash className="icon3" onClick={() => handleDeletepayroll(payroll.PayrollID)} /> */}
+                    <FaTrash className="icon3" onClick={() => handleDeletePayroll(payroll.PayrollID)} />
                   </div>
                 </td>
               </tr>
@@ -103,11 +103,11 @@ const handleViewPayrollDetails = (PayrollID) => {
           </tbody>
         </table>
       </section>
-      <PayrollDetailsModal
+      {/* <PayrollDetailsModal
       isOpen={selectedEmployeeID !== null}
       onClose={() => setSelectedEmployeeID(null)}
       PayrollID={selectedEmployeeID}
-       />
+       /> */}
 
     </div>
   );

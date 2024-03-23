@@ -1,3 +1,9 @@
+.list{
+    height: 90vh;
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+
 table{
     width: 95%;
     table-layout: fixed;
@@ -11,6 +17,11 @@ table{
         position: sticky;
         top: 0;
         font-size: 15px;
+    }
+    tbody{
+        height: 80vh;
+    overflow: scroll;
+    scroll-behavior: smooth;
     }
     th,td{
         border-bottom: 1px solid #dddd;

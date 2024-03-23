@@ -33,14 +33,14 @@ export const payrollApi = createApi({
             providesTags: ["Payrolls"]
         }),
 
-        // addSchedule: builder.mutation({
-        //     query: (schedule) =>({
-        //         url:"Payrolls/addSchedule",
-        //         method: "POST",
-        //         body: schedule,
-        //     }),
-        //     invalidatesTags: ["Payrolls"],
-        // }),
+        addPayroll: builder.mutation({
+            query: (payroll) =>({
+                url:"payroll/addpayroll",
+                method: "POST",
+                body: payroll,
+            }),
+            invalidatesTags: ["Payrolls"],
+        }),
 
         // updatePayrolls: builder.mutation({
         //     query: (ScheduleID) =>({
@@ -51,16 +51,16 @@ export const payrollApi = createApi({
         // }),
 
 
-        // deletePayrolls: builder.mutation({
-        //     query:(ScheduleID) => ({
-        //         url:`Payrolls/deleteSchedule/${ScheduleID}`,
-        //         method: "DELETE",
-        //     }),
-        //     invalidatesTags: ["Payrolls"],
-        // })       
+        deletePayrolls: builder.mutation({
+            query:(PayrollID) => ({
+                url:`payroll/deletepayrollByID/${PayrollID}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Payrolls"],
+        })       
 
 
     })
 });
 
-export const {useGetPayrollsQuery, useGetPayrollsByIDQuery} = payrollApi;
+export const {useGetPayrollsQuery, useGetPayrollsByIDQuery, useAddPayrollMutation, useDeletePayrollsMutation} = payrollApi;

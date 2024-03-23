@@ -41,16 +41,16 @@ const EmployeesList = () => {
     setIsModalOpen(true); // Open the modal when editing an employee
   };
 
-  const handleUpdateEmployee = async (updatedEmployee) => {
-    try {
-      await updateEmployee(updatedEmployee).unwrap();
-      SuccessToast("Employee details updated successfully");
-      setIsModalOpen(false); // Close the modal after updating employee details
-    } catch (error) {
-      // console.error("Error updating employee:", error);
-      // ErrorToast("Failed to update employee details");
-    }
-  };
+  // const handleUpdateEmployee = async (updatedEmployee) => {
+  //   try {
+  //     await updateEmployee(updatedEmployee).unwrap();
+  //     SuccessToast("Employee details updated successfully");
+  //     setIsModalOpen(false); // Close the modal after updating employee details
+  //   } catch (error) {
+  //     // console.error("Error updating employee:", error);
+  //     // ErrorToast("Failed to update employee details");
+  //   }
+  // };
 
   const handleViewEmployeeDetails = (employee) => {
     setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
@@ -103,7 +103,7 @@ const EmployeesList = () => {
       {isModalOpen && (
         <EditEmployeeModal
           employee={editEmployeeData}
-          onUpdateEmployee={handleUpdateEmployee}
+          // onUpdateEmployee={handleUpdateEmployee}
           onClose={() => setIsModalOpen(false)} // Close the modal
         />
       )}

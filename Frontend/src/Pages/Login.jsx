@@ -37,13 +37,14 @@ const Login = () => {
     try {
       LoadingToast("Logging in...");
       const response = await loginEmployee(data).unwrap();
+      SuccessToast(response.message);
       console.log("Response: ", response);
       if (!response.error) {
         const { token, userDetails } = response;
         localStorage.setItem("token", token);
         localStorage.setItem("employeeDetails", JSON.stringify(userDetails));
         LoadingToast(false);
-        SuccessToast("Login successful");
+        // SuccessToast(response.message);
         userDetails.admin == true ? navigate("/MainContainer") : navigate("/MainClient");
         // navigate("*")
       } else {
@@ -59,14 +60,13 @@ const Login = () => {
     }
   };
   if (isLoading) {
-    return <div>{LoadingToast(false)}</div>;
+    return <div>{LoadingToast("false")}</div>;
   } else{
     LoadingToast(false)
   }
 
   return (
     <div className="loginpage">
-      <ToasterContainer />
       <div className="login-card">
 
       <div className="form">

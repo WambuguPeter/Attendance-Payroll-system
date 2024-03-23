@@ -9,7 +9,8 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
   const [updatedEmployee, setUpdatedEmployee] = useState({
     ...employee // Initialize form data with employee details
   });
-
+  const employeeID = employee.EmployeeID;
+  console.log('employee', employeeID)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedEmployee(prevState => ({
@@ -21,7 +22,8 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateEmployee(updatedEmployee).unwrap();
+      await updateEmployee({EmployeeID: parseInt(employeeID), employee}).unwrap();
+      SuccessToast(response.message);
       onClose(); // Close the form upon successful submission
     } catch (error) {
       console.error("Error in Updating the employee:", error);
@@ -50,7 +52,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
           </label>
           <label>
             BirthDate:
-            <input type="Date" name="BirthDate" value={updatedEmployee.BirthDate} onChange={handleChange} />
+            <input type="vachar" name="BirthDate" value={updatedEmployee.BirthDate} onChange={handleChange} />
           </label>
           <label>
             Contact(Phone no):
@@ -79,7 +81,7 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
           </label>
           <label>
             PhotoURL:
-            <input type="text" name="PhotoURL" value={updatedEmployee.PhotoURL} onChange={handleChange} />
+            <input type=" " name="PhotoURL" value={updatedEmployee.PhotoURL} onChange={handleChange} />
           </label>
           <label>
             Email:

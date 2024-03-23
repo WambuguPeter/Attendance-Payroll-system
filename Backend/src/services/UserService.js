@@ -11,7 +11,7 @@ export const addEmployeeService = async (newEmployee) => {
         .input("FirstName", sql.VarChar(255), newEmployee.FirstName)
         .input("LastName", sql.VarChar(255), newEmployee.LastName)
         .input("Location", sql.VarChar(255), newEmployee.Location)
-        .input("BirthDate", sql.Date, newEmployee.BirthDate)
+        .input("BirthDate", sql.DateTime, newEmployee.BirthDate)
         .input("Contact", sql.VarChar(255), newEmployee.Contact)
         .input("Gender", sql.VarChar(255), newEmployee.Gender)
         .input("admin", sql.Bit, newEmployee.admin)
@@ -161,7 +161,7 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .input("FirstName", sql.VarChar, FirstName)
         .input("LastName", sql.VarChar, LastName)
         .input("Location", sql.VarChar, Location)
-        .input("BirthDate", sql.Date, BirthDate)
+        .input("BirthDate", sql.DateTime, BirthDate)
         .input("Contact", sql.VarChar, Contact)
         .input("Gender", sql.VarChar, Gender)
         .input("admin", sql.Bit, admin)
@@ -174,7 +174,6 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .input("BankBranch", sql.VarChar, BankBranch)
         .input("AccountNumber", sql.VarChar, AccountNumber)
         .input("Bio", sql.VarChar, Bio)
-        // where Id is????????
         .query(
           `UPDATE Employees 
            SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, 

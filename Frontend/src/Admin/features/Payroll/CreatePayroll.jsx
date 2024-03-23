@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
-import { useAddScheduleMutation } from './ScheduleApi';
+import { useAddPayrollMutation } from './PayrollApi';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 
-const AddSchedule = ({ onClose }) => {
-  const [addSchedule, { isLoading }] = useAddScheduleMutation();
+const AddPayroll = ({ onClose }) => {
+  const [addPayroll, { isLoading }] = useAddPayrollMutation();
   const [formData, setFormData] = useState({
-    ScheduleName: "",
-    StartTime: "",
-    EndTime: "",
-    Hours: ""
+    EmployeeID: ""
   });
-
+console.log('formData', formData)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addSchedule(formData).unwrap();
+      await addPayroll(formData).unwrap();
       SuccessToast(response.message)
       onClose();
        // Close the form upon successful submission
     } catch (error) {
-      console.error("Error adding schedule:", error);
-      ErrorToast("Failed to add schedule");
+      console.error("Error adding Payroll:", error);
+      ErrorToast("Failed to add Payroll");
       onClose();
     }
   };
@@ -33,7 +30,7 @@ const AddSchedule = ({ onClose }) => {
   return (
     <div className="modal">
     <section className="modal-content ">
-      <h2>Add a New Schedule</h2>
+      <h2>Add a New Payroll</h2>
       <form onSubmit={handleSubmit} className="form">
         {/* Input fields */}
         {Object.keys(formData).map((key) => (
@@ -54,4 +51,4 @@ const AddSchedule = ({ onClose }) => {
   );
 };
 
-export default AddSchedule;
+export default AddPayroll;

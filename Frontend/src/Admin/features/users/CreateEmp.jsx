@@ -5,6 +5,7 @@ import { ErrorToast, ToasterContainer } from '../../Components/Toster';
 
 const AddEmployee = ({ onClose }) => {
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();
+  const PhotoURL= <input type ="file"/>
   const [formData, setFormData] = useState({
     FirstName: "",
     LastName: "",
@@ -15,7 +16,7 @@ const AddEmployee = ({ onClose }) => {
     admin: "",
     PositionID: "",
     ScheduleID: "",
-    PhotoURL: "",
+    PhotoURL :PhotoURL,
     Email: "",
     Password: "",
     BankName: "",

@@ -57,7 +57,7 @@ if (error){
         </div>
         
       </div>
-      <div className="employeeList">
+      <div className="list">
           {showForm && <AddEmployee onClose={toggleForm} />}
      
       <EmployeesList employees={employees} onDeleteEmployee={handleDeleteEmployee} />

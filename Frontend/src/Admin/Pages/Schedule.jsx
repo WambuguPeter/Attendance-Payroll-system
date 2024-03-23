@@ -15,7 +15,7 @@ const Schedule = () => {
   } = useGetSchedulesQuery({ refetchOnReconnect: true });
 
   const [isOpen, setIsOpen] = useState(false);
-  const [deleteSchedule] = useDeleteSchedulesMutation();
+  // const [deleteSchedule] = useDeleteSchedulesMutation();
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -26,13 +26,13 @@ const Schedule = () => {
   const toggleForm = () => {
     setShowForm((prevState) => !prevState);}
 
-  const handleDeleteSchedule = async (ScheduleID) => {
-    try {
-      await deleteSchedule(ScheduleID).unwrap();
-    } catch (err) {
-      console.error('Failed to delete Schedule:', err);
-    }
-  };
+  // const handleDeleteSchedule = async (ScheduleID) => {
+  //   try {
+  //     await deleteSchedule(ScheduleID).unwrap();
+  //   } catch (err) {
+  //     console.error('Failed to delete Schedule:', err);
+  //   }
+  // };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -50,7 +50,8 @@ const Schedule = () => {
       <div className="schedulesList">
       {showForm && <AddSchedule onClose={toggleForm} />}
      
-     <ScheduleList schedules={schedules} onDeleteSchedule={handleDeleteSchedule} />
+     <ScheduleList schedules={schedules}  />
+     {/* <ScheduleList schedules={schedules} onDeleteSchedule={handleDeleteSchedule} /> */}
       </div>
     </div>
   )

@@ -23,51 +23,33 @@ const checkPayroll = async (req) => {
 
 
 //Adding Payroll
-export const addPayrollController = async (req, res) =>{
-  const {
-      PayrollDate, EmployeeID, GrossPay, TotalDeductions, NetPay
-  } = req.body;
-  // console.log(req.body);
 
+export const addPayrollController = async (req, res) => {
   try {
+      const { EmployeeID } = req.body;
+console.log(EmployeeID)
+      // Call addPayrollService function with the EmployeeID
+      const result = await addPayrollService({ EmployeeID });
 
-      // const {error} = validateNewpayroll({
-      //     PayrollDate, EmployeeID, GrossPay, TotalDeductions, NetPay
-      // });
-
-      // if (error){
-      //     // return res.status(400).send(error.details.message);
-      //     return res.status(400).send(error.details[0].message);
-      // }
-      // const PayrollDate = String(req.params.PayrollDate);
-      // console.log(PayrollDate)
-      // const existingPosition = await getPositionByPayrollDateService(PayrollDate);
-
-      // if (existingPosition) {
-      //     return res.status(400).json({ error : "Position already exists"});
-      //     // console.log("Use in the syste alredy");
-      // }
-      
-      const newPayroll = {
-        PayrollDate, EmployeeID, GrossPay, TotalDeductions, NetPay 
-      }
-      // console.log(newPayroll);
-
-      const response = await addPayrollService(newPayroll);
-
-      if (response instanceof Error){
-          throw response;
+      // Check if the result is an error
+      if (result instanceof Error) {
+          throw result;
       }
 
-      if (response.rowsAffected && response.rowsAffected[0] === 1) {
-          sendCreated(res, "Payroll created successfully");
-        } else {
-          sendServerError(res, "Failed to create Payroll");
-        }
+      // Check if the payroll was successfully added
+      if (!result.error && result.rowsAffected && result.rowsAffected[0] === 1) {
+          // Send success response if payroll was created successfully
+          res.status(201).json({ success: true, message: "Payroll created successfully" });
+      } else {
+          // Send error response if there was a problem creating the payroll
+          res.status(500).json({ success: false, message: "Failed to create payroll" });
+      }
   } catch (error) {
-      sendServerError(res, error.message);
+      // Send error response if an error occurred during processing
+      res.status(500).json({ success: false, error: error.message });
   }
 }
+
 
 
 // Get all

@@ -14,7 +14,9 @@ function App() {
   return (
     <>
     
-      {/* <ToasterContainer /> */}
+       <ToasterContainer />
+      
+      
     <Routes>
       <Route path="/" element={<Login/>} />
       {/* <Route path="*" element={<Major/>} /> */}

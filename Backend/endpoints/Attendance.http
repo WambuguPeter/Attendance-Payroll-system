@@ -24,15 +24,12 @@ Content-Type: application/json
 
 {
     "EmployeeID": 2,
-    "Date": "2024-03-18",
     "ScheduleID": 1,
-    "TimeIn": "08:00:00AM"
-    
-   
+    "TimeIn": "08:00:00"      
 }
 
-### Update Attendance
-PUT http://localhost:8000/api/attendance/UpdateAttendanceByEmpID/2
+### Update Attendance by ID
+PUT http://localhost:8000/api/attendance/UpdateAttendanceByID/115
 Content-Type: application/json
 
 {
@@ -40,8 +37,8 @@ Content-Type: application/json
     "Date": "2024-03-18",
     "ScheduleID": 1,
     "TimeIn": "08:00:00AM",
-    "TimeOut": "14:00:00.000Z",
-    "Hours": "5"
+    "TimeOut": "011:00:00AM",
+    "Hours": "10"
 }
 
 

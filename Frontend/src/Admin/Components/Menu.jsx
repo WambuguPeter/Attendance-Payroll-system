@@ -25,6 +25,11 @@ function Menu() {
       icon: Schedule,
       path: "/MainContainer/Schedule"
     },
+    // {
+    //   title: "Positions",
+    //   icon: Schedule,
+    //   path: "/MainContainer/Position"
+    // },
     {
       title: "Attendance",
       icon: Attendance,

@@ -35,8 +35,8 @@ export const attendanceApi = createApi({
         }),
 
         updateAttendance: builder.mutation({
-            query: (EmployeeID) =>({
-                url:`attendance/UpdateAttendanceByEmpID/${EmployeeID}`,
+            query: (AttendanceID) =>({
+                url:`attendance/UpdateAttendanceByID/${AttendanceID}`,
                 method: "PUT",
             }),
             invalidatesTags: ["Attendances"],

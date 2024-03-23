@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { getAllOvertimesController, getOvertimeByIDController } from "../controllers/OvertimeController.js";
+import { addovertimeController, deleteOvertimeContollor, getAllOvertimesController, getOvertimeByIDController, getovertimesByEmpIDController, updateOvertimeByEmpIDController } from "../controllers/OvertimeController.js";
+// import { updateAttendanceByEmpIDController } from "../controllers/AttendanceController.js";
 
 
 const ovetimeRoute =  Router();
 
-ovetimeRoute.get("/ovetime/getAll", getAllOvertimesController);
-ovetimeRoute.get("/ovetime/getovetimeByID/:OvetimeID", getOvertimeByIDController);
+ovetimeRoute.get("/overtime/getAll", getAllOvertimesController);
+ovetimeRoute.get("/overtime/getovetimeByEmpID/:EmployeeID", getovertimesByEmpIDController); 
+ovetimeRoute.get("/overtime/getovetimeByID/:OvertimeID", getOvertimeByIDController); 
+ovetimeRoute.post("/overtime/addOvetime", addovertimeController); 
+ovetimeRoute.put("/overtime/updateOvetimeByEmpID/:EmployeeID", updateOvertimeByEmpIDController); 
+ovetimeRoute.delete("/overtime/deleteOvetimeByID/:OvertimeID", deleteOvertimeContollor); 
 
 export default ovetimeRoute;

@@ -47,8 +47,9 @@ export const getAllUserController = async (req,res) => {
 
 export const getEmpByIDController = async (req, res) => {
     try {
-      const EmployeeID = req.params.EmployeeID;
-      const employee = await getEmployeeByIDService(EmployeeID);
+      const employeeID = Number(req.params.EmployeeID);
+      const employee = await getEmployeeByIDService(employeeID);
+      // console.log(employee)
   
       if (employee.length != 0) {
         return res.status(200).json(employee);
@@ -67,7 +68,7 @@ export const addEmployeeController = async (req, res) =>{
     const {
         FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio 
     } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     try {
 
@@ -137,16 +138,16 @@ export const sendMail = async (Email) => {
 //Login user
 export const loginUserController = async (req, res) =>{
     const {Email, Password} = req.body;
-    console.log("Req: " ,req.body)
+    // console.log("Req: " ,req.body)
     const { error} = userLoginvalidator (req.body);
     // const {Email, Password} = req.body
     if(error){ 
-        console.log("Err: ", error)
+        // console.log("Err: ", error)
         return sendBadRequest(res, error.details[0].message);
     } else {
     try {
         const user =await getUserByEmailService(Email);
-        console.log(user);
+        // console.log(user);
         if (!user){
             return sendNotFound(res, "USer not Found");
         }
@@ -234,14 +235,12 @@ export const updateUserController = async (req, res) => {
         return res.status(404).json({ message: "Employee not found" });
       }
       
-      if (exists){
-        console.log("he exists")
-      }
+    
       const employeeData = await getEmployeeByIDService(employeeID);
       // console.log(employeeData)
      
       const updatedEmployeeData ={ ...employeeData[0], ...req.body };
-      console.log("employeeData :", employeeData)
+      // console.log("employeeData :", employeeData)
       updatedEmployeeData.EmployeeID =employeeID;
       // console.log(employeeID)
 

@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { LoadingToast, ErrorToast, SuccessToast } from "../../Admin/Components/Toster";
 import { useGetAttendanceByIDQuery, useUpdateAttendanceMutation, useAddAttendancesMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
 
-const AttendList = ({ isTimeIn, isTimeOut }) => {
-
+const AttendList = ({ isTimeIn, isTimeOut, handleTimeOut }) => {
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
   const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const { data: attendance, error, isLoading, refetch } = useGetAttendanceByIDQuery(employeeID);
-  const [updateAttendance] = useUpdateAttendanceMutation(employeeID);
+  // console.log(attendance)
+  // const attendanceID = attendance.AttendanceID;
+
+  const [updateAttendance] = useUpdateAttendanceMutation(); // Update by AttendanceID
   const [addAttendance] = useAddAttendancesMutation();
 
+  // const sortedAttendances = [...attendance].sort((a, b) => b.AttendanceID - a.AttendanceID);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,7 +25,6 @@ const AttendList = ({ isTimeIn, isTimeOut }) => {
     return () => clearInterval(interval);
   }, []);
 
-
   useEffect(() => {
     if (isTimeIn) {
       const newAttendanceData = {
@@ -32,38 +34,35 @@ const AttendList = ({ isTimeIn, isTimeOut }) => {
         TimeOut: null,
         Hours: null,
       };
+      console.log(newAttendanceData)
+
       addAttendance(newAttendanceData)
         .unwrap()
         .then(() => {
           SuccessToast("Attendance recorded successfully");
-          refetch()})
-        .catch(error => {console.error('Error adding attendance:', error)        
-        ErrorToast("Failed to record attendance");
-      });
-    }
-
-    if (isTimeOut && attendance && attendance.length > 0) {
-      const latestAttendance = attendance[0]; // Assuming the latest attendance record is at index 0
-      updateAttendance({
-        ...latestAttendance,
-        TimeOut: currentTime.toLocaleTimeString(),
-      })
-        .unwrap()
-        .then(() => {
-          SuccessToast("Attendance updated successfully");
-          refetch()})
+          refetch();
+        })
         .catch(error => {
-          console.error('Error updating attendance:', error)
-          ErrorToast("Failed to update attendance");});
+          console.error('Error adding attendance:', error);
+          ErrorToast("Failed to record attendance");
+        });
     }
-  }, [isTimeIn, isTimeOut, attendance, updateAttendance, addAttendance, employeeID, refetch]);
+  // }, [ ]);
+  }, [isTimeIn, employeeID, currentTime, addAttendance, refetch]);
+  
+  // const handleTimeOutClick = (attendanceID, event) => {
+  //   event.stopPropagation(); // Prevent event bubbling
+  //   handleTimeOut(attendanceID);
+  // };
 
-  if (isLoading){ 
+  if (isLoading) {
     LoadingToast("Loading attendance...");
-    return <div>Loading...</div>};
+    return <div>Loading...</div>;
+  }
   if (error) {
     ErrorToast("Failed to fetch attendance");
-    return <div>Error: {error.message}</div>};
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className='attendList'>
@@ -78,12 +77,12 @@ const AttendList = ({ isTimeIn, isTimeOut }) => {
           </tr>
         </thead>
         <tbody>
-          {attendance.map((item) => (
+          {/* {sortedAttendances.map((item) => ( */}
+          {newAttendanceData.map((item) => (
             <tr className="details" key={item.AttendanceID}>
               <td>{item.AttendanceID}</td>
               <td>{item.Date}</td>
-              <td>{item.TimeIn}</td>
-              <td>{item.TimeOut}</td>
+              <td>{item.TimeIn}</td>              
               <td>{item.Hours}</td>
             </tr>
           ))}
@@ -94,8 +93,6 @@ const AttendList = ({ isTimeIn, isTimeOut }) => {
 };
 
 export default AttendList;
-
-
 
 
 

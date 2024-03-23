@@ -71,8 +71,8 @@ export const addAttendanceService = async (newAttendance) => {
         .input("EmployeeID", sql.Int, newAttendance.EmployeeID)
         .input("Date", sql.Date, newAttendance.Date)
         .input("ScheduleID", sql.Int, newAttendance.ScheduleID)
-        .input("TimeIn", sql.VarChar(255), newAttendance.TimeIn)
-        .input("TimeOut", sql.VarChar(255), newAttendance.TimeOut)
+        .input("TimeIn", sql.VarChar, newAttendance.TimeIn)
+        .input("TimeOut", sql.VarChar, newAttendance.TimeOut)
         .input("Hours", sql.VarChar(255), newAttendance.Hours)
        
         .query(
@@ -102,22 +102,19 @@ export const deleteAttendanceService = async (attendanceID) => {
     }
 }
 
+
 // Updteee
 export const updateAttendanceService = async (attendance) => {
     const { AttendanceID, EmployeeID, Date, ScheduleID, TimeIn, Hours} = attendance;
         //  console.log(employee)
     try {
       const result = await poolRequest()         
-        .input("AttendanceID", sql.Int, AttendanceID)
-        .input("EmployeeID", sql.Int, EmployeeID)
-        .input("Date", sql.VarChar, Date)
-        .input("ScheduleID", sql.Int, ScheduleID)
-        .input("TimeIn", sql.VarChar, TimeIn)
-        .input("TimeOut", sql.VarChar, TimeIn)
+        .input("AttendanceID", sql.Int, AttendanceID)       
+        .input("TimeOut", sql.VarChar, TimeOut)
         .input("Hours", sql.VarChar, Hours)
         .query(
           `UPDATE Attendances 
-           SET Date= @Date, ScheduleID= @ScheduleID, TimeIn= @TimeIn, TimeOut= @TimeOut, Hours= @Hours
+           SET  TimeOut= @TimeOut, Hours= @Hours
            where AttendanceID = @AttendanceID`
           );
       return result;
@@ -127,4 +124,29 @@ export const updateAttendanceService = async (attendance) => {
     }
   };
 
+  
+// // Updteee
+// export const updateAttendanceService = async (attendance) => {
+//     const { AttendanceID, EmployeeID, Date, ScheduleID, TimeIn, Hours} = attendance;
+//         //  console.log(employee)
+//     try {
+//       const result = await poolRequest()         
+//         .input("AttendanceID", sql.Int, AttendanceID)
+//         .input("EmployeeID", sql.Int, EmployeeID)
+//         .input("Date", sql.Date, Date)
+//         .input("ScheduleID", sql.Int, ScheduleID)
+//         .input("TimeIn", sql.VarChar, TimeIn)
+//         .input("TimeOut", sql.VarChar, TimeIn)
+//         .input("Hours", sql.VarChar, Hours)
+//         .query(
+//           `UPDATE Attendances 
+//            SET EmployeeID= @EmployeeID, Date= @Date, ScheduleID= @ScheduleID, TimeIn= @TimeIn, TimeOut= @TimeOut, Hours= @Hours
+//            where AttendanceID = @AttendanceID`
+//           );
+//       return result;
+//     } catch (error) {
+//         console.error("Error updating Attendances:", error);
+//       return error;
+//     }
+//   };
 

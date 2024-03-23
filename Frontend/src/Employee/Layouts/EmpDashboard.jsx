@@ -52,6 +52,7 @@ const EmpDashboard = () => {
       EmployeeID: employeeID,
       TimeOut: currentTime.toLocaleTimeString()
     };
+    event.stopPropagation();
 
     updateAttendance(attendanceData)
       .unwrap()

@@ -7,19 +7,19 @@ import './EmployeeDetails.scss'
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
 const EmployeeDetailsModal = ({ isOpen, onClose, employeeID }) => {
-  const { data: employee, isLoading, isError } = useGetEmployeeByIDQuery(employeeID);
-  // console.log(employee)
+  const { data: employeeData, isLoading, isError } = useGetEmployeeByIDQuery(employeeID);
+  console.log(employeeID)
 
   if (isLoading) {
     LoadingToast("Loading");
     return null; // Render nothing while loading
   }
 
-  if (isError || !employee) {
-    console.error("Error fetching employee details");
-    ErrorToast("Failed to fetch employee details");
-    return null; // Render nothing in case of error or no employee data
-  }
+  // if (isError || !employeeData) {
+  //   console.error("Error fetching employee details");
+  //   ErrorToast("Failed to fetch employee details");
+  //   return null; // Render nothing in case of error or no employee data
+  // }
 
   return (
     <Modal
@@ -33,15 +33,15 @@ const EmployeeDetailsModal = ({ isOpen, onClose, employeeID }) => {
       <button className="close-button" onClick={onClose}>👍</button>
       <h2 className="modal-title">Employee Details</h2>
       <div className="employee-details-content">
-        {console.log(employee)}
-        <p><strong>ID:</strong> {employee[0].EmployeeID}</p>
-        <p><strong>Name:</strong> {`${employee[0].FirstName} ${employee[0].LastName}`}</p>
-        <p><strong>Email:</strong> {employee[0].Email}</p>
-        <p><strong>Position:</strong> {employee[0].Title}</p>
-        <p><strong>Schedule:</strong> {employee[0].ScheduleName}</p>
-        <p><strong>AccountNumber:</strong> {employee[0].AccountNumber}</p>
-        <p><strong>BasicSalary:</strong> {employee[0].BasicSalary}</p>
-        <p><strong>Bio:</strong> {employee[0].Bio}</p>
+        {console.log(employeeData)}
+        <p><strong>ID:</strong> {employeeData[0].EmployeeID}</p>
+        <p><strong>Name:</strong> {`${employeeData[0].FirstName} ${employeeData[0].LastName}`}</p>
+        <p><strong>Email:</strong> {employeeData[0].Email}</p>
+        <p><strong>Position:</strong> {employeeData[0].Title}</p>
+        <p><strong>Schedule:</strong> {employeeData[0].ScheduleName}</p>
+        <p><strong>AccountNumber:</strong> {employeeData[0].AccountNumber}</p>
+        <p><strong>BasicSalary:</strong> {employeeData[0].BasicSalary}</p>
+        <p><strong>Bio:</strong> {employeeData[0].Bio}</p>
       </div>
     </Modal>
   );

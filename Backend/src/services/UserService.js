@@ -71,10 +71,10 @@ export const getAllUserService = async () =>{
 
 
 //get user by Id
-export const getEmployeeByIDService = async (EmployeeID) =>{
+export const getEmployeeByIDService = async (employeeID) =>{
     try {
         const result = await poolRequest()
-        .input("EmployeeID", sql.Int,  EmployeeID)
+        .input("EmployeeID", sql.Int,  employeeID)
         .query(`
         SELECT Employees.*, Schedules.*, Positions.*, Attendances.*
         FROM Employees
@@ -82,7 +82,7 @@ export const getEmployeeByIDService = async (EmployeeID) =>{
         JOIN Positions ON Positions.PositionID = Employees.PositionID
         LEFT JOIN Attendances ON Employees.EmployeeID = Attendances.EmployeeID
 
-        WHERE Employees.EmployeeID = 1;
+        WHERE Employees.EmployeeID = @EmployeeID;
 
         `);
         return result.recordset;
@@ -140,7 +140,7 @@ export const getUserByEmailService = async (Email) =>{
 
 export const deleteEmployeeService = async (employeeID) => {
     try {
-        console.log("EmployeeID at delete sevice",employeeID)
+        // console.log("EmployeeID at delete sevice",employeeID)
         const result = await poolRequest()
         .input ('EmployeeID',sql.Int, employeeID)
         .query(`DELETE FROM Employees WHERE EmployeeID=@EmployeeID`);
@@ -182,7 +182,7 @@ export const updateEmployeeService = async (employee, employeeID) => {
           );
       return result;
     } catch (error) {
-        console.error("Error updating employee:", error);
+        // console.error("Error updating employee:", error);
       return error;
     }
   };
@@ -190,7 +190,7 @@ export const updateEmployeeService = async (employee, employeeID) => {
 
   export const getDetailsByEmployeeIDService = async (EmployeeID) => {
     try {
-      console.log("Service reached");
+    //   console.log("Service reached");
       const result = await poolRequest()
         .input("EmployeeID", sql.Int, EmployeeID)
         .query(

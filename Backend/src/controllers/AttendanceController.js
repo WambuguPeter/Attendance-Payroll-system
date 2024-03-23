@@ -99,13 +99,14 @@ export const addAttendanceController = async (req, res) =>{
       // console.log(newPosition);
 
       const response = await addAttendanceService(newAttendance);
-
+console.log(response)
       if (response instanceof Error){
           throw response;
       }
 
       if (response.rowsAffected && response.rowsAffected[0] === 1) {
-          // sendMail(newUser.Email);
+          
+
           sendCreated(res, "Attendance created successfully");
         } else {
           sendServerError(res, "Failed to create Attendance");
@@ -138,25 +139,28 @@ export const addAttendanceController = async (req, res) =>{
   }
 
 
-  export const updateAttendanceByEmpIDController = async (req, res) => {
+  export const updateAttendanceByIDController = async (req, res) => {
     try {
-      const employeeID = Number(req.params.EmployeeID);
+      const attendanceID = Number(req.params.AttendanceID);
       const exists = await checkAttendance(req);
 
-      // if (!exists){
-      //   return res.status(404).json({ message: "Attendance not found" });
-      // }
+      if (!exists){
+        return res.status(404).json({ message: "Attendance not found" });
+      }
       
-      const attendanceData = await getAttendByEmpIDService(employeeID);
+      const attendanceData = await getAttendanceByIDService(attendanceID);
       // console.log(employeeData)
      
       const updatedAttendanceData ={ ...attendanceData[0], ...req.body };
-      updatedAttendanceData.EmployeeID =employeeID;
+      updatedAttendanceData.AttendanceID =attendanceID;
       // console.log(employeeID)
 
       if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
-            const { Date, ScheduleID, TimeIn, Hours } = req.body;
+            const { EmployeeID, Date, ScheduleID, TimeIn, Hours } = req.body;
           
+            if (EmployeeID) {
+              updatedAttendanceData.EmployeeID = EmployeeID;
+            }
             if (Date) {
               updatedAttendanceData.Date = Date;
             }

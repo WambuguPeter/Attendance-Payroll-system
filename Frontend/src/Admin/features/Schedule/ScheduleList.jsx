@@ -16,6 +16,8 @@ const ScheduleList = () => {
     isFetching,
   } = useGetSchedulesQuery();
 
+  // console.log(schedules)
+
   const [deleteSchedule] = useDeleteSchedulesMutation();
   const [updateSchedule] = useUpdateSchedulesMutation();
   const [editScheduleData, setEditScheduleData] = useState(null);

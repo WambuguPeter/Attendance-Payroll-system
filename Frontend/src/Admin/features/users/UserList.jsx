@@ -13,9 +13,9 @@ const EmployeesList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
   const [selectedEmployeeID, setSelectedEmployeeID] = useState(null); // State to track the selected employee ID
 
-  const { data: singleEmployeeData, isLoading: isSingleEmployeeLoading, isError: isSingleEmployeeError } = useGetEmployeeByIDQuery(selectedEmployeeID);
+  // const { data: singleEmployeeData, isLoading: isSingleEmployeeLoading, isError: isSingleEmployeeError } = useGetEmployeeByIDQuery(selectedEmployeeID);
 
-  if (isLoading || isFetching || isSingleEmployeeLoading) {
+  if (isLoading || isFetching) {
     LoadingToast("Loading");
     return <RotateLoader color="#36d7b7" loading={true} size={15} />;
   }
@@ -48,12 +48,13 @@ const EmployeesList = () => {
       setIsModalOpen(false); // Close the modal after updating employee details
     } catch (error) {
       // console.error("Error updating employee:", error);
-      ErrorToast("Failed to update employee details");
+      // ErrorToast("Failed to update employee details");
     }
   };
 
   const handleViewEmployeeDetails = (employee) => {
     setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
+    // setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
   };
 
   return (
@@ -91,14 +92,14 @@ const EmployeesList = () => {
           </tbody>
         </table>
       </section>
-      <EmployeeDetailsModal
+      {/* <EmployeeDetailsModal
         isOpen={selectedEmployeeID !== null}
         onClose={() => setSelectedEmployeeID(null)}
         employeeID={selectedEmployeeID}
-        singleEmployeeData={singleEmployeeData}
-        isLoading={isSingleEmployeeLoading}
-        isError={isSingleEmployeeError}
-      />
+        // singleEmployeeData={singleEmployeeData}
+        // isLoading={isSingleEmployeeLoading}
+        // isError={isSingleEmployeeError}
+      /> */}
       {isModalOpen && (
         <EditEmployeeModal
           employee={editEmployeeData}

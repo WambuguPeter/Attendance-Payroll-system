@@ -42,16 +42,16 @@ export const overtimeApi = createApi({
     //     }),
 
 
-    //     deleteOvertime: builder.mutation({
-    //         query:(ScheduleID) => ({
-    //             url:`Overtime/deleteSchedule/${ScheduleID}`,
-    //             method: "DELETE",
-    //         }),
-    //         invalidatesTags: ["Overtime"],
-    //     })       
+        deleteOvertime: builder.mutation({
+            query:(OvertimeID) => ({
+                url:`overtime/deleteOvetimeByID/${OvertimeID}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Overtime"],
+        })       
 
 
     })
 });
 
-export const { useGetOvertimeQuery} = overtimeApi;
+export const { useGetOvertimeQuery, useDeleteOvertimeMutation} = overtimeApi;

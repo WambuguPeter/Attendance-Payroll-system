@@ -6,7 +6,7 @@ import { sendBadRequest, sendDeleteSuccess,
     sendCreated, sendNotFound,
     sendServerError, sendSuccess, checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js";     
 import { response } from "express";
-import { addPayrollService, deletePayRollService, getAllPayrollsService, getPayrollByIDService, updatePayrollService } from "../services/Payroll.js";
+import { addPayrollService, deletePayRollService, getAllPayrollsService, getPayrollByEmpIDService, getPayrollByIDService, updatePayrollService } from "../services/Payroll.js";
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
@@ -83,6 +83,22 @@ export const getAllPayrollsController = async (req,res) => {
         sendServerError(res, error);
     }
 };
+
+//get by Empid
+export const getPayrollByEmpIDController = async (req, res) => {
+    try {
+      const employeeID = Number(req.params.EmployeeID);
+      const payroll = await getPayrollByEmpIDService(employeeID);
+  
+      if (payroll.length != 0) {
+        return res.status(200).json(payroll);
+      } else {
+        return res.status(404).json({ error: "Payroll not found" });
+      }
+    } catch (error) {
+      sendServerError(res, error.message);
+    }
+  };
 
 //get by id
 export const getPayrollByIDController = async (req, res) => {

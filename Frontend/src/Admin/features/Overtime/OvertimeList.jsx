@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RotateLoader from "react-spinners/RotateLoader";
-import { useGetOvertimeQuery } from './OvertimeApi';
+import { useGetOvertimeQuery, useDeleteOvertimeMutation } from './OvertimeApi';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 
@@ -13,9 +13,9 @@ const overtimeList = () => {
     isFetching,
   } = useGetOvertimeQuery();
 
-  // console.log(schedules)
+  console.log(overtimes)
 
-//   const [deleteSchedule] = useDeleteSchedulesMutation();
+  const [deleteOvertime] = useDeleteOvertimeMutation();
 //   const [updateSchedule] = useUpdateSchedulesMutation();
 //   const [editScheduleData, setEditScheduleData] = useState(null);
 //   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
@@ -32,14 +32,15 @@ const overtimeList = () => {
   }
   const sortedOvertimes = [...overtimes].sort((a, b) => b.OvertimeID - a.OvertimeID);
 
-//   const handleDeleteOvertime = async (OvertimeID) =>{
-//     try {
-//       await deleteOvertime(OvertimeID).unwrap();
-//       SuccessToast("Deleted Successfully");
-//     } catch (error) {
-//       console.error("Error deleting Overtime:", error);
-//     }
-//   };
+  const handleDeleteOvertime = async (OvertimeID) =>{
+    console.log(OvertimeID)
+    try {
+      await deleteOvertime(OvertimeID).unwrap();
+      SuccessToast("Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting Overtime:", error);
+    }
+  };
 
 //   const handleEditOvertime = (schedule) => {
 //     setEditScheduleData(schedule);
@@ -76,15 +77,15 @@ const overtimeList = () => {
             {sortedOvertimes.map((overtime) => (
               <tr className="details" key={overtime.OvertimeID}>
                 <td>{overtime.OvertimeID}</td>
-                <td>{overtime.EmployeeID}</td>
+                <td>{overtime.FirstName} {overtime.LastName} </td>
                 <td>{overtime.AttendanceID}</td>
                 <td>{overtime.OvertimeHours}</td>
                 <td>{overtime.OvertimeEarnings}</td>
                 <td>
                   <div className="action-icons">
                     {/* <FaEye className="icon1" /> */}
-                    <FaEdit className="icon2" onClick={() => handleEditSchedule(schedule)} />
-                    <FaTrash className="icon3" onClick={() => handleDeleteSchedule(schedule.ScheduleID)} />
+                    {/* <FaEdit className="icon2" onClick={() => handleEditSchedule(overtime)} /> */}
+                    <FaTrash className="icon3" onClick={() => handleDeleteOvertime(overtime.OvertimeID)} />
                   </div>
                 </td>
               </tr>

@@ -33,7 +33,10 @@ export const addPayrollService = async (newPayroll) => {
 export const getAllPayrollsService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM Payrolls");
+        .query(`
+        SELECT Payrolls.*, Employees.*
+       FROM Payrolls
+       JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID`);
         return result.recordset;
         
     } catch (error) {
@@ -42,12 +45,34 @@ export const getAllPayrollsService = async () =>{
 };
 
 
+//get Payrolls by Emp Id
+export const getPayrollByEmpIDService = async (employeeID) =>{
+    try {
+        const result = await poolRequest()
+        .input("EmployeeID", sql.Int,  employeeID)
+        .query(`
+        SELECT Payrolls.*, Employees.*
+       FROM Payrolls
+       JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
+       WHERE Payrolls.EmployeeID = @EmployeeID
+       `);
+        return result.recordset;
+        
+    } catch (error) {
+        return error.message;
+    }
+};
 //get Payrolls by Id
 export const getPayrollByIDService = async (payrollID) =>{
     try {
         const result = await poolRequest()
         .input("PayrollID", sql.Int,  payrollID)
-        .query("SELECT * FROM Payrolls WHERE PayrollID= @PayrollID");
+        .query(`
+        SELECT Payrolls.*, Employees.*
+       FROM Payrolls
+       JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
+       WHERE PayrollID = @PayrollID
+       `);
         return result.recordset;
         
     } catch (error) {

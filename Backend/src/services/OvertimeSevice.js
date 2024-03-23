@@ -8,7 +8,10 @@ dotenv.config();
 export const getAllOvertimesService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM Overtime");
+        .query(`
+         SELECT Overtime.*, Employees.*
+        FROM Overtime
+        JOIN Employees ON Employees.EmployeeID = Overtime.EmployeeID`);
         return result.recordset;
         
     } catch (error) {

@@ -2,56 +2,65 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const payrollApi = createApi({
-    reducerPath: "scheduleApi",
+    reducerPath: "payrollApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/"}),
-    tagTypes: ["Schedules"],
+    tagTypes: ["Payrolls"],
     endpoints: (builder) =>({
-        getSchedules: builder.query({
+        getPayrolls: builder.query({
             query: () => ({
-                url: "Schedules/getAll",
+                url: "payroll/getAll",
                 method: "GET",
             }) ,  
-            providesTags: ["Schedules"]
+            providesTags: ["Payrolls"]
             
             
         }),
-        getSchedulesByID: builder.query({
+        getPayrollsByID: builder.query({
             //by id???
-            query: (ScheduleID) =>({
-                url: `Schedules/getScheduleByID/${ScheduleID}`,
+            query: (PayrollID) =>({
+                url: `payroll/getpayrollByID/${PayrollID}`,
                 method: "GET",
             }),
-            providesTags: ["Schedules"]
+            providesTags: ["Payrolls"]
         }),
 
-        addSchedule: builder.mutation({
-            query: (schedule) =>({
-                url:"Schedules/addSchedule",
-                method: "POST",
-                body: schedule,
+        getPayrollsByEmpID: builder.query({
+            //by id???
+            query: (EmployeeID) =>({
+                url: `payroll/getpayrollByEmpID/${EmployeeID}`,
+                method: "GET",
             }),
-            invalidatesTags: ["Schedules"],
+            providesTags: ["Payrolls"]
         }),
 
-        updateSchedules: builder.mutation({
-            query: (ScheduleID) =>({
-                url:`Schedules/updateScheduleByID/${ScheduleID}`,
-                method: "PUT",
-            }),
-            invalidatesTags: ["Schedules"],
-        }),
+        // addSchedule: builder.mutation({
+        //     query: (schedule) =>({
+        //         url:"Payrolls/addSchedule",
+        //         method: "POST",
+        //         body: schedule,
+        //     }),
+        //     invalidatesTags: ["Payrolls"],
+        // }),
+
+        // updatePayrolls: builder.mutation({
+        //     query: (ScheduleID) =>({
+        //         url:`Payrolls/updateScheduleByID/${ScheduleID}`,
+        //         method: "PUT",
+        //     }),
+        //     invalidatesTags: ["Payrolls"],
+        // }),
 
 
-        deleteSchedules: builder.mutation({
-            query:(ScheduleID) => ({
-                url:`Schedules/deleteSchedule/${ScheduleID}`,
-                method: "DELETE",
-            }),
-            invalidatesTags: ["Schedules"],
-        })       
+        // deletePayrolls: builder.mutation({
+        //     query:(ScheduleID) => ({
+        //         url:`Payrolls/deleteSchedule/${ScheduleID}`,
+        //         method: "DELETE",
+        //     }),
+        //     invalidatesTags: ["Payrolls"],
+        // })       
 
 
     })
 });
 
-export const {} = payrollApi;
+export const {useGetPayrollsQuery, useGetPayrollsByIDQuery} = payrollApi;

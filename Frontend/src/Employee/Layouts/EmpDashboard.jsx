@@ -100,7 +100,7 @@ const EmpDashboard = () => {
             <img src={graph} alt="Attendance Graph" />
           </div>
           <div className="attend">
-            <AttendList isTimeIn={isTimeIn} isTimeOut={isTimeOut} />
+            {/* <AttendList isTimeIn={isTimeIn} isTimeOut={isTimeOut} /> */}
           </div>
         </div>
       </div>

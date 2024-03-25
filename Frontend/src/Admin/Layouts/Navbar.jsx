@@ -66,11 +66,11 @@ const Navbar = () => {
                 <div className="rightend">
                     <div className="msg">
                         <img src={msg} alt="msg" />
-                        <div className="count">2</div>
+                        {/* <div className="count">2</div> */}
                     </div>
                     <div className="notify">
                         <img src={notify} alt="notify" />
-                        <div className="count">2</div>
+                        {/* <div className="count">2</div> */}
                     </div>
                     <div className="avator" onClick={handleProfileClick}>
                         <span className="user">Admin</span>

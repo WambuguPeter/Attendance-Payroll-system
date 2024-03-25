@@ -5,7 +5,7 @@
 GET http://localhost:8000/api/payroll/getAll
 
 ### get Payrolls By ID.
-GET http://localhost:8000/api/payroll/getpayrollByID/22
+GET http://localhost:8000/api/payroll/getpayrollByID/33
 
 
 ### get Payrolls By Emp ID.
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### Update payroll
-PUT http://localhost:8000/api/payroll/UpdatepayrollByID/1
+PUT http://localhost:8000/api/payroll/UpdatepayrollByID/33
 Content-Type: application/json
 
 {

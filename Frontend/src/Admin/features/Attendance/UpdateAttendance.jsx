@@ -38,14 +38,14 @@ const UpdateAttendance = ({attendance, onUpdateAttendance, onClose}) => {
             EmployeeID :
                 <input type="Int" name="EmployeeID" value= {`${updatedAttendance.FirstName} ${updatedAttendance.LastName}`} onChange={handleChange} />
             </label>
-            <label>
+            {/* <label>
             Date:
                 <input type="Date" name="Date" value={updatedAttendance.Date} onChange={handleChange} />
-            </label>
-            <label>
+            </label> */}
+            {/* <label>
             ScheduleID:
                 <input type="Int" name="ScheduleID" value={updatedAttendance.ScheduleID} onChange={handleChange} />
-            </label>
+            </label> */}
             <label>
                 TimeIn:
                 <input type="Time" name="TimeIn" value={updatedAttendance.TimeIn} onChange={handleChange} />

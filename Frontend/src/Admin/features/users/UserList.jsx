@@ -4,7 +4,7 @@ import { useDeleteEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutat
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
 import EditEmployeeModal from './updateEmployee';
-import EmployeeDetailsModal from './EmployeeDetails';
+import EmployeeDetailsModal from './EmployeeDetails'
 
 const EmployeesList = () => {
   const { data: employees, error, isLoading, isError, isFetching } = useGetEmployeesQuery();
@@ -41,20 +41,11 @@ const EmployeesList = () => {
     setIsModalOpen(true); // Open the modal when editing an employee
   };
 
-  // const handleUpdateEmployee = async (updatedEmployee) => {
-  //   try {
-  //     await updateEmployee(updatedEmployee).unwrap();
-  //     SuccessToast("Employee details updated successfully");
-  //     setIsModalOpen(false); // Close the modal after updating employee details
-  //   } catch (error) {
-  //     // console.error("Error updating employee:", error);
-  //     // ErrorToast("Failed to update employee details");
-  //   }
-  // };
-
-  const handleViewEmployeeDetails = (employee) => {
-    setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
-    // setSelectedEmployeeID(employee.EmployeeID); // Set the selected employee ID
+  const handleViewEmployeeDetails = (employeeID) => {
+    if (employeeID) {
+      setSelectedEmployeeID(employeeID);
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -82,7 +73,7 @@ const EmployeesList = () => {
                 <td>{employee.ScheduleName}</td>
                 <td>
                   <div className="action-icons">
-                    <FaEye className="icon1" onClick={() => handleViewEmployeeDetails(employee)}/>
+                    <FaEye className="icon1" onClick={() => handleViewEmployeeDetails(employee.EmployeeID)}/>
                     <FaEdit className="icon2" onClick={() => handleEditEmployee(employee)} />
                     <FaTrash className="icon3" onClick={() => handleDeleteEmployee(employee.EmployeeID)} />
                   </div>
@@ -92,21 +83,17 @@ const EmployeesList = () => {
           </tbody>
         </table>
       </section>
-      {/* <EmployeeDetailsModal
-        isOpen={selectedEmployeeID !== null}
-        onClose={() => setSelectedEmployeeID(null)}
+      <EmployeeDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         employeeID={selectedEmployeeID}
-        // singleEmployeeData={singleEmployeeData}
-        // isLoading={isSingleEmployeeLoading}
-        // isError={isSingleEmployeeError}
-      /> */}
-      {isModalOpen && (
-        <EditEmployeeModal
-          employee={editEmployeeData}
-          // onUpdateEmployee={handleUpdateEmployee}
-          onClose={() => setIsModalOpen(false)} // Close the modal
-        />
-      )}
+      />
+     {isModalOpen && editEmployeeData && (
+  <EditEmployeeModal
+    employee={editEmployeeData}
+    onClose={() => setIsModalOpen(false)} // Close the modal
+  />
+)}
     </div>
   );
 };

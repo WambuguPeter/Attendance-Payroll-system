@@ -10,9 +10,9 @@ const Overtime = () => {
     <div className='ovetimePage'>
        <div className="header1">
         <h1>Overtime.</h1>
-        <div className="generate">
+        {/* <div className="generate">
           <span >+ Add</span>
-        </div>
+        </div> */}
       </div>
 
       <div className="ovetimeRatesList">

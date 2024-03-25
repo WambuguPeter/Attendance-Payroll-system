@@ -35,11 +35,10 @@ table{
         tr{
             background-color: rgb(22, 77, 22);
             color: white;
-            // position: absolute;
         }
         th{
         background-color: rgb(22, 77, 22);
-        position: sticky;
+        // position: sticky;
         top: 0;
         font-size: 15px;
     }}
@@ -53,7 +52,7 @@ table{
     }
     tbody{
         // background-color: red;
-        height: 60vh;
+        height: 50vh;
         overflow: scroll;
         scroll-behavior: smooth;
     }

@@ -1,0 +1,42 @@
+.payslip {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+  }
+  
+  .payslip h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .empDetails {
+    margin-bottom: 20px;
+  }
+  
+  .empDetails p {
+    margin: 5px 0;
+  }
+  
+  .amounts {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  
+  .amounts p {
+    margin: 5px 0;
+  }
+  
+  .gross {
+    margin-top: 10px;
+  }
+  
+  .gross p {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  

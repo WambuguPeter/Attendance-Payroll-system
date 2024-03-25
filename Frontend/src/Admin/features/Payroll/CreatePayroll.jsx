@@ -32,7 +32,6 @@ console.log('formData', formData)
     <section className="modal-content ">
       <h2>Add a New Payroll</h2>
       <form onSubmit={handleSubmit} className="form">
-        {/* Input fields */}
         {Object.keys(formData).map((key) => (
           <label className="form-input" htmlFor={key} key={key}>
             {key}:

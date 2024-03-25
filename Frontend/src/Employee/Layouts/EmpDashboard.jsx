@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import emp from '../assets/images/emp1.jpg';
 import graph from '../assets/images/graph1.png';
 import AttendList from '../Components/AttendList';
+import EmployeeAttendanceChart from '../Components/BarGraph';
 import { useAddAttendancesMutation, useUpdateAttendanceMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
 
 const EmpDashboard = () => {
@@ -96,8 +97,9 @@ const EmpDashboard = () => {
         </div>
         <div className="rightContent">
           <div className="graph">
-            <h3>Attendance Graph</h3>
-            <img src={graph} alt="Attendance Graph" />
+            {/* <h3>Attendance Graph</h3> */}
+            <EmployeeAttendanceChart />
+            {/* <img src={graph} alt="Attendance Graph" /> */}
           </div>
           <div className="attend">
             {/* <AttendList isTimeIn={isTimeIn} isTimeOut={isTimeOut} /> */}

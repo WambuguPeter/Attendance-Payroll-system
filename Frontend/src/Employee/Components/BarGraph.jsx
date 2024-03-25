@@ -1,54 +1,62 @@
-import React from 'react'
-// import Chart from 'chart.js/auto';
-import { Bar } from 'react-chartjs-2';
+import React, { useRef, useEffect, useState } from 'react';
+import Chart from 'chart.js/auto';
 
+const EmployeeAttendanceChart = () => {
+  const chartContainer = useRef(null);
+  const [myChart, setMyChart] = useState(null);
 
-const BarGraph = () => {
+  useEffect(() => {
+    let chartInstance = null;
+
+    if (myChart) {
+      myChart.destroy(); // Destroy the previous chart instance
+    }
+
     const data = {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        datasets: [
-          {
-            label: 'Attendance',
-            backgroundColor: 'rgba(75,192,192,0.2)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderWidth: 2,
-            hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-            hoverBorderColor: 'rgba(75,192,192,1)',
-            data: [8, 7, 8.5, 9, 7.5], // Number of hours attended for each day
-          },
-        ],
-      };
-    
-      // Chart options
-      const options = {
-        scales: {
-          xAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'Number of Hours',
-              },
-            },
-          ],
-          yAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: 'Weekdays',
-              },
-            },
-          ],
-        },
-      };
-    
-      return (
-        <div>
-          <Bar data={data} options={options} />
-        </div>
-      );
-}
+      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      datasets: [{
+        label: 'Employee Attendance',
+        data: [8, 9, 7, 8, 9], // Sample attendance hours for the employee for each weekday
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    };
 
-export default BarGraph
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        indexAxis: 'y',
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Hours'
+            },
+            beginAtZero: true
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Weekdays'
+            }
+          }
+        }
+      },
+    };
+
+    chartInstance = new Chart(chartContainer.current, config);
+    setMyChart(chartInstance);
+
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy(); // Cleanup the chart instance when component unmounts
+      }
+    };
+  }, []); // Empty dependency array to ensure this effect runs only once
+
+  return <canvas ref={chartContainer} />;
+};
+
+export default EmployeeAttendanceChart;

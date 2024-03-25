@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-//fetch basic salary by EmployeeID
 const fetchBasicSalary = async (employeeID) => {
     console.log('employeeID:', employeeID)
     try {
@@ -17,16 +16,13 @@ const fetchBasicSalary = async (employeeID) => {
                 WHERE EmployeeID= @EmployeeID`
             );
         
-        // Extract basic salary from the result
         const basicSalary = result.recordset[0].BasicSalary;
-        // console.log(basicSalary);
         return basicSalary;
     } catch (error) {
         throw error;
     }
 }
 
-// Function to fetch advance cash for a given EmployeeID
 const fetchAdvanceCash = async (employeeID) => {
     try {
         const result = await poolRequest()
@@ -35,7 +31,6 @@ const fetchAdvanceCash = async (employeeID) => {
                 `SELECT AdvanceAmount FROM AdvanceCash WHERE EmployeeID = @EmployeeID`
             );
         
-        // Extract advance cash from the result
         const advanceCash = result.recordset[0].AdvanceAmount;
         return advanceCash;
     } catch (error) {
@@ -43,16 +38,14 @@ const fetchAdvanceCash = async (employeeID) => {
     }
 }
 
-// Function to fetch overtime earnings for a given EmployeeID
 const fetchOvertimeEarnings = async (employeeID) => {
     try {
         const result = await poolRequest()
             .input("EmployeeID", sql.Int, employeeID)
             .query(
                 `SELECT OvertimeEarnings FROM Overtime WHERE EmployeeID = @EmployeeID`
-            );
+            );        
         
-        // Extract overtime earnings from the result
         const overtimeEarnings = result.recordset[0].OvertimeEarnings;
         return overtimeEarnings;
     } catch (error) {
@@ -60,16 +53,15 @@ const fetchOvertimeEarnings = async (employeeID) => {
     }
 }
 
-// Function to fetch deductions for a given EmployeeID
+
 const fetchDeductions = async (employeeID) => {
     try {
         const result = await poolRequest()
             .input("EmployeeID", sql.Int, employeeID)
             .query(
                 `SELECT SUM(DeductionAmount) AS TotalDeductions FROM tbl_Deductions WHERE EmployeeID = @EmployeeID`
-            );
-        
-        // Extract total deductions from the result
+            );        
+       
         const totalDeductions = result.recordset[0].TotalDeductions; 
         return totalDeductions;
     } catch (error) {
@@ -127,7 +119,6 @@ export const addPayrollService = async ({ EmployeeID }) => {
 
 
 
-
 //Get all Payrolls
 export const getAllPayrollsService = async () =>{
     try {
@@ -177,11 +168,26 @@ export const getPayrollByIDService = async (payrollID) =>{
         const result = await poolRequest()
         .input("PayrollID", sql.Int,  payrollID)
         .query(`
-        SELECT Payrolls.*, Employees.*
-       FROM Payrolls
-       JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
-       WHERE PayrollID = @PayrollID
-       `);
+        SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
+	FROM Payrolls 
+	JOIN 
+	Employees E ON E.EmployeeID = Payrolls.EmployeeID
+	JOIN
+	Positions P ON E.PositionID = P.PositionID
+	JOIN
+	AdvanceCash A ON E.EmployeeID = A.EmployeeID
+	JOIN
+	Overtime O ON E.EmployeeID = O.EmployeeID
+	JOIN
+	tbl_Deductions D ON E.EmployeeID = D.EmployeeID
+    WHERE PayrollID = @PayrollID;
+`)
+    //     .query(`
+    //     SELECT Payrolls.*, Employees.*
+    //    FROM Payrolls
+    //    JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
+    //    WHERE PayrollID = @PayrollID
+    //    `);
         return result.recordset;
         
     } catch (error) {

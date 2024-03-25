@@ -22,12 +22,13 @@ const EditEmployeeModal = ({ employee, onUpdateEmployee, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateEmployee({EmployeeID: parseInt(employeeID), employee}).unwrap();
+      await updateEmployee(employee).unwrap();
       SuccessToast(response.message);
       onClose(); // Close the form upon successful submission
     } catch (error) {
       console.error("Error in Updating the employee:", error);
       ErrorToast("Failed to Update employee");
+      onClose();
     }
     onUpdateEmployee(updatedEmployee);
   };

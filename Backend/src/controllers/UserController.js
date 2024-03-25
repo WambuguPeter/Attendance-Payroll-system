@@ -14,8 +14,7 @@ sendNotFound,
 sendServerError,
 sendSuccess,
 checkIfValuesIsEmptyNullUndefined} from "../helper/helperFunctions.js"; 
-import emailTemp from "../utils/EmailTemp.js";    
-import { response } from "express";
+ 
 // import { verifyToken } from "../middlewares/VerifyToken.js";
 
 dotenv.config();
@@ -110,29 +109,94 @@ export const addEmployeeController = async (req, res) =>{
     }
 }
 
+
 //send Email
-export const sendMail = async (Email) => {
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-    });
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: Email,
-      subject: "Welcome To TillHappens Ltd!",
-      html: emailTemp,
-    };
-    try {
-      logger.info("Sending mail....");
-      await transporter.sendMail(mailOptions);
-      logger.info("Email sent successfully!");
-    } catch (error) {
-      logger.error(error);
-    }
+export const sendMail = async (Email, FirstName, LastName, Password) => {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+
+  // Generate HTML string for the email content
+  const emailContent = `
+    <html>
+      <head>
+        <title>Welcome To TillHappens Ltd!</title>
+        <!-- Add your custom styles here -->
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+          }
+          /* Add more styles as needed */
+        </style>
+      </head>
+      <body>
+        <div>
+          <h1>Welcome to TillHappens Ltd!</h1>
+          <p>Dear ${FirstName} ${LastName},</p>
+          <p>We are thrilled to welcome you to our platform. You are now part of our community!</p>
+          <p>Your login credentials:</p>
+          <p>Email: ${Email}</p>
+          <p>Password: ${Password}</p>
+          <p>You can now login to our platform using the provided credentials.</p>
+          <p>If you have any questions or need assistance, feel free to contact us at  info@tillHappens.com.</p>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: Email,
+    subject: "Welcome To TillHappens Ltd!",
+    html: emailContent,
   };
+
+  try {
+    logger.info("Sending mail....");
+    await transporter.sendMail(mailOptions);
+    logger.info("Email sent successfully!");
+  } catch (error) {
+    logger.error(error);
+  }
+};
+
+
+//send Email
+// export const sendMail = async (Email) => {
+//     let transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user: process.env.EMAIL,
+//         pass: process.env.PASSWORD,
+//       },
+//     });
+//     const mailOptions = {
+//       from: process.env.EMAIL,
+//       to: Email,
+//       subject: "Welcome To TillHappens Ltd!",
+//       html: <WelcomeEmail 
+//             firstName={FirstName}
+//             lastName={LastName}
+//             email={Email}
+//             password={Password}
+//             supportEmail="[info.tillHappens@gmail.com]"
+//           />,
+//     };
+//     try {
+//       logger.info("Sending mail....");
+//       await transporter.sendMail(mailOptions);
+//       logger.info("Email sent successfully!");
+//     } catch (error) {
+//       logger.error(error);
+//     }
+//   };
 
 
 //Login user

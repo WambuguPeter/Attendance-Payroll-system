@@ -9,6 +9,7 @@ import Employee from '../Pages/Employee';
 import Schedule from '../Pages/Schedule'
 // import Position from '../Pages/Position'
 import Attendance from '../Pages/Attendance'
+import Advancecash from '../Pages/AdvanceCash';
 import Overtime from '../Pages/Overtime'
 import Payroll from '../Pages/Payroll'
 import Setting from '../Pages/Setting'
@@ -32,6 +33,7 @@ const MainContainer = () => {
             <Route path='/MainContainer/Schedule' element={<Schedule/>} />
             {/* <Route path='/MainContainer/Position' element={<Position/>} /> */}
             <Route path='/MainContainer/Attendance' element={<Attendance/>} />
+            <Route path='/MainContainer/Advancecash' element={<Advancecash/>} />
             <Route path='/MainContainer/Overtime' element={<Overtime/>} />
             <Route path='/MainContainer/Payroll' element={<Payroll/>} />
             <Route path='/MainContainer/Setting' element={<Setting/>} />

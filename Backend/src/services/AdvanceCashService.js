@@ -17,14 +17,12 @@ export const getAllAdvanceCashService = async () =>{
 };
 
 
-
-
 //get AdvanceCashs by Id
 export const getAdvanceCashByIDService = async (AdvanceCashID) =>{
     try {
         const result = await poolRequest()
         .input("AdvanceCashID", sql.Int,  AdvanceCashID)
-        .query("SELECT * FROM Positions WHERE AdvanceCashID= @AdvanceCashID");
+        .query("SELECT * FROM AdvanceCash WHERE AdvanceCashID= @AdvanceCashID");
         return result.recordset;
         
     } catch (error) {
@@ -32,4 +30,65 @@ export const getAdvanceCashByIDService = async (AdvanceCashID) =>{
     }
 };
 
+
+//Add new AdvanceCash 
+
+export const addAdvanceCashService = async (newAdvanceCash ) => {
+    try {
+        // Get the current date
+        const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
+
+        const result = await poolRequest()
+        .input("EmployeeID", sql.Int, newAdvanceCash.EmployeeID)
+        .input("Date", sql.VarChar(255), currentDate)
+        .input("Description", sql.VarChar(255), newAdvanceCash.Description)
+        .input("AdvanceAmount", sql.Decimal(10, 2), newAdvanceCash.AdvanceAmount)       
+        .query(
+            `INSERT INTO AdvanceCash (EmployeeID, Date, Description, AdvanceAmount)
+            VALUES (@EmployeeID, @Date, @Description, @AdvanceAmount)`
+        );
+        return result;
+        
+    } catch (error) {
+        return error;
+    }
+
+}
+
+
+
+//delete
+
+export const deleteAdvanceCashService = async (advanceCashID) => {
+    try {
+        const result = await poolRequest()
+        .input ('AdvanceCashID',sql.Int, advanceCashID)
+        .query("DELETE FROM AdvanceCash WHERE AdvanceCashID=@AdvanceCashID");
+        return result.recordset;
+    } catch (error) {
+        return error;
+    }
+}
+
+// Updteee
+export const updatePositionService = async (position) => {
+    const { PositionID, Title, BasicSalary, OvertimeRate} = position;
+        //  console.log(employee)
+    try {
+      const result = await poolRequest()         
+        .input("PositionID", sql.Int, PositionID)
+        .input("Title", sql.VarChar, Title)
+        .input("BasicSalary", sql.VarChar, BasicSalary)
+        .input("OvertimeRate", sql.VarChar, OvertimeRate)
+        .query(
+          `UPDATE Positions 
+           SET Title= @Title, BasicSalary= @BasicSalary, OvertimeRate= @OvertimeRate
+           where PositionID =@PositionID`
+          );
+      return result;
+    } catch (error) {
+        console.error("Error updating position:", error);
+      return error;
+    }
+  };
 

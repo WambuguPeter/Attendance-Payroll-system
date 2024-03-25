@@ -79,7 +79,6 @@ export const addPayrollService = async ({ EmployeeID }) => {
         // Get the current date
         const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
 
-        // Fetch basic salary, advance cash, overtime earnings, and deductions for the given EmployeeID
         const basicSalary = await fetchBasicSalary(EmployeeID);
         const advanceCash = await fetchAdvanceCash(EmployeeID);
         const overtimeEarnings = await fetchOvertimeEarnings(EmployeeID);
@@ -121,19 +120,19 @@ export const getAllPayrollsService = async () =>{
         const result = await poolRequest()
         .query(`
         SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
-	FROM Payrolls 
-	JOIN 
-	Employees E ON E.EmployeeID = Payrolls.EmployeeID
-	JOIN
-	Positions P ON E.PositionID = P.PositionID
-	JOIN
-	AdvanceCash A ON E.EmployeeID = A.EmployeeID
-	JOIN
-	Overtime O ON E.EmployeeID = O.EmployeeID
-	JOIN
-	tbl_Deductions D ON E.EmployeeID = D.EmployeeID;
-`);
-        return result.recordset;
+        FROM Payrolls 
+        JOIN 
+        Employees E ON E.EmployeeID = Payrolls.EmployeeID
+        JOIN
+        Positions P ON E.PositionID = P.PositionID
+        JOIN
+        AdvanceCash A ON E.EmployeeID = A.EmployeeID
+        JOIN
+        Overtime O ON E.EmployeeID = O.EmployeeID
+        JOIN
+        tbl_Deductions D ON E.EmployeeID = D.EmployeeID;
+    `);
+            return result.recordset;
         
     } catch (error) {
         return error.message;
@@ -177,25 +176,20 @@ export const getPayrollByIDService = async (payrollID) =>{
         .input("PayrollID", sql.Int,  payrollID)
         .query(`
         SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
-	FROM Payrolls 
-	JOIN 
-	Employees E ON E.EmployeeID = Payrolls.EmployeeID
-	JOIN
-	Positions P ON E.PositionID = P.PositionID
-	JOIN
-	AdvanceCash A ON E.EmployeeID = A.EmployeeID
-	JOIN
-	Overtime O ON E.EmployeeID = O.EmployeeID
-	JOIN
-	tbl_Deductions D ON E.EmployeeID = D.EmployeeID
-    WHERE PayrollID = @PayrollID;
+        FROM Payrolls 
+        JOIN 
+        Employees E ON E.EmployeeID = Payrolls.EmployeeID
+        JOIN
+        Positions P ON E.PositionID = P.PositionID
+        JOIN
+        AdvanceCash A ON E.EmployeeID = A.EmployeeID
+        JOIN
+        Overtime O ON E.EmployeeID = O.EmployeeID
+        JOIN
+        tbl_Deductions D ON E.EmployeeID = D.EmployeeID
+        WHERE PayrollID = @PayrollID;
 `)
-    //     .query(`
-    //     SELECT Payrolls.*, Employees.*
-    //    FROM Payrolls
-    //    JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
-    //    WHERE PayrollID = @PayrollID
-    //    `);
+  
         return result.recordset;
         
     } catch (error) {

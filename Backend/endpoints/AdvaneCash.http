@@ -4,7 +4,17 @@
 ### get all AdvanceCash.
 GET http://localhost:8000/api/AdvanceCash/getAll
 ### get AdvanceCash By ID.
-GET http://localhost:8000/api//AdvanceCash/getAdvanceCashByID/1
+GET http://localhost:8000/api/AdvanceCash/getAdvanceCashByID/1
 ### Delete AdvanceCash .
-DELETE http://localhost:8000/api/Schedules/deleteSchedule/2
+DELETE http://localhost:8000/api/AdvanceCash/deleteAdvanceCashByID/1
 
+
+### add advancecash
+POST http://localhost:8000/api/AdvanceCash/addAdvanceCash
+Content-Type: application/json
+
+  {
+    "EmployeeID": 1,
+    "Description": "Pre Salary advance",
+    "AdvanceAmount": 1000
+  }

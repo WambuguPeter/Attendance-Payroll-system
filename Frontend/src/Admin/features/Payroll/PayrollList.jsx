@@ -87,7 +87,7 @@ const PayrollList = () => {
         <PayrollDetails
           payrollID={selectedPayrollID}
           onClose={() => setSelectedPayrollID(null)}
-          isLoading={detailsLoading}
+          // isLoading={detailsLoading}
         />
       )}
     </div>
@@ -99,91 +99,3 @@ export default PayrollList;
 
 
 
-
-
-
-// import React, { useState } from 'react';
-// import RotateLoader from "react-spinners/RotateLoader";
-// import { useGetPayrollsQuery, useDeletePayrollsMutation } from './PayrollApi';
-// import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
-// import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../Components/Toster';
-
-// const payrollList = () => {
-//   const {
-//     data: payrolls,
-//     error,
-//     isLoading,
-//     isError,
-//     isFetching,
-//   } = useGetPayrollsQuery();
-
-//   const [deletePayroll] = useDeletePayrollsMutation();
-// const [selectedEmployeeID, setSelectedEmployeeID] = useState(null);
-
-
-//   if (isLoading || isFetching) {
-//     LoadingToast("Loading");
-//     return <RotateLoader color="#36d7b7" loading={true} size={15} />;
-//   }
-
-//   if (error || isError || !payrolls || payrolls.length === 0) {
-//     console.log("Error caught or no Payrolls");
-//     ErrorToast("No Payrolls");
-//     return <div> <h2>No Payrolls at the moment</h2>  </div>;
-//   }
-//   const sortedPayrolls = [...payrolls].sort((a, b) => b.PayrollID - a.PayrollID);
-
-//   const handleDeletePayroll = async (PayrollID) =>{
-//     console.log(PayrollID)
-//     try {
-//       await deletePayroll(PayrollID).unwrap();
-//       SuccessToast("Deleted Successfully");
-//     } catch (error) {
-//       console.error("Error deleting Overtime:", error);
-//     }
-//   };
-
-
-//   return (
-//     <div className="payrollList">
-//       <ToasterContainer />
-//       <section className="payrollcontainer">
-//         <table>
-//           <thead>
-//             <tr className="titles">
-//               <th>ID</th>
-//               <th>Date</th>
-//               <th>Employee</th>
-//               <th>GrossPay</th>
-//               <th>TotalDeductions</th>
-//               <th>NetPay</th>
-//               <th>Action</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {sortedPayrolls.map((payroll) => (
-//               <tr className="details" key={payroll.PayrollID}>                
-//                 <td>{payroll.EmployeeID}</td>
-//                 <td>{payroll.PayrollDate}</td>
-//                 <td>{payroll.FirstName} {payroll.LastName} </td>
-//                 <td>{payroll.GrossPay}</td>
-//                 <td>{payroll.TotalDeductions}</td>
-//                 <td>{payroll.NetPay}</td>
-//                 <td>
-//                   <div className="action-icons">
-//                     <FaEye className="icon1"  />
-//                     <FaTrash className="icon3" onClick={() => handleDeletePayroll(payroll.PayrollID)} />
-//                   </div>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </section>
-     
-
-//     </div>
-//   );
-// };
-
-// export default payrollList;

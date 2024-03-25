@@ -36,10 +36,16 @@ function Menu() {
       path: "/MainContainer/Attendance"
     },
     {
+      title: "Advancecash",
+      icon: Payroll,
+      path: "/MainContainer/Advancecash"
+    },
+    {
       title: "Overtime",
       icon: Overtime,
       path: "/MainContainer/Overtime"
-    },
+    },    
+    
     {
       title: "Payroll",
       icon: Payroll,

@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './EmpDashboard.scss';
-import { useNavigate } from 'react-router-dom';
 import emp from '../assets/images/emp1.jpg';
 import graph from '../assets/images/graph1.png';
-import AttendList from '../Components/AttendList';
+import AttendanceList from '../Components/AttendList';
 import EmployeeAttendanceChart from '../Components/BarGraph';
+import { ErrorToast, SuccessToast } from '../../Admin/Components/Toster';
 import { useAddAttendancesMutation, useUpdateAttendanceMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
+
 
 const EmpDashboard = () => {
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
   const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
-  // console.log(employeeID)
 
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isTimeIn, setIsTimeIn] = useState(false);
-  const [isTimeOut, setIsTimeOut] = useState(false);
   const [addAttendance] = useAddAttendancesMutation();
-  const [updateAttendance] = useUpdateAttendanceMutation(employeeID);
-  const navigate = useNavigate();
+  const [addedAttendanceID, setAddedAttendanceID] = useState(null);
+  const [updateAttendance] = useUpdateAttendanceMutation();
 
   // Update current time every second
   useEffect(() => {
@@ -29,40 +27,55 @@ const EmpDashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (addedAttendanceID) {
+      SuccessToast("You have timed in.");
+    }
+  }, [addedAttendanceID]);
+
   const handleTimeIn = () => {
+    if (addedAttendanceID) {
+      ErrorToast("You have already timed in.");
+      return;
+    }
     const attendanceData = {
       EmployeeID: employeeID,
-      Date: new Date().toISOString(),
-      // date: currentTime.toLocaleTimeString(),
+      Date: currentTime.toISOString(), // Use ISO string format for Date
       TimeIn: currentTime.toLocaleTimeString(),
-      TimeOut: null,
     };
-    console.log(attendanceData)
-
+  
     addAttendance(attendanceData)
       .unwrap()
-      .then(() => {
-        setIsTimeIn(false);
-        setIsTimeOut(true);
+      .then((addedAttendance) => {
+        // Handle success if needed
+        // You can access addedAttendance.AttendanceID here
+        setAddedAttendanceID(addedAttendance.AttendanceID); // Set the added AttendanceID in state
       })
       .catch(error => console.error('Error adding attendance:', error));
   };
+  
 
   const handleTimeOut = () => {
+    if (!addedAttendanceID) {
+      ErrorToast("You have not timed in yet or you have already timed out for today.");
+      return;
+    }
+    console.log('addedAttendanceID', addedAttendanceID)
     const attendanceData = {
+      AttendanceID: addedAttendanceID,
       EmployeeID: employeeID,
-      TimeOut: currentTime.toLocaleTimeString()
+       // Use the stored AttendanceID
+      TimeOut: currentTime.toLocaleTimeString(),      
     };
-    event.stopPropagation();
-
-    updateAttendance(attendanceData)
+  console.log('attendanceData', attendanceData)
+    updateAttendance({ AttendanceID: attendanceData.AttendanceID, attendance: attendanceData, employeeID })
       .unwrap()
       .then(() => {
-        setIsTimeOut(true);
-        setIsTimeIn(false);
+        // Handle success if needed
       })
       .catch(error => console.error('Error updating attendance:', error));
   };
+  
 
   return (
     <div className="empDashboard">
@@ -80,29 +93,23 @@ const EmpDashboard = () => {
             </div>
           </div>
           <div className="clock">
-            {!isTimeOut && (
-              <span className="timeOut">
-                <div className="time" onClick={handleTimeIn}>Time In</div>
-                <div></div>
-              </span>
-            )}
-            {isTimeOut && (
-              <span className="timeOut">
-                <div></div>
-                <div className="time" onClick={handleTimeOut}>Time Out</div>
-              </span>
-            )}
+            <span className="timeOut">
+              <div className="time" onClick={handleTimeIn}>Time In</div>
+              <div></div>
+            </span>
             <div className='realTimer'>{currentTime.toLocaleTimeString()}</div>
+            <span className="timeOut">
+              <div></div>
+              <div className="time" onClick={handleTimeOut}>Time Out</div>
+            </span>
           </div>
         </div>
         <div className="rightContent">
           <div className="graph">
-            {/* <h3>Attendance Graph</h3> */}
             <EmployeeAttendanceChart />
-            {/* <img src={graph} alt="Attendance Graph" /> */}
           </div>
           <div className="attend">
-            {/* <AttendList isTimeIn={isTimeIn} isTimeOut={isTimeOut} /> */}
+            <AttendanceList />
           </div>
         </div>
       </div>

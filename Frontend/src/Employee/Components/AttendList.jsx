@@ -1,101 +1,91 @@
+import React, { useState } from 'react'
+import RotateLoader from "react-spinners/RotateLoader";
+// import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { ErrorToast, LoadingToast, SuccessToast } from '../../Admin/Components/Toster';
+import { useGetAttendanceByIDQuery } from '../../Admin/features/Attendance/AttendanceApi';
+// import UpdateAttendance from './UpdateAttendance';
 
-import React, { useEffect, useState } from 'react';
-import { LoadingToast, ErrorToast, SuccessToast } from "../../Admin/Components/Toster";
-import { useGetAttendanceByIDQuery, useUpdateAttendanceMutation, useAddAttendancesMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
+const AttendanceList = () => {
 
-const AttendList = ({ isTimeIn, isTimeOut, handleTimeOut }) => {
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
-  const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
+  // console.log('employeeDetails', employeeDetails)
+const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
+    const {
+        data: attendances,
+        error,
+        isLoading,
+        isError,
+        isFetching,
+      } = useGetAttendanceByIDQuery(employeeID);
 
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const { data: attendance, error, isLoading, refetch } = useGetAttendanceByIDQuery(employeeID);
-  // console.log(attendance)
-  // const attendanceID = attendance.AttendanceID;
 
-  const [updateAttendance] = useUpdateAttendanceMutation(); // Update by AttendanceID
-  const [addAttendance] = useAddAttendancesMutation();
+      // const [updateAttendance] = useUpdateAttendanceMutation();
+      
+  if (isLoading || isFetching) {
+    LoadingToast("Loading");
+    return <RotateLoader color="#36d7b7" loading={true} size={15} />;
+  }
 
-  // const sortedAttendances = [...attendance].sort((a, b) => b.AttendanceID - a.AttendanceID);
+  if (error || isError || !attendances || attendances.length === 0) {
+    // console.log("Error caught or no Attendance");
+    // ErrorToast("No attendance");
+    return <div> <h2>Yet to Attendant </h2>  </div>;
+  }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    // Clean up interval on unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (isTimeIn) {
-      const newAttendanceData = {
-        EmployeeID: employeeID,
-        Date: new Date().toISOString(),
-        TimeIn: currentTime.toLocaleTimeString(),
-        TimeOut: null,
-        Hours: null,
-      };
-      console.log(newAttendanceData)
-
-      addAttendance(newAttendanceData)
-        .unwrap()
-        .then(() => {
-          SuccessToast("Attendance recorded successfully");
-          refetch();
-        })
-        .catch(error => {
-          console.error('Error adding attendance:', error);
-          ErrorToast("Failed to record attendance");
-        });
-    }
-  // }, [ ]);
-  }, [isTimeIn, employeeID, currentTime, addAttendance, refetch]);
-  
-  // const handleTimeOutClick = (attendanceID, event) => {
-  //   event.stopPropagation(); // Prevent event bubbling
-  //   handleTimeOut(attendanceID);
+  // const handleUpdateAttendance = async (updatedAttendance) => {
+  //   try {
+  //     await updateAttendance(updatedAttendance).unwrap();
+  //     SuccessToast("Attendance details updated successfully");
+  //     setIsModalOpen(false); // Close the modal after updating employee details
+  //   } catch (error) {
+  //     console.error("Error updating Attendance:", error);
+  //     ErrorToast("Failed to update Attendance details");
+  //   }
   // };
-
-  if (isLoading) {
-    LoadingToast("Loading attendance...");
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    ErrorToast("Failed to fetch attendance");
-    return <div>Error: {error.message}</div>;
-  }
-
+  const sortedAttendance = [...attendances].sort((a, b) => b.AttendanceID - a.AttendanceID);
   return (
-    <div className='attendList'>
-      <table>
-        <thead>
-          <tr className="titles">
-            <th>ID</th>
-            <th>Date</th>
-            <th>Time In</th>
-            <th>Time Out</th>
-            <th>Total Hours</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* {sortedAttendances.map((item) => ( */}
-          {newAttendanceData.map((item) => (
-            <tr className="details" key={item.AttendanceID}>
-              <td>{item.AttendanceID}</td>
-              <td>{item.Date}</td>
-              <td>{item.TimeIn}</td>              
-              <td>{item.Hours}</td>
+    <div className='AttendanceList'>
+
+         <table>
+          <thead>
+            <tr className="titles">
+              <th>ID</th>
+              <th>Date</th>
+              <th>Time In</th>
+              <th>Time out</th>
+              <th>Hours</th>
+              <th>Overtime</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+          </thead>
+          <tbody>
+            {sortedAttendance.map((attendance) => (
+              <tr className="details" key={attendance.AttendanceID}>
+                <td>{attendance.AttendanceID}</td>
+                <td>{attendance.Date}</td>
+                <td>{attendance.TimeIn}</td>
+                <td>{attendance.TimeOut}</td>
+                <td>{attendance.Hours}</td>
+                <td>{attendance.Overtime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        
+        {/* {isModalOpen && (
+        <UpdateAttendance
+          attendance={editAttendanceData}
+          onUpdateAttendance={handleUpdateAttendance}
+          onClose={() => setIsModalOpen(false)} // Close the modal
+        />
+      )} */}
+        </div>
+  )
+}
 
-export default AttendList;
+export default AttendanceList
 
 
 
-// employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
-// const employeeID = employeeDetails ? employeeDetails.EmployeeID : null;
+
+
+

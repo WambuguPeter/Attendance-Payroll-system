@@ -63,4 +63,4 @@ export const payrollApi = createApi({
     })
 });
 
-export const {useGetPayrollsQuery, useGetPayrollsByIDQuery, useAddPayrollMutation, useDeletePayrollsMutation} = payrollApi;
+export const {useGetPayrollsQuery, useGetPayrollsByIDQuery, useAddPayrollMutation, useDeletePayrollsMutation, useGetPayrollsByEmpIDQuery} = payrollApi;

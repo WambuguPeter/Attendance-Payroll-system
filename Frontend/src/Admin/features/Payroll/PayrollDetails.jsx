@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const PayrollDetails = ({ payrollID, onClose, isLoading }) => {
-  const { data: payroll, isError, isLoading: dataLoading } = useGetPayrollsByIDQuery(payrollID);
-  console.log('payroll', payroll);
+const PayrollDetails = ({ payrollID, onClose }) => {
+  const { data: payroll, isError, isLoading } = useGetPayrollsByIDQuery(payrollID);
 
   const generatePDF = () => {
+    if (!payroll || isError) return;
     const doc = new jsPDF();
     doc.text(`TillHappens Payslip`, 10, 10);
     doc.text(`ID: ${payroll[0].PayrollID}`, 10, 20);
@@ -40,7 +40,7 @@ const PayrollDetails = ({ payrollID, onClose, isLoading }) => {
     doc.save("payroll_details.pdf");
   };
 
-  if (isLoading || dataLoading) {
+  if (isLoading) {
     return <LoadingToast message="Loading payroll details..." />;
   }
 
@@ -52,7 +52,7 @@ const PayrollDetails = ({ payrollID, onClose, isLoading }) => {
     <div className="modal">
       <div className="modal-content">
         <button className="close" onClick={onClose}>X</button>
-        <button onClick={generatePDF}>Print</button>
+        <button className='print' onClick={generatePDF}>Print</button>
         <div className='payslip'>
           <h2>TillHappens Payslip</h2>
           <div className="empDetails">

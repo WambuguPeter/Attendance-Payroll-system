@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const attendanceApi = createApi({
@@ -15,8 +14,7 @@ export const attendanceApi = createApi({
                        
         }),
 
-        getAttendanceByID: builder.query({
-          
+        getAttendanceByID: builder.query({          
             query: (EmployeeID) =>({
                 url: `attendance/getattendanceByEmpID/${EmployeeID}`,
                 method: "GET",
@@ -35,9 +33,10 @@ export const attendanceApi = createApi({
         }),
 
         updateAttendance: builder.mutation({
-            query: (AttendanceID) =>({
+            query: ({AttendanceID, attendance}) =>({
                 url:`attendance/UpdateAttendanceByID/${AttendanceID}`,
                 method: "PUT",
+                body: attendance,
             }),
             invalidatesTags: ["Attendances"],
         }),
@@ -55,7 +54,8 @@ export const attendanceApi = createApi({
 
 
     })
-});
+})
+
 
 export const {useGetAttendancesQuery, useAddAttendancesMutation,
 useDeleteAttendanceMutation, useGetAttendanceByIDQuery, useUpdateAttendanceMutation } = attendanceApi;

@@ -10,9 +10,6 @@ const EmpPayroll = () => {
     <div className='payroll'>
        <div className="header1">
         <h1>Payroll.</h1>
-        {/* <div className="generate">
-          <span>+ Add</span>
-        </div> */}
       </div>
 
       <div className="payrollList">

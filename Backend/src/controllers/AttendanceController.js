@@ -68,53 +68,31 @@ export const getAttendancesByEmpIDController = async (req, res) => {
 
 
   //Adding Attendance
-export const addAttendanceController = async (req, res) =>{
-  const {
-    EmployeeID, Date, ScheduleID, TimeIn, Hours
-  } = req.body;
-  // console.log(req.body);
-
-  try {
-
-      // const {error} = validateNewPosition({
-      //     Title, BasicSalary, OvertimeRate
-      // });
-
-      // if (error){
-      //     // return res.status(400).send(error.details.message);
-      //     return res.status(400).send(error.details[0].message);
-      // }
-      // const Title = String(req.params.Title);
-      // console.log(Title)
-      // const existingPosition = await getPositionByTitleService(Title);
-
-      // if (existingPosition) {
-      //     return res.status(400).json({ error : "Position already exists"});
-      //     // console.log("Use in the syste alredy");
-      // }
-      
+  export const addAttendanceController = async (req, res) => {
+    const {
+      EmployeeID, Date, ScheduleID, TimeIn, Hours
+    } = req.body;
+  
+    try {
       const newAttendance = {
         EmployeeID, Date, ScheduleID, TimeIn, Hours 
-      }
-      // console.log(newPosition);
-
+      };
+  
       const response = await addAttendanceService(newAttendance);
-console.log(response)
-      if (response instanceof Error){
-          throw response;
+  
+      if (response instanceof Error) {
+        throw response;
       }
-
-      if (response.rowsAffected && response.rowsAffected[0] === 1) {
-          
-
-          sendCreated(res, "Attendance created successfully");
-        } else {
-          sendServerError(res, "Failed to create Attendance");
-        }
-  } catch (error) {
+  
+      if (response && response.AttendanceID) {
+        res.status(200).send(response); // Send back the added details with its ID
+      } else {
+        sendServerError(res, "Failed to create Attendance");
+      }
+    } catch (error) {
       sendServerError(res, error.message);
-  }
-}
+    }
+};
 
   
 

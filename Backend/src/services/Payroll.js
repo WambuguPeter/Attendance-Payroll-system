@@ -87,17 +87,13 @@ export const addPayrollService = async ({ EmployeeID }) => {
         console.log('basicSalary', basicSalary);
         
         
-        // Calculate GrossPay by adding basic salary and overtime earnings
-        const grossPay = basicSalary + (overtimeEarnings || 0); // Ensure overtimeEarnings is 0 if it's null or undefined
-        // console.log('grossPay', grossPay)
+        
+        const grossPay = basicSalary + (overtimeEarnings || 0); 
+        const totalDeductions = (advanceCash || 0) + (deductions || 0); 
 
-        // Calculate TotalDeductions by adding advance cash and all other deductions
-        const totalDeductions = (advanceCash || 0) + (deductions || 0); // Ensure deductions is 0 if it's null or undefined
-
-        // Calculate NetPay by subtracting TotalDeductions from GrossPay
+        
         const netPay = grossPay - totalDeductions;
 
-        // Insert the calculated values into the database
         const result = await poolRequest()
             .input("PayrollDate", sql.VarChar(255), currentDate) // Use current date
             .input("EmployeeID", sql.Int, EmployeeID)
@@ -147,21 +143,33 @@ export const getAllPayrollsService = async () =>{
 
 //get Payrolls by Emp Id
 export const getPayrollByEmpIDService = async (employeeID) =>{
+   
     try {
         const result = await poolRequest()
         .input("EmployeeID", sql.Int,  employeeID)
         .query(`
-        SELECT Payrolls.*, Employees.*
-       FROM Payrolls
-       JOIN Employees ON Employees.EmployeeID = Payrolls.EmployeeID
-       WHERE Payrolls.EmployeeID = @EmployeeID
-       `);
+        SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
+        FROM Payrolls 
+        JOIN 
+        Employees E ON E.EmployeeID = Payrolls.EmployeeID
+        JOIN
+        Positions P ON E.PositionID = P.PositionID
+        JOIN
+        AdvanceCash A ON E.EmployeeID = A.EmployeeID
+        JOIN
+        Overtime O ON E.EmployeeID = O.EmployeeID
+        JOIN
+        tbl_Deductions D ON E.EmployeeID = D.EmployeeID
+        WHERE Payrolls.EmployeeID = @EmployeeID
+    `);
         return result.recordset;
         
     } catch (error) {
         return error.message;
     }
 };
+
+
 //get Payrolls by Id
 export const getPayrollByIDService = async (payrollID) =>{
     try {

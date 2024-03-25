@@ -29,15 +29,14 @@ const insertAttendanceRecord = async (attendanceData) => {
             .input("Date", sql.Date, formattedDate) 
             .input("TimeIn", sql.VarChar, attendanceData.TimeIn)
             .query(
-                `INSERT INTO Attendances (EmployeeID, Date, TimeIn) VALUES (@EmployeeID, @Date, @TimeIn)`
+                `INSERT INTO Attendances (EmployeeID, Date, TimeIn) OUTPUT INSERTED.AttendanceID VALUES (@EmployeeID, @Date, @TimeIn)`
             );
 
-        return result;
+        return result.recordset[0]; // Return the inserted data along with its ID
     } catch (error) {
         throw error;
     }
-}
-
+};
 
 
 const updateAttendanceHoursAndOvertime = async (attendanceID, hours, minutes, overtime) => {
@@ -94,7 +93,7 @@ const updateAttendanceRecord = async (attendanceData,existingRecord) => {
        console.log('timeOut', timeOut)
 
         const timeDifference = timeOut.getTime() - timeIn.getTime(); // Difference in milliseconds
-        console.log('timeDifference', timeDifference)
+        console.log('timeOut.getTime()')
 
         const hours = Math.floor(timeDifference / (1000 * 60 * 60)); // Convert milliseconds to hours
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Convert remaining milliseconds to minutes

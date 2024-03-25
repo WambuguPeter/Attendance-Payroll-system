@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
-import { useAddAttendancesMutation } from './AttendanceApi';
+import { useAddAttendancesMutation } from '../../Admin/features/Attendance/AttendanceApi';
 
 const CreateAttendance = ({ onClose }) => {
     const [addAttendance, { isLoading }] = useAddAttendancesMutation();

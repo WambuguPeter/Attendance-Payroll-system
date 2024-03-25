@@ -14,7 +14,7 @@ GET http://localhost:8000/api/attendance/getattendanceByEmpID/2
 
 
 ### Delete Attendance .
-DELETE http://localhost:8000/api/attendance/deleteattendanceByID/2
+DELETE http://localhost:8000/api/attendance/deleteattendanceByID/43
 
 
 
@@ -23,9 +23,9 @@ POST http://localhost:8000/api/attendance/AddAttendance
 Content-Type: application/json
 
 {
-    "EmployeeID": 2,
+    "EmployeeID": 3,
     "ScheduleID": 1,
-    "TimeIn": "09:00:00"      
+    "TimeIn": "10:00:00"      
 }
 
 ### Update Attendance by ID

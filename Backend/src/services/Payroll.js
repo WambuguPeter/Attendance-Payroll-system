@@ -74,7 +74,6 @@ const fetchDeductions = async (employeeID) => {
 //Add new Payroll
 
 export const addPayrollService = async ({ EmployeeID }) => {
-    console.log(EmployeeID)
     try {
         // Get the current date
         const currentDate = new Date().toISOString().slice(0, 10); // Format: YYYY-MM-DD
@@ -83,7 +82,6 @@ export const addPayrollService = async ({ EmployeeID }) => {
         const advanceCash = await fetchAdvanceCash(EmployeeID);
         const overtimeEarnings = await fetchOvertimeEarnings(EmployeeID);
         const deductions = await fetchDeductions(EmployeeID);
-        console.log('basicSalary', basicSalary);
         
         
         

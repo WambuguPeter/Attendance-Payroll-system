@@ -5,20 +5,16 @@ import * as yup from "yup";
 import { Route } from "react-router-dom";
 import { useState } from "react";
 import "./Login.scss";
-import { ToasterContainer,
-  ErrorToast,
+import { ErrorToast,
   LoadingToast,
   SuccessToast, } from "../Admin/Components/Toster";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLoginEmployeeMutation } from "../Admin/features/users/UserApi";
-import MainContainer from "../Admin/Layouts/MainContainer";
-import MainClient from "../Employee/Layouts/MainClient";
 
  
 const Login = () => {
 
   const [loginEmployee, { isLoading }] = useLoginEmployeeMutation();
-  
 
   const navigate = useNavigate();
   const schema = yup.object().shape({
@@ -46,7 +42,6 @@ const Login = () => {
         LoadingToast(false);
         // SuccessToast(response.message);
         userDetails.admin == true ? navigate("/MainContainer") : navigate("/MainClient");
-        // navigate("*")
       } else {
         console.log(response.error.data.message);
         ErrorToast(response.error.data.message);
@@ -94,43 +89,13 @@ const Login = () => {
           <p>{errors.Password?.message}</p>
           <input type="submit" value="Login" className="loginbtns" />
         </form>
+        <Link to="/forgot-password">Forgot Password?</Link>
       </div>
       </div>
+     
     </div>
   );
 };
  
 export default Login;
 
-
-// import './Login.scss'
-// import { useNavigate } from 'react-router-dom'
-// import { useLoginEmployeeMutation } from '../Admin/features/users/UserApi';
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
-
-// const Login = () => {
-//     const navigate = useNavigate();
-
-
-//   return (
-//     <div className='loginPage'>
-//         <div className="login-card">
-//         <form >
-//         <h1>Staff Portal</h1>
-//             <input type="text" placeholder='Enter the Employee ID' />
-//             <input type="text" placeholder='Password' />
-//         </form>
-//         <div className="loginbtns">
-//         <button onClick={() => navigate('/LoginAdmin')} >As Admin</button>
-//         <button onClick={() => navigate('/MainClient')} >Login</button>
-
-//         </div>
-            
-//         </div>
-//     </div>
-//   )
-// }
-
-// export default Login

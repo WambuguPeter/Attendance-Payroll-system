@@ -84,7 +84,7 @@ const overtimeList = () => {
                 <td>
                   <div className="action-icons">
                     {/* <FaEye className="icon1" /> */}
-                    {/* <FaEdit className="icon2" onClick={() => handleEditSchedule(overtime)} /> */}
+                    <FaEdit className="icon2" onClick={() => handleEditSchedule(overtime)} />
                     <FaTrash className="icon3" onClick={() => handleDeleteOvertime(overtime.OvertimeID)} />
                   </div>
                 </td>

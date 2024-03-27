@@ -17,7 +17,6 @@ export const addEmployeeService = async (newEmployee) => {
         .input("admin", sql.Bit, newEmployee.admin)
         .input("PositionID", sql.Int, newEmployee.PositionID)
         .input("ScheduleID", sql.Int, newEmployee.ScheduleID)
-        .input("PhotoURL", sql.VarChar(999), newEmployee.PhotoURL)
         .input("Email", sql.VarChar(255), newEmployee.Email)
         .input("Password", sql.VarChar(255), newEmployee.Password)
         .input("BankName", sql.VarChar(255), newEmployee.BankName)
@@ -25,10 +24,11 @@ export const addEmployeeService = async (newEmployee) => {
         .input("AccountNumber", sql.VarChar(255), newEmployee.AccountNumber)
         .input("Bio", sql.VarChar(255), newEmployee.Bio) 
         .query(
-            `INSERT INTO Employees (FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID, ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio)
-            VALUES (@FirstName, @LastName, @Location, @BirthDate, @Contact, @Gender,@admin, @PositionID, @ScheduleID, @PhotoURL, @Email, @Password, @BankName, @BankBranch, @AccountNumber, @Bio)`
+            `INSERT INTO Employees (FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio)
+            VALUES (@FirstName, @LastName, @Location, @BirthDate, @Contact, @Gender,@admin, @PositionID, @ScheduleID, @Email, @Password, @BankName, @BankBranch, @AccountNumber, @Bio)
+            SELECT FirstName, LastName, Email, Password FROM Employees WHERE Email = @Email;`
         );
-        return result;
+        return result.recordset[0];
         
     } catch (error) {
         return error;
@@ -56,20 +56,6 @@ export const getAllUserService = async () =>{
 
 
 
-
-
-// export const getAllUserService = async () =>{
-//     try {
-//         const result = await poolRequest()
-//         .query("SELECT * FROM Employees");
-//         return result.recordset;
-        
-//     } catch (error) {
-//         return error.message;
-//     }
-// };
-
-
 //get user by Id
 export const getEmployeeByIDService = async (employeeID) =>{
     try {
@@ -94,21 +80,6 @@ export const getEmployeeByIDService = async (employeeID) =>{
 
 
 
-
-
-// export const getEmployeeByIDService = async (EmployeeID) =>{
-//     try {
-//         const result = await poolRequest()
-//         .input("EmployeeID", sql.Int,  EmployeeID)
-//         .query("SELECT * FROM Employees WHERE EmployeeID= @EmployeeID");
-//         return result.recordset;
-        
-//     } catch (error) {
-//         return error.message;
-//     }
-// };
-
-
 //get details o a single Employee
 export const getDetailsByBEmployeeIDService = async (EmployeeID) =>{
     try {
@@ -126,11 +97,22 @@ export const getDetailsByBEmployeeIDService = async (EmployeeID) =>{
 
 // get by Email
 
-export const getUserByEmailService = async (Email) =>{
+export const getUserByEmailService = async (email) =>{
     try {
         const result = await poolRequest()
-        .input("Email", sql.VarChar(255),  Email)
+        .input("Email", sql.VarChar(255),  email)
         .query("SELECT * FROM Employees WHERE Email= @Email" );
+        return result.recordset[0];        
+    } catch (error) {
+        return error.message;
+    }
+};
+
+export const getUserByEmailService1 = async (email) =>{
+    try {
+        const result = await poolRequest()
+        .input("Email", sql.VarChar(255),  email)
+        .query("SELECT FirstName, LastName, Email, Password FROM Employees WHERE Email= @Email" );
         return result.recordset[0];        
     } catch (error) {
         return error.message;
@@ -152,7 +134,7 @@ export const deleteEmployeeService = async (employeeID) => {
 
 export const updateEmployeeService = async (employee, employeeID) => {
     const { FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
-         ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = employee;
+         ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio } = employee;
         //  console.log(employee)
     const EmployeeID = employeeID
     try {
@@ -167,7 +149,6 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .input("admin", sql.Bit, admin)
         .input("PositionID", sql.Int, PositionID)
         .input("ScheduleID", sql.Int, ScheduleID)
-        .input("PhotoURL", sql.VarChar, PhotoURL)
         .input("Email", sql.VarChar, Email)
         .input("Password", sql.VarChar, Password)
         .input("BankName", sql.VarChar, BankName)
@@ -177,7 +158,7 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .query(
           `UPDATE Employees 
            SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, 
-          PositionID= @PositionID, ScheduleID= @ScheduleID, PhotoURL= @PhotoURL, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio WHERE EmployeeID= @EmployeeID`
+          PositionID= @PositionID, ScheduleID= @ScheduleID, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio WHERE EmployeeID= @EmployeeID`
           );
       return result;
     } catch (error) {

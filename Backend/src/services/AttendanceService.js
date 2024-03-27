@@ -39,23 +39,6 @@ const insertAttendanceRecord = async (attendanceData) => {
 };
 
 
-const updateAttendanceHoursAndOvertime = async (attendanceID, hours, minutes, overtime) => {
-    try {
-        const result = await poolRequest()
-            .input("AttendanceID", sql.Int, attendanceID)
-            .input("Hours", sql.VarChar(255), `${hours}:${minutes}`)
-            .input("Overtime", sql.VarChar(3), overtime)
-            .query(
-                `UPDATE Attendances SET Hours = @Hours, Overtime = @Overtime WHERE ID = @AttendanceID`
-            );
-
-        return result;
-    } catch (error) {
-        throw error;
-    }
-}
-
-
 export const addAttendanceService = async (newAttendance) => {
     try {
         const existingRecord = await checkExistingAttendanceRecord(newAttendance.EmployeeID, newAttendance.Date);
@@ -93,7 +76,7 @@ const updateAttendanceRecord = async (attendanceData,existingRecord) => {
        console.log('timeOut', timeOut)
 
         const timeDifference = timeOut.getTime() - timeIn.getTime(); // Difference in milliseconds
-        console.log('timeOut.getTime()')
+        console.log('timeDifference', timeDifference)
 
         const hours = Math.floor(timeDifference / (1000 * 60 * 60)); // Convert milliseconds to hours
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)); // Convert remaining milliseconds to minutes
@@ -127,6 +110,21 @@ const updateAttendanceRecord = async (attendanceData,existingRecord) => {
 }
 
 
+const updateAttendanceHoursAndOvertime = async (attendanceID, hours, minutes, overtime) => {
+    try {
+        const result = await poolRequest()
+            .input("AttendanceID", sql.Int, attendanceID)
+            .input("Hours", sql.VarChar(255), `${hours}:${minutes}`)
+            .input("Overtime", sql.VarChar(3), overtime)
+            .query(
+                `UPDATE Attendances SET Hours = @Hours, Overtime = @Overtime WHERE ID = @AttendanceID`
+            );
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
 //Add new Attendance

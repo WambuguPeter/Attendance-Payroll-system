@@ -40,6 +40,7 @@ const AttendanceList = () => {
   };
 
   const handleEditAttendance = (attendance) => {
+    console.log('attendance', attendance)
     setEditAttendanceData(attendance);
     setIsModalOpen(true); // Open the modal when editing an employee
   };

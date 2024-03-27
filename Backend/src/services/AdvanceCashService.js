@@ -8,7 +8,11 @@ dotenv.config();
 export const getAllAdvanceCashService = async () =>{
     try {
         const result = await poolRequest()
-        .query("SELECT * FROM AdvanceCash");
+        .query(`SELECT A.*, E.*
+         FROM AdvanceCash A
+         JOIN
+         Employees E ON E.EmployeeID = A.EmployeeID
+         `);
         return result.recordset;
         
     } catch (error) {

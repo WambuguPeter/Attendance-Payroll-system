@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "FirstName" : "Calor",
-    "LastName" : "Waaaaaaaaaaa",
+    "LastName" : "Waaaaa",
     "Location" : "Nyeri",
     "BirthDate" : "2000-05-10",
     "Contact" : "0735621144",
@@ -18,20 +18,25 @@ Content-Type: application/json
     "admin" : false ,
     "PositionID" : 1,
     "ScheduleID" : 1,
-    "PhotoURL" : "https://example.com/john.jpg",
-    "Email" : "simogatuma21@gmail.com",
+    "Email" : "pientopitelo@gmail.com",
     "Password" : "password111",
     "BankName" : "NCBA",
     "BankBranch" : "Nyeri",
     "AccountNumber" : "12354321",
-    "Bio" : "Meet From Munyoki fro Moringa"
+    "Bio" : "Meet From Calor from Moringa"
 }
 
 ### getting All users
 GET http://localhost:8000/api/users/getAllUsers
 
 ### getting User By ID
-GET http://localhost:8000/api/users/getUserByID/2
+GET http://localhost:8000/api/users/getUserByID/4
+
+
+### getting User By Email
+GET http://localhost:8000/api/users/getNotFoundByEmail/gitiropeter4@gmail.com
+
+
 
 ### login
 POST http://localhost:8000/api/users/login
@@ -44,7 +49,7 @@ Content-Type: application/json
 
 
 ### Update Employee ---where id is.....
-PUT http://localhost:8000/api/users/UpdateEmployeeByID/4
+PUT http://localhost:8000/api/users/UpdateEmployeeByID/12
 Content-Type: application/json
 
 {
@@ -57,7 +62,6 @@ Content-Type: application/json
     "admin" : 0,
     "PositionID" : 1,
     "ScheduleID" : 1,
-    "PhotoURL" : "https://example.com/john.jpg",
     "Email" : "pientopitelo@gmail.com",
     "Password" : "password110",
     "BankName" : "NCBA",
@@ -73,4 +77,33 @@ Content-Type: application/json
 
 
 ###delete employee
-DELETE http://localhost:8000/api/users/deleteEmployeeById/12
+DELETE http://localhost:8000/api/users/deleteEmployeeById/11
+
+
+
+
+
+
+### Update Employee ---where id is.....
+PUT http://localhost:8000/api/users/UpdateEmployeeByID/12
+Content-Type: application/json
+
+{
+    "FirstName" : "Titus",
+    "LastName" : "Munyoki",
+    "Location" : "Nyeri",
+    "BirthDate" : "2000-05-10",
+    "Contact" : "0735621144",
+    "Gender" : "Male",
+    "admin" : 0,
+    "PositionID" : 1,
+    "ScheduleID" : 1,
+    "PhotoURL" : "https://example.com/john.jpg",
+    "Email" : "peter.wambugu@teach2give.com",
+    "Password" : "password110",
+    "BankName" : "NCBA",
+    "BankBranch" : "Nyeri",
+    "AccountNumber" : "12354321",
+    "Bio" : "Meet Titus Munyoki from Moringa"
+}
+

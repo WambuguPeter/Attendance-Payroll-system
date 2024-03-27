@@ -52,7 +52,9 @@ const Navbar = () => {
                     {/* <div className="count">2</div> */}
                 </div>
                 <div className="avator">
-                    <span className='user'>Staff</span>
+                    <span className='user' onClick={() => {
+                                    navigate("/Empprofile")
+                                }}>Staff</span>
                     <img src={admin} alt="avater" />
                 </div>
                 <div className="dropdown" onClick={toggleDropDown}>                    
@@ -61,14 +63,14 @@ const Navbar = () => {
                         <div className='dropdownitems'> 
                             <div className="item" 
                                 onClick={() => {
-                                    navigate("/profile")
+                                    navigate("/MainClient/EmpProfile")
                                 }}>
                                     <img src={profile} alt="nopic" />
                                     <span>Profile</span>
                             </div>
                             <div className="item"
                                 onClick={() => {
-                                    navigate("/setting")
+                                    navigate("/MainClient/EmpSetting")
                                 }}>
                                     <img src={setting} alt="nopic" />
                                     <span>Setting</span>

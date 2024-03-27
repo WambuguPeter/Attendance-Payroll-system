@@ -33,8 +33,8 @@ export const attendanceApi = createApi({
         }),
 
         updateAttendance: builder.mutation({
-            query: ({AttendanceID, attendance}) =>({
-                url:`attendance/UpdateAttendanceByID/${AttendanceID}`,
+            query: (attendance) =>({
+                url:`attendance/UpdateAttendanceByID/${attendance.AttendanceID}`,
                 method: "PUT",
                 body: attendance,
             }),

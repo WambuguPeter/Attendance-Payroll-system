@@ -22,6 +22,13 @@ export const employeeApi = createApi({
             }),
             providesTags: ["Employees"]
         }),
+        getForgotByEmail: builder.query({            
+            query: (Email) =>({
+                url: `/users/getNotFoundByEmail/${Email}`,
+                method: "GET",
+            }),
+            providesTags: ["Employees"]
+        }),
         loginEmployee: builder.mutation({
             query:(employee) => ({
                 url: "users/login",
@@ -41,8 +48,8 @@ export const employeeApi = createApi({
         }),
 
         updateEmployee: builder.mutation({
-            query: (employee) =>({
-                url:`users/UpdateEmployeeByID/${employee.EmployeeID}`,
+            query: (employee,EmployeeID) =>({
+                url:`users/UpdateEmployeeByID/${EmployeeID}`,
                 method: "PUT",
                 body: employee,
             }),
@@ -66,4 +73,5 @@ export const employeeApi = createApi({
 
 export const {useGetEmployeesQuery, useLoginEmployeeMutation, 
     useAddEmployeeMutation, useDeleteEmployeeMutation,
-     useGetEmployeeByIDQuery, useUpdateEmployeeMutation } = employeeApi;
+     useGetEmployeeByIDQuery, useUpdateEmployeeMutation,
+    useGetForgotByEmailQuery} = employeeApi;

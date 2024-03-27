@@ -34,9 +34,10 @@ export const scheduleApi = createApi({
         }),
 
         updateSchedules: builder.mutation({
-            query: (ScheduleID) =>({
-                url:`Schedules/updateScheduleByID/${ScheduleID}`,
+            query: (schedule) =>({
+                url:`Schedules/updateScheduleByID/${schedule.ScheduleID}`,
                 method: "PUT",
+                body: schedule,
             }),
             invalidatesTags: ["Schedules"],
         }),

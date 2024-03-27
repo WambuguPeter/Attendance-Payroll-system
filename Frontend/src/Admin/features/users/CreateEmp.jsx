@@ -4,7 +4,7 @@ import { useAddEmployeeMutation } from './UserApi';
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
 
 const AddEmployee = ({ onClose }) => {
-  const [addEmployee, { isLoading }] = useAddEmployeeMutation();
+  const [addEmployee, { isLoading }] = useAddEmployeeMutation();  
   const [formData, setFormData] = useState({
     FirstName: "",
     LastName: "",
@@ -15,7 +15,6 @@ const AddEmployee = ({ onClose }) => {
     admin: "",
     PositionID: "",
     ScheduleID: "",
-    PhotoURL: "",
     Email: "",
     Password: "",
     BankName: "",
@@ -23,38 +22,15 @@ const AddEmployee = ({ onClose }) => {
     AccountNumber: "",
     Bio: ""
   });
-  const [file, setFile] = useState(null); // State for file
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Upload the file to Cloudinary
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', 'wdfjbcug');
-      data.append('cloud_name', 'diyuy63ue');
-      
-      const cloudinaryRes = await fetch("https://api.cloudinary.com/v1_1/diyuy63ue/image/upload", {
-        method: 'POST',
-        body: data
-      });
-      
-      const responseJson = await cloudinaryRes.json();
-      if (cloudinaryRes.ok) {
-        const { secure_url } = responseJson;
-        setFormData({ ...formData, PhotoURL: secure_url }); // Update PhotoURL in form data
-      } else {
-        console.error("Cloudinary upload failed:", responseJson);
-        throw new Error("Failed to upload image to Cloudinary");
-      }
-
-      // Add employee using form data
       await addEmployee(formData).unwrap();
       onClose(); // Close the form upon successful submission
     } catch (error) {
       console.error("Error adding employee:", error);
       ErrorToast("Failed to add employee");
-      onClose();
     }
   };
 
@@ -63,52 +39,40 @@ const AddEmployee = ({ onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
-  };
-
   const handleClose = () => {
     onClose(); // Close the form when close button is clicked
   };
 
   return (
     <div className="modal">
-      <section className="modal-content">
-        <ToasterContainer />
-        <button className="close" onClick={handleClose}>X</button>
-        <form onSubmit={handleSubmit} className="form">
-          <h2 className="form-title">Add New Employee</h2>
-          {Object.keys(formData).map((key) => (
-            <div className="form-group" key={key}>
-              <label className="form-label" htmlFor={key}>{key}:</label>
-              <input
-                id={key}
-                name={key}
-                value={formData[key]}
-                onChange={handleChange}
-                className="form-input"
-              />
-              {key === "PhotoURL" && (
-                <input
-                  type="file"
-                  name="PhotoURL"
-                  onChange={handleFileChange}
-                  className="form-input"
-                />
-              )}
-            </div>
-          ))}
-          <button type="submit" className="form-button" disabled={isLoading}>
-            {isLoading ? "Loading..." : "Save"}
-          </button>
-        </form>
-      </section>
+    <section className="modal-content">
+      <ToasterContainer />
+      <button className="close" onClick={handleClose}>X</button>
+      <form onSubmit={handleSubmit} className="form">
+        <h2 className="form-title">Add New Employee</h2>
+        {Object.keys(formData).map((key) => (
+          <div className="form-group" key={key}>
+            <label className="form-label" htmlFor={key}>{key}:</label>
+            <input
+              id={key}
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+              className="form-input"
+            />
+          </div>
+        ))}
+        <button type="submit" className="form-button" disabled={isLoading}>
+          {isLoading ? "Loading..." : "Save"}
+        </button>
+      </form>
+    </section>
     </div>
   );
 };
 
 export default AddEmployee;
+
 
 
 

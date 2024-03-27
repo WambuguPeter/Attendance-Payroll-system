@@ -32,7 +32,8 @@ const AddSchedule = ({ onClose }) => {
 
   return (
     <div className="modal">
-    <section className="modal-content ">
+    <section className="modal-content ">      
+    <span className="close" onClick={onClose}>&times;</span>
       <h2>Add a New Schedule</h2>
       <form onSubmit={handleSubmit} className="form">
         {/* Input fields */}

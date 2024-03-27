@@ -7,6 +7,7 @@ import { addEmployeeService,
     getAllUserService, 
     getEmployeeByIDService,
      getUserByEmailService, 
+     getUserByEmailService1, 
      updateEmployeeService} from "../services/UserService.js";
 import { userLoginvalidator, validateNewEmployee } from "../validators/UserValidator.js";
 import { sendBadRequest, sendDeleteSuccess, sendCreated,
@@ -30,6 +31,7 @@ const checkEmployee = async (req) => {
   }
 }
 
+//get all
 export const getAllUserController = async (req,res) => {
     try {
         const data = await getAllUserService();
@@ -43,7 +45,7 @@ export const getAllUserController = async (req,res) => {
     }
 };
 
-
+//get by ID
 export const getEmpByIDController = async (req, res) => {
     try {
       const employeeID = Number(req.params.EmployeeID);
@@ -60,58 +62,28 @@ export const getEmpByIDController = async (req, res) => {
     }
   };
   
+//get by email (forgot password)
+export const getEmpByEmailController1 = async (req, res) => {
+  try {
+    const email = req.params.Email;
+    const employee = await getUserByEmailService1(email);
 
-
-//Adding an Employee
-export const addEmployeeController = async (req, res) =>{
-    const {
-        FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio 
-    } = req.body;
-    // console.log(req.body);
-
-    try {
-
-        const {error} = validateNewEmployee({
-            FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio 
-        });
-
-        if (error){
-            // return res.status(400).send(error.details.message);
-            return res.status(400).send(error.details[0].message);
-        }
-
-        const existingUser = await getUserByEmailService(Email);
-
-        if (existingUser) {
-            return res.status(400).json({ error : "Employee already exists(Email)"});
-            // console.log("Use in the syste alredy");
-        }
-        
-        const newEmployee = {
-            FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio 
-        }
-        // console.log(newEmployee);
-
-        const response = await addEmployeeService(newEmployee);
-
-        if (response instanceof Error){
-            throw response;
-        }
-
-        if (response.rowsAffected && response.rowsAffected[0] === 1) {
-            sendMail(Email);
-            sendCreated(res, "Employee created successfully");
-          } else {
-            sendServerError(res, "Failed to create Employee");
-          }
-    } catch (error) {
-        sendServerError(res, error.message);
+    if (employee) {
+      // Send email with password
+      await sendMailForgot(employee.Email, employee.FirstName, employee.LastName, employee.Password);
+      
+      return res.status(200).json(employee);
+    } else {
+      return res.status(404).json({ error: "Employee not found" });
     }
-}
+  } catch (error) {
+    sendServerError(res, error.message);
+  }
+};
 
 
-//send Email
-export const sendMail = async (Email, FirstName, LastName, Password) => {
+//send Email forgot Password
+export const sendMailForgot = async (Email, FirstName, LastName, Password) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -124,7 +96,7 @@ export const sendMail = async (Email, FirstName, LastName, Password) => {
   const emailContent = `
     <html>
       <head>
-        <title>Welcome To TillHappens Ltd!</title>
+        <title>Forgot Password???  @TillHappens</title>
         <!-- Add your custom styles here -->
         <style>
           body {
@@ -138,11 +110,10 @@ export const sendMail = async (Email, FirstName, LastName, Password) => {
       </head>
       <body>
         <div>
-          <h1>Welcome to TillHappens Ltd!</h1>
+          <h1>Welcome Back @TillHappens</h1>
           <p>Dear ${FirstName} ${LastName},</p>
-          <p>We are thrilled to welcome you to our platform. You are now part of our community!</p>
-          <p>Your login credentials:</p>
-          <p>Email: ${Email}</p>
+          <p>Here is your Password to our platform. Welcome back to our community!</p>
+          <p>Your password is:</p>
           <p>Password: ${Password}</p>
           <p>You can now login to our platform using the provided credentials.</p>
           <p>If you have any questions or need assistance, feel free to contact us at  info@tillHappens.com.</p>
@@ -153,50 +124,123 @@ export const sendMail = async (Email, FirstName, LastName, Password) => {
 
   const mailOptions = {
     from: process.env.EMAIL,
-    to: Email,
-    subject: "Welcome To TillHappens Ltd!",
+    to: Email, // Ensure that Email is properly defined
+    subject: "Welcome Back @TillHappens",
     html: emailContent,
   };
 
   try {
-    logger.info("Sending mail....");
+    logger.info("Sending mail(Forgot)....");
     await transporter.sendMail(mailOptions);
-    logger.info("Email sent successfully!");
+    logger.info("Email(Forgot) sent successfully!");
   } catch (error) {
     logger.error(error);
   }
 };
 
 
+
+//Adding an Employee
+export const addEmployeeController = async (req, res) =>{
+  const {
+      FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio 
+  } = req.body;
+
+  try {
+      const {error} = validateNewEmployee({
+          FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio 
+      });
+
+      if (error){
+          return res.status(400).send(error.details[0].message);
+      }
+
+      const existingUser = await getUserByEmailService(Email);
+
+      if (existingUser) {
+          return res.status(400).json({ error : "Employee already exists(Email)"});
+      }
+      
+      const newEmployee = {
+          FirstName, LastName, Location, BirthDate, Contact, Gender, admin, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio 
+      }
+
+      const addedEmployee = await addEmployeeService(newEmployee);
+
+      if (addedEmployee instanceof Error){
+          throw addedEmployee;
+      }
+
+      if (addedEmployee) {
+          // Send email with credentials to the employee
+          await sendMail(addedEmployee.Email, addedEmployee.FirstName, addedEmployee.LastName, addedEmployee.Password);
+          // Return response
+          res.status(201).json({ message: "Employee created successfully", addedEmployee });
+      } else {
+          res.status(500).json({ error: "Failed to create Employee" });
+      }
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+}
+
+
 //send Email
-// export const sendMail = async (Email) => {
-//     let transporter = nodemailer.createTransport({
-//       service: "gmail",
-//       auth: {
-//         user: process.env.EMAIL,
-//         pass: process.env.PASSWORD,
-//       },
-//     });
-//     const mailOptions = {
-//       from: process.env.EMAIL,
-//       to: Email,
-//       subject: "Welcome To TillHappens Ltd!",
-//       html: <WelcomeEmail 
-//             firstName={FirstName}
-//             lastName={LastName}
-//             email={Email}
-//             password={Password}
-//             supportEmail="[info.tillHappens@gmail.com]"
-//           />,
-//     };
-//     try {
-//       logger.info("Sending mail....");
-//       await transporter.sendMail(mailOptions);
-//       logger.info("Email sent successfully!");
-//     } catch (error) {
-//       logger.error(error);
-//     }
-//   };
+export const sendMail = async (Email, FirstName, LastName, Password) => {
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+// Generate HTML string for the email content
+const emailContent = `
+  <html>
+    <head>
+      <title>Welcome To TillHappens Ltd!</title>
+      <!-- Add your custom styles here -->
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+        }
+        /* Add more styles as needed */
+      </style>
+    </head>
+    <body>
+      <div>
+        <h1>Welcome to TillHappens Ltd!</h1>
+        <p>Dear ${FirstName} ${LastName},</p>
+        <p>We are thrilled to welcome you to our platform. You are now part of our community!</p>
+        <p>Your login credentials:</p>
+        <p>Email: ${Email}</p>
+        <p>Password: ${Password}</p>
+        <p>You can now login to our platform using the provided credentials.</p>
+        <p>If you have any questions or need assistance, feel free to contact us at  info@tillHappens.com.</p>
+      </div>
+    </body>
+  </html>
+`;
+
+const mailOptions = {
+  from: process.env.EMAIL,
+  to: Email,
+  subject: "Welcome To TillHappens Ltd!",
+  html: emailContent,
+};
+
+try {
+  logger.info("Sending mail....");
+  await transporter.sendMail(mailOptions);
+  logger.info("Email sent successfully!");
+} catch (error) {
+  logger.error(error);
+}
+};
 
 
 //Login user
@@ -252,41 +296,6 @@ export const deleteEmployee = async (req, res) => {
   }
 }
 
-// export const updateUser = async (req, res) => {
-//   try {
-//       const userId = Number(req.params.id);
-//       const { error } = updateUserValidator(req.body);
-//       if (error) {
-//           return res.status(400).send(error.details[0].message);
-//       } else {
-//           if (await checkUser(req)) {
-//               const { username, email, password, img_url } = req.body;
-//               let updatedUserData = { username, email };
-
-//               if (password) {
-//                   const hashedPassword = await hashPassword(password);
-//                   updatedUserData.password = hashedPassword;
-//               }
-
-//               if (img_url) {
-//                   updatedUserData.img_url = img_url;
-//               }
-
-//               const updateResult = await updateUserService(userId, updatedUserData);
-
-//               if (updateResult.message) {
-//                   return res.status(500).send({ "error": updateResult.message });
-//               } else {
-//                   res.status(200).json({ "message": "User updated successfully" });
-//               }
-//           } else {
-//               return sendNotFound(res, 'User not found');
-//           }
-//       }
-//   } catch (error) {
-//       sendServerError(res, error.message);
-//   }
-// }
 
 
 
@@ -310,7 +319,7 @@ export const updateUserController = async (req, res) => {
 
       if (checkIfValuesIsEmptyNullUndefined(req, res, req.body)) {
             const {FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID,
-            ScheduleID, PhotoURL, Email, Password, BankName, BankBranch, AccountNumber, Bio } = req.body;
+            ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio } = req.body;
             if (FirstName) {
               updatedEmployeeData.FirstName = FirstName;
             }
@@ -337,9 +346,6 @@ export const updateUserController = async (req, res) => {
             }
             if (ScheduleID) {
               updatedEmployeeData.ScheduleID = ScheduleID;
-            }
-            if (PhotoURL) {
-              updatedEmployeeData.PhotoURL = PhotoURL;
             }
             if (Email) {
               updatedEmployeeData.Email = Email;

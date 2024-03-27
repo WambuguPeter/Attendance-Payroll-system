@@ -30,7 +30,9 @@ const CreateAttendance = ({ onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
   return (
-    <div className='CreateAttendance'>
+    <div className='modal'>
+      <div className="modal-content">
+    <span className="close" onClick={onClose}>&times;</span>
         <h2>Add a New Attendance</h2>
       <form onSubmit={handleSubmit} className="form">
         {/* Input fields */}
@@ -47,6 +49,7 @@ const CreateAttendance = ({ onClose }) => {
         ))}
         <button type="submit">{isLoading ? "Loading" : "Save"}</button>
       </form>
+      </div>
 
     </div>
   )

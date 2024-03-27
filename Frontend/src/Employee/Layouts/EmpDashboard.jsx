@@ -5,6 +5,7 @@ import graph from '../assets/images/graph1.png';
 import AttendanceList from '../Components/AttendList';
 import EmployeeAttendanceChart from '../Components/BarGraph';
 import { ErrorToast, SuccessToast } from '../../Admin/Components/Toster';
+import { useGetEmployeeByIDQuery } from '../../Admin/features/users/UserApi';
 import { useAddAttendancesMutation, useUpdateAttendanceMutation } from '../../Admin/features/Attendance/AttendanceApi'; // Adjust the import path accordingly
 
 
@@ -56,18 +57,18 @@ const EmpDashboard = () => {
   
 
   const handleTimeOut = () => {
-    if (!addedAttendanceID) {
-      ErrorToast("You have not timed in yet or you have already timed out for today.");
-      return;
-    }
+    // if (!addedAttendanceID) {
+    //   ErrorToast("You have not timed in yet or you have already timed out for today.");
+    //   return;
+    // }
     console.log('addedAttendanceID', addedAttendanceID)
     const attendanceData = {
       AttendanceID: addedAttendanceID,
       EmployeeID: employeeID,
-       // Use the stored AttendanceID
-      TimeOut: currentTime.toLocaleTimeString(),      
+      Date: currentTime.toISOString(), 
+      TimeOut: currentTime.toLocaleTimeString()  // Set TimeOut in ISO string format
     };
-  console.log('attendanceData', attendanceData)
+    console.log('attendanceData', attendanceData)
     updateAttendance({ AttendanceID: attendanceData.AttendanceID, attendance: attendanceData, employeeID })
       .unwrap()
       .then(() => {
@@ -87,9 +88,10 @@ const EmpDashboard = () => {
           <div className="profile">
             <img src={emp} alt="Profile" />
             <div className="details">
-              <span>Lydia Wanjiku</span>
-              <span>Developer</span>
-              <span>@ TillHappens Ltd.</span>
+              <span>{employeeDetails.FirstName } {employeeDetails.LastName}</span>
+              <span>{employeeDetails.Email}</span>
+              <span>{employeeDetails.Bio}</span>
+              <span><i>@TillHappens</i></span>
             </div>
           </div>
           <div className="clock">

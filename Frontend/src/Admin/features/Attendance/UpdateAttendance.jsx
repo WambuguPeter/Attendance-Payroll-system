@@ -5,7 +5,7 @@ import { ErrorToast, LoadingToast, SuccessToast, ToasterContainer } from '../../
 const UpdateAttendance = ({attendance, onUpdateAttendance, onClose}) => {
     const [ updateAttendance, {isLoading}] = useUpdateAttendanceMutation();
     const [updatedAttendance, setUpdatedAttendance] = useState({ ...attendance});
-
+console.log('attendance', attendance)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUpdatedAttendance(prevState => ({
@@ -36,27 +36,19 @@ const UpdateAttendance = ({attendance, onUpdateAttendance, onClose}) => {
             <form onSubmit={handleSubmit}>
             <label>
             EmployeeID :
-                <input type="Int" name="EmployeeID" value= {`${updatedAttendance.FirstName} ${updatedAttendance.LastName}`} onChange={handleChange} />
+                <input type="Int" name="EmployeeID" value= {updatedAttendance.EmployeeID} onChange={handleChange} />
             </label>
-            {/* <label>
-            Date:
-                <input type="Date" name="Date" value={updatedAttendance.Date} onChange={handleChange} />
-            </label> */}
-            {/* <label>
-            ScheduleID:
-                <input type="Int" name="ScheduleID" value={updatedAttendance.ScheduleID} onChange={handleChange} />
-            </label> */}
             <label>
                 TimeIn:
-                <input type="Time" name="TimeIn" value={updatedAttendance.TimeIn} onChange={handleChange} />
+                <input type="DateTime" name="TimeIn" value={updatedAttendance.TimeIn} onChange={handleChange} />
             </label>
             <label>
                 TimeOut:
-                <input type="Time" name="TimeOut" value={updatedAttendance.TimeOut} onChange={handleChange} />
+                <input type="DateTime" name="TimeOut" value={updatedAttendance.TimeOut} onChange={handleChange} />
             </label>
             <label>
                 Hours:
-                <input type="text" name="Hours" value={updatedAttendance.Hours} onChange={handleChange} />
+                <input type="vachar" name="Hours" value={updatedAttendance.Hours} onChange={handleChange} />
             </label>
             
             

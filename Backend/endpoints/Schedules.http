@@ -27,7 +27,7 @@ Content-Type: application/json
 
 
 ### Update Schedule
-PUT http://localhost:8000/api/Schedules/updateScheduleByID/3
+PUT http://localhost:8000/api/Schedules/updateScheduleByID/1026
 Content-Type: application/json
 
 {

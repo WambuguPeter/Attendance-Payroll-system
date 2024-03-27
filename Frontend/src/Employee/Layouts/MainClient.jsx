@@ -24,8 +24,8 @@ const MainClient = () => {
             <Route path='/*' element={<EmpDashboard />} />
             <Route path='/EmpAttendance' element={<EmpAttendance/>} />
             <Route path='/EmpPayroll' element={<EmpPayroll/>} />
-            <Route path='/E-profile' element={<Profile />} />
-            <Route path='/E-setting' element={<Setting />} />
+            <Route path='/EmpProfile' element={<Profile />} />
+            <Route path='/EmpSetting' element={<Setting />} />
           </Routes>
 
         </div>

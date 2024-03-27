@@ -27,6 +27,7 @@ const EmployeeDetailsModal = ({ isOpen, onClose, employeeID }) => {
           <p><strong>ID:</strong> {employee[0].EmployeeID}</p>
          <p><strong>Name:</strong> {employee[0].FirstName} {employee[0].LastName}</p>
          <p><strong>Email:</strong> {employee[0].Email}</p>
+         <p><strong>Password:</strong> {employee[0].Password}</p>
          <p><strong>Position:</strong> {employee[0].Title}</p>
          <p><strong>Schedule:</strong> {employee[0].ScheduleName}</p>
          <p><strong>AccountNumber:</strong> {employee[0].AccountNumber}</p>

@@ -20,14 +20,14 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
-    margin-top: 40vh;
+    margin-top: 15vh;
     overflow: scroll;
     scroll-behavior: smooth; /* Adjust as needed */
   }
   
   .close {
     position: fixed;
-    top: 20px;
+    top: 20vh;
     right: 25%;
     cursor: pointer;
     background-color: red;

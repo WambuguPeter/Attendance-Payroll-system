@@ -1,3 +1,16 @@
+.visit-profileBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    margin-right: 20px;   
+    height: 38px;
+    width: 15vh;
+    padding: 5px;
+    border-radius: 20px;
+    color: #fff;
+}
+
 .content2{
     display: flex;
     flex-direction: column;
@@ -20,5 +33,26 @@
             gap: 1em;
         }
 
+    }
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    .pic-profile{
+        // background-color: greenyellow;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        img{
+            height: 250px;
+            width: 200px;
+            border-radius: 10px;
+            background-color: rgb(194, 190, 190);
+        }
     }
 }

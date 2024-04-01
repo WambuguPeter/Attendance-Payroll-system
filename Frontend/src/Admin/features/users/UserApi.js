@@ -56,16 +56,23 @@ export const employeeApi = createApi({
             invalidatesTags: ["Employees"],
         }),
 
+        upload: builder.mutation({
+            query: (file) =>({
+                url:`/photos/users/${file.filename}`,
+                method: "POST",
+                body: file,
+            }),
+            invalidatesTags: ["Employees"],
+
+        }),
+
         deleteEmployee: builder.mutation({
             query:(EmployeeID) => ({
                 url:`users/deleteEmployeeById/${EmployeeID}`,
                 method: "DELETE",
-                // body: employee,
             }),
             invalidatesTags: ["Employees"],
-        })
-
-        
+        })       
 
 
     })
@@ -74,4 +81,4 @@ export const employeeApi = createApi({
 export const {useGetEmployeesQuery, useLoginEmployeeMutation, 
     useAddEmployeeMutation, useDeleteEmployeeMutation,
      useGetEmployeeByIDQuery, useUpdateEmployeeMutation,
-    useGetForgotByEmailQuery} = employeeApi;
+    useGetForgotByEmailQuery, useUploadMutation} = employeeApi;

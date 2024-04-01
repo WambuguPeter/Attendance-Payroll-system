@@ -27,7 +27,13 @@
 }
 @media screen and (max-width: 768px) {
     .sidebar{
-        display: none;
+        background-color: red;
+        // display: none;
+    }
+    .content{
+        width: 100%;
+        // background-color: aqua;
+
     }
     
   }

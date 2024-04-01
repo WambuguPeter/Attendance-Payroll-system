@@ -15,6 +15,7 @@ export const addEmployeeService = async (newEmployee) => {
         .input("Contact", sql.VarChar(255), newEmployee.Contact)
         .input("Gender", sql.VarChar(255), newEmployee.Gender)
         .input("admin", sql.Bit, newEmployee.admin)
+        .input("photoURL", sql.VarChar(999), newEmployee.photoURL)
         .input("PositionID", sql.Int, newEmployee.PositionID)
         .input("ScheduleID", sql.Int, newEmployee.ScheduleID)
         .input("Email", sql.VarChar(255), newEmployee.Email)
@@ -24,8 +25,8 @@ export const addEmployeeService = async (newEmployee) => {
         .input("AccountNumber", sql.VarChar(255), newEmployee.AccountNumber)
         .input("Bio", sql.VarChar(255), newEmployee.Bio) 
         .query(
-            `INSERT INTO Employees (FirstName, LastName, Location, BirthDate, Contact, Gender,admin, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio)
-            VALUES (@FirstName, @LastName, @Location, @BirthDate, @Contact, @Gender,@admin, @PositionID, @ScheduleID, @Email, @Password, @BankName, @BankBranch, @AccountNumber, @Bio)
+            `INSERT INTO Employees (FirstName, LastName, Location, BirthDate, Contact, Gender,admin, photoURL, PositionID, ScheduleID, Email, Password, BankName, BankBranch, AccountNumber, Bio)
+            VALUES (@FirstName, @LastName, @Location, @BirthDate, @Contact, @Gender,@admin, @photoURL, @PositionID, @ScheduleID, @Email, @Password, @BankName, @BankBranch, @AccountNumber, @Bio)
             SELECT FirstName, LastName, Email, Password FROM Employees WHERE Email = @Email;`
         );
         return result.recordset[0];
@@ -145,8 +146,9 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .input("Location", sql.VarChar, Location)
         .input("BirthDate", sql.DateTime, BirthDate)
         .input("Contact", sql.VarChar, Contact)
-        .input("Gender", sql.VarChar, Gender)
+        .input("Gender", sql.VarChar, Gender) 
         .input("admin", sql.Bit, admin)
+        .input("photoURL", sql.VarChar, photoURL) 
         .input("PositionID", sql.Int, PositionID)
         .input("ScheduleID", sql.Int, ScheduleID)
         .input("Email", sql.VarChar, Email)
@@ -157,7 +159,7 @@ export const updateEmployeeService = async (employee, employeeID) => {
         .input("Bio", sql.VarChar, Bio)
         .query(
           `UPDATE Employees 
-           SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, 
+           SET FirstName= @FirstName, LastName= @LastName, Location= @Location, BirthDate= @BirthDate, Contact= @Contact, Gender= @Gender, admin= @admin, photoURL =@photoURL,
           PositionID= @PositionID, ScheduleID= @ScheduleID, Email= @Email, Password= @Password, BankName= @BankName, BankBranch= @BankBranch, AccountNumber= @AccountNumber, Bio= @Bio WHERE EmployeeID= @EmployeeID`
           );
       return result;

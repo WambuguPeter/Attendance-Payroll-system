@@ -107,3 +107,5 @@ Content-Type: application/json
     "Bio" : "Meet Titus Munyoki from Moringa"
 }
 
+###
+http://localhost:8000/api/photos/users/${req.file.filename}

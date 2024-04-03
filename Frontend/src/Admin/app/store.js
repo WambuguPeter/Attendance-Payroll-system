@@ -6,6 +6,7 @@ import { scheduleApi } from "../features/Schedule/ScheduleApi";
 import { overtimeApi } from "../features/Overtime/OvertimeApi";
 import { payrollApi } from "../features/Payroll/PayrollApi";
 import { advancecashApi } from "../features/AdvanceCash/AdvanceCashApi";
+import { positionApi } from "../features/Position/PositionApi";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         [overtimeApi.reducerPath ]: overtimeApi.reducer,
         [payrollApi.reducerPath ]: payrollApi.reducer,
         [advancecashApi.reducerPath ]: advancecashApi.reducer,
+        [positionApi.reducerPath ]: positionApi.reducer,
   
     },
     middleware: (getDefaultMiddleware) =>
@@ -25,6 +27,7 @@ export const store = configureStore({
         overtimeApi.middleware,
         payrollApi.middleware,
         advancecashApi.middleware,
+        positionApi.middleware,
        
     ),
 

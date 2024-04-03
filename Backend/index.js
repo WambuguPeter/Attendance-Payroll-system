@@ -13,6 +13,7 @@ import advanceCashRoute from "./src/routes/AdvanceCashRoute.js";
 import ovetimeRoute from "./src/routes/OvertimeRoute.js";
 import attendanceRoute from "./src/routes/AttendanceRoute.js";
 import leavesRoute from "./src/routes/LeavesRoute.js";
+import uploadImageRouter from "./src/routes/UploadPhotoRoute.js";
 
 
 dotenv.config();
@@ -45,6 +46,7 @@ app.use('/api',advanceCashRoute);
 app.use('/api',ovetimeRoute);
 app.use('/api',attendanceRoute);
 app.use('/api',leavesRoute);
+app.use('/api',uploadImageRouter);
 
 
 app.listen(port, () => {

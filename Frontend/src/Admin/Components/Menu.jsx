@@ -1,5 +1,4 @@
 import './Menu.scss'
-import Dashboard from '../assets/images/Dashboard.png';
 import Employees from '../assets/images/user.png';
 import Schedule from '../assets/images/Schedule.png';
 import Attendance from '../assets/images/Attendance.png';
@@ -10,11 +9,6 @@ import { NavLink } from "react-router-dom";
 
 function Menu() {
   const menuItems = [    
-    // {
-    //   title: "Dashboard",
-    //   icon: Dashboard,
-    //   path: "/MainContainer"
-    // },
     {
       title: "Employees",
       icon: Employees,

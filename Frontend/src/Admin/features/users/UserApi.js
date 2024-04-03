@@ -11,8 +11,7 @@ export const employeeApi = createApi({
                 url: "users/getAllUsers",
                 method: "GET",
             }) ,  
-            providesTags: ["Employees"]
-            
+            providesTags: ["Employees"]            
             
         }),
         getEmployeeByID: builder.query({            
@@ -48,8 +47,8 @@ export const employeeApi = createApi({
         }),
 
         updateEmployee: builder.mutation({
-            query: (employee,EmployeeID) =>({
-                url:`users/UpdateEmployeeByID/${EmployeeID}`,
+            query: (employee) =>({
+                url:`users/UpdateEmployeeByID/${employee.EmployeeID}`,
                 method: "PUT",
                 body: employee,
             }),
@@ -58,12 +57,11 @@ export const employeeApi = createApi({
 
         upload: builder.mutation({
             query: (file) =>({
-                url:`/photos/users/${file.filename}`,
+                url:"upload-user-profile",
                 method: "POST",
                 body: file,
             }),
             invalidatesTags: ["Employees"],
-
         }),
 
         deleteEmployee: builder.mutation({

@@ -35,7 +35,7 @@ export const payrollApi = createApi({
 
         addPayroll: builder.mutation({
             query: (payroll) =>({
-                url:"payroll/addpayroll",
+                url:`/payroll/addpayroll`,
                 method: "POST",
                 body: payroll,
             }),

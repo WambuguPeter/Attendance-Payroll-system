@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CreateEmp.scss';
 import { useAddEmployeeMutation } from './UserApi';
+import {useGetPositionsQuery} from '../Position/PositionApi';
+import {useGetSchedulesQuery} from '../Schedule/ScheduleApi';
 import { ErrorToast, ToasterContainer } from '../../Components/Toster';
 
 const AddEmployee = ({ onClose }) => {
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();  
+  const { data: positionsData } = useGetPositionsQuery();
+  const { data: schedulesData } = useGetSchedulesQuery();
+
   const [formData, setFormData] = useState({
     FirstName: "",
     LastName: "",
@@ -49,23 +54,54 @@ const AddEmployee = ({ onClose }) => {
       <ToasterContainer />
       <button className="close" onClick={handleClose}>X</button>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="form-title">Add New Employee</h2>
-        {Object.keys(formData).map((key) => (
-          <div className="form-group" key={key}>
-            <label className="form-label" htmlFor={key}>{key}:</label>
-            <input
-              id={key}
-              name={key}
-              value={formData[key]}
+          <h2 className="form-title">Add New Employee</h2>
+          {Object.keys(formData).map((key) => (
+            key !== "PositionID" && key !== "ScheduleID" && (
+              <div className="form-group" key={key}>
+                <label className="form-label" htmlFor={key}>{key}:</label>
+                <input
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+            )
+          ))}
+          <div className="form-group">
+            <label className="form-label" htmlFor="PositionID">Position:</label>
+            <select
+              id="PositionID"
+              name="PositionID"
+              value={formData.PositionID}
               onChange={handleChange}
               className="form-input"
-            />
+            >
+              {positionsData && positionsData.map(position => (
+                <option key={position.PositionID} value={position.PositionID}>{position.Title}</option>
+              ))}
+            </select>
           </div>
-        ))}
-        <button type="submit" className="form-button" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Save"}
-        </button>
-      </form>
+          <div className="form-group">
+            <label className="form-label" htmlFor="ScheduleID">Schedule:</label>
+            <select
+              id="ScheduleID"
+              name="ScheduleID"
+              value={formData.ScheduleID}
+              onChange={handleChange}
+              className="form-input"
+            >
+              {schedulesData && schedulesData.map(schedule => (
+                <option key={schedule.ScheduleID} value={schedule.ScheduleID}>{schedule.ScheduleName}</option>
+              ))}
+            </select>
+          </div>
+          
+          <button type="submit" className="form-button" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Save"}
+          </button>
+        </form>
     </section>
     </div>
   );

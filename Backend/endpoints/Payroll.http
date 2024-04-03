@@ -5,7 +5,7 @@
 GET http://localhost:8000/api/payroll/getAll
 
 ### get Payrolls By ID.
-GET http://localhost:8000/api/payroll/getpayrollByID/33
+GET http://localhost:8000/api/payroll/getpayrollByID/4
 
 
 ### get Payrolls By Emp ID.
@@ -24,7 +24,7 @@ POST http://localhost:8000/api/payroll/addpayroll
 Content-Type: application/json
 
 {
-    "EmployeeID" : 2
+    "EmployeeID" : 16
 }
 
 ### Update payroll

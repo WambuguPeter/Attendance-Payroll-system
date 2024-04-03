@@ -31,6 +31,9 @@ const fetchAdvanceCash = async (employeeID) => {
                 `SELECT AdvanceAmount FROM AdvanceCash WHERE EmployeeID = @EmployeeID`
             );
         
+        if (result.recordset.length === 0) {
+            return 0; // Return 0 if no overtime earnings found
+        }
         const advanceCash = result.recordset[0].AdvanceAmount;
         return advanceCash;
     } catch (error) {
@@ -45,7 +48,9 @@ const fetchOvertimeEarnings = async (employeeID) => {
             .query(
                 `SELECT OvertimeEarnings FROM Overtime WHERE EmployeeID = @EmployeeID`
             );        
-        
+        if (result.recordset.length === 0) {
+            return 0; // Return 0 if no overtime earnings found
+        }
         const overtimeEarnings = result.recordset[0].OvertimeEarnings;
         return overtimeEarnings;
     } catch (error) {
@@ -60,7 +65,10 @@ const fetchDeductions = async (employeeID) => {
             .input("EmployeeID", sql.Int, employeeID)
             .query(
                 `SELECT SUM(DeductionAmount) AS TotalDeductions FROM tbl_Deductions WHERE EmployeeID = @EmployeeID`
-            );        
+            ); 
+            if (result.recordset.length === 0) {
+                return 0; // Return 0 if no overtime earnings found
+            }       
        
         const totalDeductions = result.recordset[0].TotalDeductions; 
         return totalDeductions;
@@ -117,19 +125,13 @@ export const getAllPayrollsService = async () =>{
     try {
         const result = await poolRequest()
         .query(`
-        SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
+        SELECT Payrolls.*, E.*, P.*
         FROM Payrolls 
         JOIN 
         Employees E ON E.EmployeeID = Payrolls.EmployeeID
         JOIN
-        Positions P ON E.PositionID = P.PositionID
-        JOIN
-        AdvanceCash A ON E.EmployeeID = A.EmployeeID
-        JOIN
-        Overtime O ON E.EmployeeID = O.EmployeeID
-        JOIN
-        tbl_Deductions D ON E.EmployeeID = D.EmployeeID;
-    `);
+        Positions P ON E.PositionID = P.PositionID;
+    `)
             return result.recordset;
         
     } catch (error) {
@@ -173,18 +175,12 @@ export const getPayrollByIDService = async (payrollID) =>{
         const result = await poolRequest()
         .input("PayrollID", sql.Int,  payrollID)
         .query(`
-        SELECT Payrolls.*, E.*, P.*, A.AdvanceAmount, O.OvertimeEarnings, D.*
+        SELECT Payrolls.*, E.*, P.*
         FROM Payrolls 
         JOIN 
         Employees E ON E.EmployeeID = Payrolls.EmployeeID
         JOIN
         Positions P ON E.PositionID = P.PositionID
-        JOIN
-        AdvanceCash A ON E.EmployeeID = A.EmployeeID
-        JOIN
-        Overtime O ON E.EmployeeID = O.EmployeeID
-        JOIN
-        tbl_Deductions D ON E.EmployeeID = D.EmployeeID
         WHERE PayrollID = @PayrollID;
 `)
   

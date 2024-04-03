@@ -13,7 +13,7 @@ const PayrollList = () => {
     isError,
     isFetching,
   } = useGetPayrollsQuery();
-
+console.log('payrolls', payrolls)
   const [deletePayroll] = useDeletePayrollsMutation();
   const [selectedPayrollID, setSelectedPayrollID] = useState(null); // State to store the selected payroll ID
 
@@ -64,7 +64,7 @@ const PayrollList = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedPayrolls.map((payroll) => (
+            {sortedPayrolls && sortedPayrolls.map((payroll) => (
               <tr className="details" key={payroll.PayrollID}>                
                 <td>{payroll.PayrollID}</td>
                 <td>{payroll.PayrollDate}</td>
